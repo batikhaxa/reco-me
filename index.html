@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>recommendation website</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        .my-custom-row {
+            background-color: bisque;
+            height: 400px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Hello, world!</h1>
+        container inside
+        <div class="row">
+            <div class="col-sm-4">Column 1</div>   <!--takes up 4/12 space-->
+            <div class="col-sm-8">Column 2</div>   <!--takes up 8/12 space-->
+            <div class="col-sm-12">Column 3</div>  <!--takes up entire row (12 spaces)-->
+            <div class="col-sm-4 col-md-6">Column 4</div> 
+            <div class="col-sm-8 col-md-6">Column 5</div> <!--different settings depending on size of screen-->
+            <div class="col-sm-4 col-md-6 col-lg-2">Column 6</div> 
+            <div class="col-sm-8 col-md-6 col-lg-8">Column 7</div> <!--if it doesnt add up to 12, there will be deadspace-->
+        </div>
+        <div class="row">
+            <div class="col-sm-4 order-md-2">Column 1</div> 
+            <div class="col-sm-8 order-md-1">Column 2</div> <!--change order depending on size-->
+        </div>
+        <div class="row">
+            <div class="col-sm-4 offset-2">Column 1</div> <!--add offset where there is extra space-->
+            <div class="col-sm-4">Column 2</div>
+        </div>
+        <div class="row my-custom-row justify-content-evenly align-items-center">
+            <div class="col-sm-4">
+                <div class="p-3 border bg-light">Column 1</div>
+            </div> 
+            <div class="col-sm-4">
+                <div class="p-3 border bg-light">Column 1</div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
