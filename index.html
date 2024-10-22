@@ -7,126 +7,16 @@
     <title>RECO.ME</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <style>
-        .flex-fill {
-            flex: 1;
-        }
-
-        .full-height {
-            height: 100vh;
-        }
-
-        .active {
-            background-color: pink;
-        }
-    </style>
+    <link href="/css/style.css" rel="stylesheet">
 </head>
 
 <body>
-    <main class="d-flex flex-nowrap full-height">
-        <!--sidebar-->
-        <div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary" style="width: 280px;">
-            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-                <span class="fs-4">reco.me</span>
-            </a>
-            <ul class="nav nav-pills flex-column mb-auto">
-                <li class="nav-item">
-                    <a href="#" class="nav-link active" aria-current="page">Home</a>
-                </li>
-                <li>
-                    <a href="#" class="nav-link link-body-emphasis">recommend</a>
-                </li>
-                <li>
-                    <a href="#" class="nav-link link-body-emphasis">search</a>
-                </li>
-            </ul>
-            <hr>
-            <div class="dropdown">
-                <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-                    <strong>mdo</strong>
-                </a>
-                <ul class="dropdown-menu text-small shadow">
-                    <li><a class="dropdown-item" href="#">New project...</a></li>
-                    <li><a class="dropdown-item" href="#">Settings</a></li>
-                    <li><a class="dropdown-item" href="#">Profile</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">Sign out</a></li>
-                </ul>
-            </div>
-        </div>
-
-        <!--main-->
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <p>friend<p>
-                    
-                    <!-- Center the card using d-flex justify-content-center -->
-                    <div class="d-flex justify-content-center">
-                        <div class="card" style="width: 30rem; height:15rem;">
-                            <div class="card-body">
-                                <h5 class="card-title">XXX person is Recommending</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">What thing</h6>
-                                <p class="card-text">Recommendention text</p>
-                                <label class="card-category mb-3">ANIME SF etc</label>
-                                <a href="https://www.example.com" class="link-icon">
-                                    <i class="bi bi-gear"></i> <!-- Bootstrap gear icon -->
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="d-flex justify-content-center">
-                        <div class="card" style="width: 30rem; height:15rem;">
-                            <div class="card-body">
-                              <h5 class="card-title">XXX person is Recommending</h5>
-                              <h6 class="card-subtitle mb-2 text-muted">What thing</h6>
-                              <p class="card-text">Recommendention text</p>
-                              <label class="card-category mb-3">ANIME SF etc</label>
-                              <a href="#" class="card-link mb-3">COMMENTS</a>
-                         
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col d-none d-sm-block d-sm-none d-md-block">
-                    <p>friend's friend</p>
-                    <div class="d-flex justify-content-right">
-                        <div class="card" style="width: 25rem; height:10rem;">
-                            <div class="card-body">
-                                <h5 class="card-title">XXX person is Recommending</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">What thing</h6>
-                                <p class="card-text">Recommendention text</p>
-                                <label class="card-category mb-3">ANIME SF etc</label>
-                                <a href="#" class="card-link mb-3">COMMENTS</a>
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="d-flex justify-content-right">
-                        <div class="card" style="width: 25rem; height: 1rem;">
-                            <div class="card-body">
-                                <h5 class="card-title">XXX person is Recommending</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">What thing</h6>
-                                <p class="card-text">Recommendention text</p>
-                                <label class="card-category mb-3">ANIME SF etc</label>
-                                <a href="#" class="card-link mb-3">COMMENTS</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
+    <div id="root"></div> <!-- React will mount your app here -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-    <script src="/src/index.js"></script> <!-- Reference your JavaScript bundle here -->
-
+    <script src="/src/index.js"></script>
 </body>
 
 </html>
