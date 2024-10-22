@@ -14,7 +14,7 @@ const Main = () => {
                                 <h6 className="card-subtitle mb-2 text-muted">What thing</h6>
                                 <p className="card-text">Recommendention text</p>
                                 <label className="card-category mb-3">ANIME SF etc</label>
-                                <a href="https://www.example.com" className="link-icon">
+                                <a href="/settings" className="link-icon">
                                     <i className="bi bi-gear"></i>
                                 </a>
                             </div>
@@ -28,7 +28,7 @@ const Main = () => {
                                 <h6 className="card-subtitle mb-2 text-muted">What thing</h6>
                                 <p className="card-text">Recommendention text</p>
                                 <label className="card-category mb-3">ANIME SF etc</label>
-                                <a href="#" className="card-link mb-3">COMMENTS</a>
+                                <a href="/comments" className="card-link mb-3">COMMENTS</a>
                             </div>
                         </div>
                     </div>
@@ -42,7 +42,7 @@ const Main = () => {
                                 <h6 className="card-subtitle mb-2 text-muted">What thing</h6>
                                 <p className="card-text">Recommendention text</p>
                                 <label className="card-category mb-3">ANIME SF etc</label>
-                                <a href="#" className="card-link mb-3">COMMENTS</a>
+                                <a href="/comments" className="card-link mb-3">COMMENTS</a>
                             </div>
                         </div>
                     </div>
@@ -54,7 +54,7 @@ const Main = () => {
                                 <h6 className="card-subtitle mb-2 text-muted">What thing</h6>
                                 <p className="card-text">Recommendention text</p>
                                 <label className="card-category mb-3">ANIME SF etc</label>
-                                <a href="#" className="card-link mb-3">COMMENTS</a>
+                                <a href="/comments" className="card-link mb-3">COMMENTS</a>
                             </div>
                         </div>
                     </div>
