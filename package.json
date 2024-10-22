@@ -35,5 +35,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "description": "a website to share your recommendations to others",
+  "main": "index.js",
+  "author": "niko, ong, olivia",
+  "license": "ISC"
 }
