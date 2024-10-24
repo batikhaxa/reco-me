@@ -10,8 +10,7 @@ const Main = () => {
                     <div className="d-flex justify-content-center">
                         <div className="card" style={{ width: "30rem", height: "15rem" }}>
                             <div className="card-body">
-                                <h5 className="card-title">XXX person is Recommending</h5>
-                                <h6 className="card-subtitle mb-2 text-muted">What thing</h6>
+                                <h5 className="card-title"><b>tanaka-san</b> is recommending <b>top gun</b></h5>
                                 <p className="card-text">Recommendention text</p>
                                 <label className="card-category mb-3">ANIME SF etc</label>
                                 <a href="/settings" className="link-icon">
