@@ -43,17 +43,21 @@ const Recommend = () => {
                         ></textarea>
                     </div>
 
-                    <label htmlFor="tag_select">tags:</label>
-                    <div className="select-picker">
-                        <select id="tag_select" data-live-search="true">
-                            <option>games</option>
-                            <option>anime</option>
-                            <option>movies</option>
-                            <option>music</option>
-                            <option>books</option>
-                            <option>sports</option>
-                            <option value="others">others</option>
-                        </select>
+                    {/* Changed in custom-choices.css */}
+                    <div className="tag-container">
+                        <label htmlFor="tag_select">tags:</label>
+                        <div className="select-picker">
+                            <select id="tag_select" data-live-search="true">
+                                <option>games</option>
+                                <option>anime</option>
+                                <option>movies</option>
+                                <option>music</option>
+                                <option>books</option>
+                                <option>sports</option>
+                                <option value="others">others</option>
+                            </select>
+                        </div>
+                        <div className="selected-tags" id="selected-tags"></div>
                     </div>
 
                     <div className="selected-tags" id="selected-tags"></div>
