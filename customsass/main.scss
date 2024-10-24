@@ -12,6 +12,19 @@
     box-shadow: none;
 }
 
+// ensure full size
+html,
+body,
+#root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.full-height {
+    height: 100vh;
+}
+
 $primary: #FFEEF2;
 // global so maybe bad?
 $box-shadow: 0;
