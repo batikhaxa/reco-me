@@ -32,14 +32,15 @@ body,
 .card-category{
     margin-top: 10px;
     padding: 5px;
-    border-radius: 5px;
+    border-radius: 50px;
     display: flex;
     flex-wrap: wrap;
     max-width:100px;
-    background-color: #FFCDD4;
+    background-color: #FFDCE6;
 }
 
 $primary: #FFEEF2;
+$secondary: #F99EBB;
 // global so maybe bad?
 $box-shadow: 0;
 
@@ -60,8 +61,10 @@ $dropdown-border-width: 0px;
 $dropdown-min-width:8rem;
 
 // cards (for recommend)
-$card-spacer-y: 40px;
-$card-spacer-x: 40px;
+.recommend-card {
+    $card-spacer-y: 40px;
+    $card-spacer-x: 40px;
+}
 $card-bg: #FFEEF2;
 $card-border-color: white;
 $card-border-radius: 25px;
