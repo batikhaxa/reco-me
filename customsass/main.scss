@@ -1,3 +1,5 @@
+// handles changes to _variables.scss
+
 #sidebar-title {
     padding: 1%;
     font-weight: bold;
@@ -60,10 +62,42 @@ $dropdown-border-width: 0px;
 $dropdown-min-width:8rem;
 
 // cards (for recommend)
+$card-spacer-y: 40px;
+$card-spacer-x: 40px;
 $card-bg: #FFEEF2;
-$card-border-width: 0px;
+$card-border-color: white;
 $card-border-radius: 25px;
 
+<<<<<<< HEAD
 
 
 @import '../node_modules/bootstrap/scss/bootstrap';
+=======
+// recommend post button
+.post-btn {
+    background: linear-gradient(135deg, #FFCDD4, #FFE0D3);
+    border-radius: 10px;
+    border-width: 0;
+    font-weight: bold;
+    padding: 7px 17px; 
+    font-size: 0.9rem; 
+    float: right;
+    margin-left: 35px; 
+    transition: all 0.3s ease;
+    &:hover {
+        background: linear-gradient(135deg, #ffcad1, #ffcfba);
+    }
+}
+
+.row-with-btn {
+    display: flex;
+    justify-content: flex-end; 
+    align-items: center; 
+}
+
+$form-select-box-shadow: none;
+$form-select-border-width: 0px;
+
+@import '../node_modules/bootstrap/scss/bootstrap';
+
+>>>>>>> c07f5af47d3cad233a9cbd280915c201171cb416
