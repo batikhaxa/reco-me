@@ -27,6 +27,18 @@ body,
     height: 100vh;
 }
 
+//tags
+
+.card-category{
+    margin-top: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    max-width:100px;
+    background-color: #FFCDD4;
+}
+
 $primary: #FFEEF2;
 // global so maybe bad?
 $box-shadow: 0;
@@ -54,6 +66,11 @@ $card-bg: #FFEEF2;
 $card-border-color: white;
 $card-border-radius: 25px;
 
+
+
+
+@import '../node_modules/bootstrap/scss/bootstrap';
+
 // recommend post button
 .post-btn {
     background: linear-gradient(135deg, #FFCDD4, #FFE0D3);
@@ -80,4 +97,3 @@ $form-select-box-shadow: none;
 $form-select-border-width: 0px;
 
 @import '../node_modules/bootstrap/scss/bootstrap';
-
