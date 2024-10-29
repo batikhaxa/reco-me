@@ -26,19 +26,17 @@ body,
 .full-height {
     height: 100vh;
 }
+
 //tags
 
 .card-category{
-
-
     margin-top: 10px;
-
-    background-color:white;
     padding: 5px;
     border-radius: 5px;
     display: flex;
     flex-wrap: wrap;
     max-width:100px;
+    background-color: #FFCDD4;
 }
 
 $primary: #FFEEF2;
