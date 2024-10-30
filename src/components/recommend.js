@@ -21,7 +21,7 @@ const Recommend = () => {
 
     return (
         <div className="container" style={{ paddingTop: '3em' }}>
-            <div className="card recommend-card shadow-none border" style={{ marginLeft: '100px', width: '500px' }}>
+            <div id="recommend-card" className="card shadow-none border" style={{ marginLeft: '100px', width: '500px' }}>
                 <div className="card-body">
                     {/* Editable title */}
                     <h2
