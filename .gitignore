@@ -21,3 +21,5 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+src/css/main.min.css
+src/css/main.min.css.map
