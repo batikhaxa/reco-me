@@ -24,12 +24,7 @@ const Main = () => {
                                 <label className="card-category mb-3"><i class="bi bi-tv"></i>anime</label>
 
                               
-<<<<<<< HEAD
                         <div className='d-flex flex-row-reverse' >
-=======
-                                
-                                <div className='d-flex flex-row-reverse' >
->>>>>>> parent of c9fac26 (very dangerous oroablt throws error)
 
                                 <a href="/comments" className='link-icon'>
                                 <i ><svg xmlns="http://www.w3.org/2000/svg"
