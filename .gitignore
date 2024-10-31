@@ -23,3 +23,4 @@ yarn-debug.log*
 yarn-error.log*
 src/css/main.min.css
 src/css/main.min.css.map
+bootstrap-5.3.3-examples
