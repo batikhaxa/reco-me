@@ -4,6 +4,7 @@ import React from 'react';
 const Main = () => {
     return (
         <div className="container">
+            <div class="Line1"></div>
             <div className="row">
                 <div className="col">
                     <p>friend</p>
@@ -89,14 +90,14 @@ const Main = () => {
                     <p>friend's friend</p>
                     <div className="freind_friends">
                         <div className="d-flex  justify-content-right col col-row-3">
-                            <div className="card" style={{ maxwidth: "25rem", maxHeight: "12.5rem" }}>
+                            <div className="card" style={{ maxwidth: "25rem", maxHeight: "13rem" }}>
                                 <div className="card-body d-flex flex-wrap">
                                     <div className='d-flex gap-2'>
                                         <img src="https://i.pinimg.com/736x/d1/51/47/d151474e2d22d12412425632275f6cff.jpg" alt="" width="50"
                                             height="50" className="rounded-circle me-2" />
                                         <h5 className="card-title"><b>c-san</b> is recommending <b>Undertale</b></h5>
                                     </div>
-                                    <div className="position-relative " style={{ paddingBottom: "1.5rem" }}>
+                                    <div className="position-relative " style={{ paddingBottom: "1rem" }}>
                                         <p className="card-text">Have you played this one? the story was heartwarming and got a lot of
                                             cute soundtracks.Plus, it is on sale rn on stream. Check that out! </p>
                                         <label className="card-category d-inline-flex mb-1"><i class="bi bi-controller"></i> game</label>
