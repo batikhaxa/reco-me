@@ -30,12 +30,11 @@ body,
 //tags
 
 .card-category {
-    margin-top: 10px;
-    padding: 5px;
+    padding: 0.5rem;
+    margin-right: 10px;
     border-radius: 50px;
     display: flex;
     flex-wrap: wrap;
-    max-width: 100px;
     background-color: #FFDCE6;
 }
 
@@ -115,7 +114,7 @@ $card-border-radius: 25px;
     &:hover {
         color: $nav-link-hover-color;
         background-color: $nav-link-hover-bg-color;
-        border-radius: 0.7rem;
+        border-radius: 0.75rem;
         transition: $nav-link-transition;
     }
 }
