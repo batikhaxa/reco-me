@@ -23,6 +23,7 @@ const Main = () => {
                                 <label className="card-category mb-3"><i class="bi bi-tv"></i>anime</label>
 
                               
+
                                 
                                 <div className='d-flex flex-row-reverse' >
 
