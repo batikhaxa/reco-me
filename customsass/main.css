@@ -25,6 +25,7 @@ body,
   height: 100vh;
 }
 
+
 .card-category {
   margin-top: 10px;
   padding: 5px;
@@ -3812,7 +3813,9 @@ textarea.form-control-lg {
   --bs-nav-link-padding-y: 0.5rem;
   --bs-nav-link-font-weight: ;
   --bs-nav-link-color: var(--bs-link-color);
-  --bs-nav-link-hover-color: white;
+
+  --bs-nav-link-hover-color: var(--bs-link-hover-color);
+
   --bs-nav-link-disabled-color: white;
   display: flex;
   flex-wrap: wrap;
@@ -4370,18 +4373,19 @@ textarea.form-control-lg {
 }
 
 .card {
-  --bs-card-spacer-y: 40px;
-  --bs-card-spacer-x: 40px;
+
+  --bs-card-spacer-y: 1.5rem;
+  --bs-card-spacer-x: 1.5rem;
   --bs-card-title-spacer-y: 0.75rem;
   --bs-card-title-color: ;
   --bs-card-subtitle-color: ;
-  --bs-card-border-width: var(--bs-border-width);
-  --bs-card-border-color: white;
+  --bs-card-border-width: 0px;
+  --bs-card-border-color: var(--bs-border-color-translucent);
   --bs-card-border-radius: 25px;
   --bs-card-box-shadow: ;
-  --bs-card-inner-border-radius: calc(25px - (var(--bs-border-width)));
-  --bs-card-cap-padding-y: 20px;
-  --bs-card-cap-padding-x: 40px;
+  --bs-card-inner-border-radius: 25px;
+  --bs-card-cap-padding-y: 0.75rem;
+  --bs-card-cap-padding-x: 1.5rem;
   --bs-card-cap-bg: rgba(var(--bs-body-color-rgb), 0.03);
   --bs-card-cap-color: ;
   --bs-card-height: ;
@@ -12000,6 +12004,7 @@ textarea.form-control-lg {
   .d-print-none {
     display: none !important;
   }
+
 }
 .post-btn {
   background: red;
@@ -23996,4 +24001,5 @@ textarea.form-control-lg {
   .d-print-none {
     display: none !important;
   }
+
 }/*# sourceMappingURL=main.css.map */
