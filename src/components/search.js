@@ -39,7 +39,7 @@ const Search = () => {
                     </div>
                     <div className="mt-1">
                         {tags.map((tag, index) => (
-                            <span key={index} className="badge tag-badge bg-secondary me-2">
+                            <span key={index} className="badge tag-badge bg-secondary me-2 p-1">
                                 {tag} <button type="button" className="btn-close btn-close-black ms-1" onClick={() => removeTag(tag)} aria-label="Remove tag"></button>
                             </span>
                         ))}

@@ -109,8 +109,6 @@ $input-border-width: 0px;
 }
 
 .tag-badge {
-    color: black; // Set text color to black
-    align-items: center; // Vertically centers text and close button
-    padding: 0.5em 0.75em; // Adjust padding as needed
-    border-radius: 0.25rem; // Optional: adjust border-radius to match Bootstrap badge style
+    color: black; 
+    border-radius: 0.5rem; 
 }
