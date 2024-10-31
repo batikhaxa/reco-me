@@ -56,7 +56,7 @@ const Main = () => {
                                     <h5 className="card-title"><b>b-san</b> is recommending <b>top gun</b></h5>
                                 </div>
                                 <p className="card-text">Recommendention text</p>
-                                <label className="card-category mb-3"><i class="bi bi-tv"></i>anime</label>
+                                <label className="card-category d-inline-flex mb-1"><i class="bi bi-tv"></i>anime</label>
                                 <div className='d-flex flex-row-reverse'>
 
 
@@ -99,7 +99,7 @@ const Main = () => {
                                     <div className="position-relative " style={{ paddingBottom: "1.5rem" }}>
                                         <p className="card-text">Have you played this one? the story was heartwarming and got a lot of
                                             cute soundtracks.Plus, it is on sale rn on stream. Check that out! </p>
-                                        <label className="card-category  position-absolute start-0 bottom-1 mb-3"><i class="bi bi-controller"></i> game</label>
+                                        <label className="card-category d-inline-flex mb-1"><i class="bi bi-controller"></i> game</label>
 
                                     </div>
                                     <div className='d-flex justify-content-end ms-auto'>
