@@ -36,7 +36,7 @@ const Sidebar = () => {
             </ul>
             <hr />
             <div className="dropdown">
-                <a href="dropdown" className="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle"
+                <a href="#" className="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle"
                     data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="https://i.pinimg.com/736x/d1/51/47/d151474e2d22d12412425632275f6cff.jpg" alt="" width="50"
                         height="50" className="rounded-circle me-2" />
