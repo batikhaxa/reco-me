@@ -6,6 +6,13 @@
     color: white;
 }
 
+//outter_scrollbar
+
+body, .outer-container {
+    overflow: hidden;
+}
+
+
 .nav-item {
     padding: 1%;
 }
@@ -29,13 +36,17 @@ body,
 
 //line_friend
 
-.Line1{
-    width: 200px;
-    height: 47px;
-    border-bottom: 1px solid black;
-    position: absolute;
+// .Line1{
+//     width: 200px;
+//     height: 47px;
+//     border-bottom: 10px solid black;
+//     position: absolute;
+//     top: 100px;  
+//     left: 170px;
 
-}
+
+
+// }
 
 
 //tags
@@ -43,6 +54,8 @@ body,
 .card-category {
     padding: 0.5rem;
     margin-right: 10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
     border-radius: 50px;
     display: flex;
     flex-wrap: wrap;
