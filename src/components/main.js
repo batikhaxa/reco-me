@@ -18,11 +18,10 @@ const Main = () => {
                                 <h5 className="card-title"><b>tanaka-san</b> is recommending <b>top gun</b></h5>
                                 </div>
                                 <p className="card-text mu-5">Recommendention text </p>
-                                <label className="card-category mb-3"><i class="bi bi-tv"></i>ANIME</label>
+                                <label className="card-category mb-3"><i class="bi bi-tv"></i>　anime</label>
                                 
                                 <div className='d-flex flex-row-reverse' >
 
-                                
                                 <a href="/comments" className='link-icon'>
 
 

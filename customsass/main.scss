@@ -32,14 +32,15 @@ body,
 .card-category{
     margin-top: 10px;
     padding: 5px;
-    border-radius: 5px;
+    border-radius: 50px;
     display: flex;
     flex-wrap: wrap;
     max-width:100px;
-    background-color: #FFCDD4;
+    background-color: #FFDCE6;
 }
 
 $primary: #FFEEF2;
+$secondary: #F99EBB;
 // global so maybe bad?
 $box-shadow: 0;
 
@@ -63,8 +64,10 @@ $dropdown-border-width: 0px;
 $dropdown-min-width:8rem;
 
 // cards (for recommend)
-$card-spacer-y: 40px;
-$card-spacer-x: 40px;
+#recommend-card {
+    $card-spacer-y: 40px;
+    $card-spacer-x: 40px;
+}
 $card-bg: #FFEEF2;
 $card-border-color: white;
 $card-border-radius: 25px;
@@ -109,5 +112,19 @@ $card-border-radius: 25px;
     
 $form-select-box-shadow: none;
 $form-select-border-width: 0px;
+$input-border-width: 0px;
 
 @import '../node_modules/bootstrap/scss/bootstrap';
+
+.form-control {
+    display: flex;
+    max-width:auto;
+    flex-grow: 1;
+}
+
+.tag-badge {
+    color: black; // Set text color to black
+    align-items: center; // Vertically centers text and close button
+    padding: 0.5em 0.75em; // Adjust padding as needed
+    border-radius: 0.25rem; // Optional: adjust border-radius to match Bootstrap badge style
+}
