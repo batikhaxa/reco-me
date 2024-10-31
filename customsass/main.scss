@@ -39,6 +39,17 @@ body,
     background-color: #FFDCE6;
 }
 
+a .link-icon {
+    margin-top: 2px;
+    margin-right: 10px;
+    padding: 10px;
+    justify-content: flex-end;
+    display: inline-block;
+
+    background-color: #FFDCE6;
+
+}
+
 $primary: #FFEEF2;
 $secondary: #F99EBB;
 // global so maybe bad?
@@ -68,13 +79,9 @@ $dropdown-min-width: 8rem;
     $card-spacer-y: 40px;
     $card-spacer-x: 40px;
 }
-
 $card-bg: #FFEEF2;
 $card-border-color: white;
 $card-border-radius: 25px;
-
-
-
 
 @import '../node_modules/bootstrap/scss/bootstrap';
 
