@@ -7,7 +7,7 @@
     margin-bottom: 24px;
     font-size: 16px;
     width: 50%;
-    border-width: 0px;
+    border-width: 1px;
     border-radius: 10px;
 }
 
@@ -97,7 +97,7 @@
     width: 0;
     border-style: solid;
     border-color: #333 transparent transparent transparent;
-    border-width: 5px;
+    border-width: 1px;
     position: absolute;
     right: 11.5px;
     top: 50%;
@@ -425,4 +425,15 @@
 .select-picker {
     flex: 1;
     /* Allow select to take available space */
+}
+
+/* Override Choices borders */
+.choices,
+.choices__inner,
+.choices__input,
+.choices__list--multiple .choices__item,
+.choices__list--dropdown,
+.choices__list[aria-expanded] {
+    border: none !important;
+    box-shadow: none !important;
 }

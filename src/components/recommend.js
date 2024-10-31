@@ -21,7 +21,7 @@ const Recommend = () => {
 
     return (
         <div className="container" style={{ paddingTop: '3em' }}>
-            <div id="recommend-card" className="card shadow-none border" style={{ marginLeft: '100px', width: '500px' }}>
+            <div id="recommend-card" className="card shadow-none p-1" style={{ marginLeft: '100px', width: '500px' }}>
                 <div className="card-body">
                     {/* Editable title */}
                     <h2
@@ -32,7 +32,6 @@ const Recommend = () => {
                     >
                         {title}
                     </h2>   
-
                     <div className="form-floating mb-3">
                         <textarea
                             className="form-control"
@@ -42,7 +41,6 @@ const Recommend = () => {
                             style={{ height: '80px' }}
                         ></textarea>
                     </div>
-
                     {/* Changed in custom-choices.css */}
                     <div className="tag-container">
                         <label htmlFor="tag_select">tags:</label>
