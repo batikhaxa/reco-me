@@ -26,10 +26,8 @@ const Main = () => {
 
                                 <label className="card-category d-inline-flex mb-1"><i class="bi bi-tv"></i>anime</label>
 
-
-
-
-                                <div className='d-flex flex-row-reverse' >
+                              
+                        <div className='d-flex flex-row-reverse' >
 
                                     <a href="/comments" className='link-icon'>
                                         <i ><svg xmlns="http://www.w3.org/2000/svg"
