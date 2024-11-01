@@ -6,10 +6,10 @@ const Sidebar = () => {
         <div className="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary bg-gradient" style={{ width: "280px" }}>
             <a href="/" className="d-flex align-items-center mb-3 mb-md-3 me-md-auto link-body-emphasis text-decoration-none">
                 <img src="/img/icon.png" className="bi pe-none me-2" width="60" height="60" alt="icon" />
-                <span id="sidebar-title" className="fs-4">reco.me</span>
+                <span id="sidebar-title" className="fs-3">reco.me</span>
             </a>
 
-            <ul className="nav nav-pills flex-column mb-auto">
+            <ul className="nav nav-pills flex-column mb-auto fs-6 fw-semibold">
                 <li className="nav-item">
                     <NavLink to="/home" className="nav-link link-body-emphasis" activeClassName="active">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-house me-2" viewBox="0 0 16 16">
@@ -37,11 +37,10 @@ const Sidebar = () => {
             </ul>
             <hr />
             <div className="dropdown">
-                <a href="javascript:void(0);" className="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle"
-                    data-bs-toggle="dropdown" aria-expanded="false">
+                <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="https://i.pinimg.com/736x/d1/51/47/d151474e2d22d12412425632275f6cff.jpg" alt="" width="50"
-                        height="50" className="rounded-circle me-2" />
-                    <strong className="text-white">niko</strong>
+                        height="50" className="rounded-circle me-2 ms-2" />
+                    <strong className="text-white fw-light fs-5">niko</strong>
                 </a>
                 <ul className="dropdown-menu ms-5 text-small shadow">
                     <li><a className="dropdown-item" href="/settings">settings</a></li>
