@@ -1,17 +1,27 @@
 // handles changes to _variables.scss
 
 #sidebar-title {
+  
     padding: 1%;
     font-weight: bold;
     color: white;
 }
 
-//outter_scrollbar
-
-body, .outer-container {
-    overflow: hidden;
+//scroll bar
+.scrollable-container {
+    max-height: 100vh; 
+    max-width:100vw ;  
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding-right: 1rem; 
+    margin-top: 4px;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: none;  
+    scrollbar-width: none;     
 }
-
+.scrollable-container::-webkit-scrollbar {
+    display: none;  
+}
 
 .nav-item {
     padding: 1%;
@@ -25,6 +35,7 @@ body, .outer-container {
 html,
 body,
 #root {
+ 
     height: 100%;
     margin: 0;
     padding: 0;
