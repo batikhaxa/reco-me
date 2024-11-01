@@ -25,6 +25,7 @@
 
 .nav-item {
     padding: 1%;
+    padding-top: 5%;
 }
 
 #dropdown {
@@ -107,6 +108,7 @@ $dropdown-border-radius: 10px 10px 10px 0px;
 $dropdown-box-shadow: none;
 $dropdown-border-width: 0px;
 $dropdown-min-width: 8rem;
+$dropdown-color: white;
 
 // cards (for recommend)
 $card-bg: #FFEEF2;
