@@ -5,13 +5,13 @@ const Main = () => {
     return (
 
         <div className="scrollable-container mx-5" data-bs-spy="scroll" data-bs-offset="0"  >
-        <div className="container  mt-4 mx-2">
+        <div className="container  mt-4 mx-2 pt-1">
            
             
             <div className="Line1"></div>
             <div className="row">
                 <div className="col">
-                    <div className="d-flex justify-content-center ">
+                    <div className="d-flex justify-content-center  ">
 
                         <div className="card " style={{ width: "28rem", maxHeight:"17rem" }}>
 
@@ -22,9 +22,9 @@ const Main = () => {
                                             height="70" className="rounded-circle me-2" />
                                         <h5 className="card-title"><b>tanaka-san</b> is recommending <b>Stranger Things</b></h5>
                                     </div>
-                                    <div className="position-relative " style={{ paddingBottom: "1.5rem" }}>
+                                    <div className="position-relative " style={{ paddingBottom: "1.5rem", paddingTop:"1.5rem" }}>
                                         <p className="card-text">Season 5 is coming out!</p>
-                                            <label className="card-category d-inline-flex mb-1 position-absolute start-0 bottom-1"><i class="bi bi-film"></i>SF</label>
+                                            <label className="card-category d-inline-flex mb-1 position-absolute start-0 bottom-1 "><i class="bi bi-film"></i>SF</label>
 
                                  
                                     <div className='d-flex flex-wrap justify-content-end '>
@@ -59,11 +59,12 @@ const Main = () => {
                                         height="70" className="rounded-circle me-2" />
                                     <h5 className="card-title"><b>佐藤-san</b> is recommending <b>KAIJYU No.8</b></h5>
                                 </div>
+                                <div className="position-relative " style={{ paddingBottom: "1.5rem",  paddingTop:"1.5rem"}}>
                                 <p className="card-text">Honestly, I barely watch anime stuffs but this one got 
                                     a pretty good vibe and funny.You'd better watch this one.
                                 </p>
-                                <label className="card-category d-inline-flex mb-1"><i class="bi bi-tv"></i>anime</label>
-                                <div className='d-flex flex-row-reverse'>
+                                <label className="card-category d-inline-flex mb-1 position-absolute start-0 bottom-1"><i class="bi bi-tv"></i>anime</label>
+                                <div className='d-flex flex-wrap justify-content-end '>
 
 
                                     <a href="/comments" className='link-icon'>
@@ -83,7 +84,7 @@ const Main = () => {
 
 
 
-
+                            </div>
 
 
                             </div>
@@ -104,7 +105,7 @@ const Main = () => {
                                             height="50" className="rounded-circle me-2" />
                                         <h5 className="card-title"><b>Honda-san</b> is recommending <b>Undertale</b></h5>
                                     </div>
-                                    <div className="position-relative " style={{ paddingBottom: "1.5rem" }}>
+                                    <div className="position-relative " style={{ paddingBottom: "1.5rem" , paddingTop:"1.5rem"}}>
                                         <p className="card-text">Have you played this one? the story was heartwarming and got a lot of
                                             cute soundtracks.Plus, it is on sale rn on stream. Check that out! </p>
                                         <label className="card-category d-inline-flex mb-1 position-absolute start-0 bottom-1"><i class="bi bi-controller"></i> game</label>
@@ -148,7 +149,7 @@ const Main = () => {
                                             <h5 className="card-title"><b>Hashimoto-san</b> is recommending<b> Hayday</b></h5>
                                         
                                         </div>
-                                        <div className="content-wrapper" style={{ paddingBottom: "1.5rem" }}>
+                                        <div className="content-wrapper" style={{ paddingBottom: "1.5rem", paddingTop:"1.5rem" }}>
                                             <p className="card-text">hope you download it.
                                             Then we can share some materials. </p>
 
@@ -189,7 +190,7 @@ const Main = () => {
                                             height="50" className="rounded-circle me-2" />
                                          <h5 className="card-title"><b>Momo-san</b> is recommending <b>Red, White & Royal Blue</b></h5>
                                      </div>
-                                    <div className="content-wrapper" style={{ paddingBottom: "1.5rem" }}>
+                                    <div className="content-wrapper" style={{ paddingBottom: "1.5rem", paddingTop:"1.5rem" }}>
                                         <p className="card-text">This was the sweetest story that I've read before{'>/////<'} Especially, the letter part,
                                          you must not miss that. </p>
                                      <label className="card-category d-inline-flex mb-1 position-absolute start-0 bottom-1"><i class="bi bi-book px-1"></i> romance</label>
