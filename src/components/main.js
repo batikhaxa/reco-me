@@ -4,21 +4,21 @@ import React from 'react';
 const Main = () => {
     return (
 
-        
-        <div className="container">
-             <div className="scrollable-container" data-bs-spy="scroll" data-bs-offset="0" tabindex="0" >
+        <div className="scrollable-container mx-5" data-bs-spy="scroll" data-bs-offset="0"  >
+        <div className="container  mt-4 mx-2">
+           
             
             <div className="Line1"></div>
             <div className="row">
                 <div className="col">
-                    <div className="d-flex justify-content-center">
+                    <div className="d-flex justify-content-center ">
 
-                        <div className="card" style={{ width: "28rem", maxHeight:"17rem" }}>
+                        <div className="card " style={{ width: "28rem", maxHeight:"17rem" }}>
 
                        
-                                <div className="card-body d-flex flex-column">
+                                <div className="card-body d-flex flex-column ">
                                     <div className='d-flex gap-2'>
-                                        <img src="https://i.pinimg.com/736x/d1/51/47/d151474e2d22d12412425632275f6cff.jpg" alt="" width="70"
+                                        <img src="https://i.pinimg.com/564x/1d/07/12/1d0712cc59edea3887771272b3fbf812.jpg" alt="" width="70"
                                             height="70" className="rounded-circle me-2" />
                                         <h5 className="card-title"><b>tanaka-san</b> is recommending <b>Stranger Things</b></h5>
                                     </div>
@@ -51,11 +51,11 @@ const Main = () => {
 
                     <br />
                     <div className="d-flex justify-content-center">
-                        <div className="card" style={{ width: "28rem", maxHeight:"17rem" }}>
+                        <div className="card " style={{ width: "28rem", maxHeight:"17rem" }}>
                             <div className="card-body">
 
                                 <div className='d-flex gap-2'>
-                                    <img src="https://i.pinimg.com/736x/d1/51/47/d151474e2d22d12412425632275f6cff.jpg" alt="" width="70"
+                                    <img src="https://i.pinimg.com/564x/85/6e/5a/856e5aa3b9590b173414fcf601fffb67.jpg" alt="" width="70"
                                         height="70" className="rounded-circle me-2" />
                                     <h5 className="card-title"><b>佐藤-san</b> is recommending <b>KAIJYU No.8</b></h5>
                                 </div>
@@ -91,13 +91,16 @@ const Main = () => {
                     </div>
                 </div>
 
-                <div className="col d-none d-sm-block d-sm-none d-md-block ">
-                    <div className="freind_friends">
-                        <div className="d-flex  justify-content-right col col-row-3">
-                            <div className="card" style={{ width: "25rem", maxHeight: "24rem" }}>
+
+                {/* friend's friend */}
+
+                <div className="col d-none d-sm-block d-sm-none d-md-block  d-md-none d-lg-block ">
+                 
+                        <div className="d-flex  justify-content-end flex-column align-item-center gap-1 ">
+                            <div className="card" style={{ width: "23rem", maxHeight: "24rem" }}>
                                 <div className="card-body d-flex flex-column">
                                     <div className='d-flex gap-2'>
-                                        <img src="https://i.pinimg.com/736x/d1/51/47/d151474e2d22d12412425632275f6cff.jpg" alt="" width="50"
+                                        <img src="https://i.pinimg.com/564x/61/e4/28/61e42824e50a8edc6aacc483cdf9c230.jpg" alt="" width="50"
                                             height="50" className="rounded-circle me-2" />
                                         <h5 className="card-title"><b>Honda-san</b> is recommending <b>Undertale</b></h5>
                                     </div>
@@ -127,35 +130,38 @@ const Main = () => {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                       
 
 
 
 
-                        <br />
+                                <br />
 
 
-                        <div className="card" style={{ width: "25rem", maxHeight: "20rem" }}>
-                            <div className="card-body d-flex flex-wrap">
-                                <div className='d-flex gap-2'>
-                                    <img src="https://i.pinimg.com/736x/d1/51/47/d151474e2d22d12412425632275f6cff.jpg" alt="" width="50"
-                                        height="50" className="rounded-circle me-2" />
-                                    <h5 className="card-title"><b>Hashimoto-san</b> is recommending<b> Hayday</b></h5>
-                                </div>
-                                <div className="content-wrapper" style={{ paddingBottom: "1.5rem" }}>
-                                    <p className="card-text">hope you download it.
-                                        Then we can share some materials. </p>
+                              <div className="card" style={{ width: "23rem", maxHeight: "24rem" }}>
+                                    <div className="card-body d-flex flex-wrap">
 
-                                    <label className="card-category d-inline-flex mb-1 position-absolute start-0 bottom-1 "> <i class="bi bi-controller"></i> game</label>
-                                </div>
+                                        <div className='d-flex gap-2'>
+                                            <img src="https://i.pinimg.com/564x/b2/f7/f1/b2f7f1d421c4974b8918947700d534cc.jpg" alt="" width="50"
 
-                                <div className='d-flex justify-content-end ms-auto'>
+                                            height="50" className="rounded-circle me-2" />
+                                            <h5 className="card-title"><b>Hashimoto-san</b> is recommending<b> Hayday</b></h5>
+                                        
+                                        </div>
+                                        <div className="content-wrapper" style={{ paddingBottom: "1.5rem" }}>
+                                            <p className="card-text">hope you download it.
+                                            Then we can share some materials. </p>
+
+                                            <label className="card-category d-inline-flex mb-1 position-absolute start-0 bottom-1 "> <i class="bi bi-controller"></i> game</label>
+                                        </div>
+
+                                        <div className='d-flex justify-content-end ms-auto'>
 
 
-                                    <a href="/comments" className='link-icon'>
+                                            <a href="/comments" className='link-icon'>
 
 
-                                        <i ><svg xmlns="http://www.w3.org/2000/svg"
+                                            <i ><svg xmlns="http://www.w3.org/2000/svg"
                                             width="30"
                                             height="30"
                                             fill="black"
@@ -163,48 +169,52 @@ const Main = () => {
                                             viewBox="0 0 16 16">
                                             <path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
                                             <path d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9 9 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.4 10.4 0 0 1-.524 2.318l-.003.011a11 11 0 0 1-.244.637c-.079.186.074.394.273.362a22 22 0 0 0 .693-.125m.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6-3.004 6-7 6a8 8 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a11 11 0 0 0 .398-2" />
-                                        </svg></i>
-                                    </a>
-                                </div>
-                            </div>
+                                             </svg></i>
+                                            </a>
+                                        </div>
+                                 </div>
+                              </div>
+                 
+
+
+                                        <br />
+
+
+
+                             <div className="d-flex justify-content-right">
+                                 <div className="card " style={{ width: "23rem", maxHeight: "24rem" }}>
+                                     <div className="card-body">
+                                        <div className='d-flex gap-2'>
+                                         <img src="https://i.pinimg.com/564x/c9/c7/35/c9c73582182228d8c1b7744ea5b11e6c.jpg" alt="" width="50"
+                                            height="50" className="rounded-circle me-2" />
+                                         <h5 className="card-title"><b>Momo-san</b> is recommending <b>Red, White & Royal Blue</b></h5>
+                                     </div>
+                                    <div className="content-wrapper" style={{ paddingBottom: "1.5rem" }}>
+                                        <p className="card-text">This was the sweetest story that I've read before{'>/////<'} Especially, the letter part,
+                                         you must not miss that. </p>
+                                     <label className="card-category d-inline-flex mb-1 position-absolute start-0 bottom-1"><i class="bi bi-book px-1"></i> romance</label>
+                                 </div>
+                                    <div className='d-flex justify-content-end ms-auto'>
+
+
+                                         <a href="/comments" className='link-icon' >
+                                         <i ><svg xmlns="http://www.w3.org/2000/svg"
+                                            width="30"
+                                            height="30"
+                                            fill="black"
+                                            class="bi bi-chat-dots"
+                                            viewBox="0 0 16 16">
+                                            <path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
+                                            <path d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9 9 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.4 10.4 0 0 1-.524 2.318l-.003.011a11 11 0 0 1-.244.637c-.079.186.074.394.273.362a22 22 0 0 0 .693-.125m.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6-3.004 6-7 6a8 8 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a11 11 0 0 0 .398-2" />
+                                             </svg></i>
+
+
+                                         </a>
+                                 </div>
+
+                             </div>
                         </div>
                     </div>
-
-
-                    <br />
-
-
-
-                    <div className="d-flex justify-content-right">
-                        <div className="card" style={{ width: "25rem", maxHeight: "12rem" }}>
-                            <div className="card-body">
-                                <div className='d-flex gap-2'>
-                                    <img src="https://i.pinimg.com/736x/d1/51/47/d151474e2d22d12412425632275f6cff.jpg" alt="" width="50"
-                                        height="50" className="rounded-circle me-2" />
-                                    <h5 className="card-title"><b>Momo-san</b> is recommending <b>top gun</b></h5>
-                                </div>
-                                <p className="card-text">Recommendention text</p>
-                                <label className="card-category d-inline-flex mb-1 position-absolute start-0 bottom-1"><i class="bi bi-film"></i>SF</label>
-                                <div className='d-flex flex-row-reverse'>
-
-
-                                    <a href="/comments" className='link-icon' >
-                                        <i ><svg xmlns="http://www.w3.org/2000/svg"
-                                            width="30"
-                                            height="30"
-                                            fill="black"
-                                            class="bi bi-chat-dots"
-                                            viewBox="0 0 16 16">
-                                            <path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
-                                            <path d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9 9 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.4 10.4 0 0 1-.524 2.318l-.003.011a11 11 0 0 1-.244.637c-.079.186.074.394.273.362a22 22 0 0 0 .693-.125m.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6-3.004 6-7 6a8 8 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a11 11 0 0 0 .398-2" />
-                                        </svg></i>
-
-
-                                    </a>
-                                </div>
-
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

@@ -7,17 +7,25 @@
     color: white;
 }
 
-//scroll bar
+
+//scrollbar
 .scrollable-container {
     max-height: 100vh; 
-    max-width:100% ;  
-    overflow-y: scroll;
-    padding-right: 1rem; 
-    margin-top: 4px;
-    -webkit-overflow-scrolling: touch;
+    width: 100%;  
+    overflow-y: auto; 
+    padding: 0;
+    box-sizing: border-box; 
     -ms-overflow-style: none;  
-    scrollbar-width: none;     
+    scrollbar-width: thin; 
+    display: flex;
+    flex-direction: column;
 }
+
+.scrollable-container::-webkit-scrollbar {
+    width: 1px; 
+}
+
+
 
 
 .nav-item {
