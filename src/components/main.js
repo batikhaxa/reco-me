@@ -121,7 +121,7 @@ const Main = () => {
                                             これ、めちゃくちゃ楽しいよ。オープンワールドが広大で、探索するものが山ほどある！『ブレス オブ ザ ワイルド』が好きなら、絶対ハマるはず。もう、本当にハイラルの世界にどっぷりハマっちゃうよ。
                                         </p>
                                         <label className="card-category d-inline-flex mb-1 position-absolute start-0 bottom-1">
-                                            <i className="bi bi-tv"></i> ゲーム
+                                            <i className="bi bi-controller"></i> ゲーム
                                         </label>
                                         <div className="d-flex flex-wrap justify-content-end">
                                             <a href="/comments" className="link-icon">
