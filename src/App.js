@@ -10,7 +10,7 @@ const App = () => {
     <Router>
       <main className="d-flex flex-nowrap full-height">
         <Sidebar />
-        <div className="content">
+        <div className="content flex-grow-1 overflow-auto">
           <Routes>
             <Route path="/" element={<Navigate to="/home" replace />} />
             <Route path="/home" element={<Main />} />

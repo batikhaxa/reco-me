@@ -3,208 +3,244 @@ import React from 'react';
 
 const Main = () => {
     return (
-        <div className="scrollable-container mx-5" data-bs-spy="scroll" data-bs-offset="0">
-        <div className="container  mt-4 mx-2 pt-1">
-            <div className="Line1"></div>
-            <div className="row">
-                <div className="col">
-                    <div className="d-flex justify-content-center  ">
-                        <div className="card card-primary">
-                                <div className="card-body d-flex flex-column ">
-                                    <div className='d-flex gap-2'>
-                                        <img src="https://i.pinimg.com/564x/1d/07/12/1d0712cc59edea3887771272b3fbf812.jpg" alt="" width="70"
-                                            height="70" className="rounded-circle me-2" />
-                                        <h5 className="card-title"><b>tanaka-san</b> is recommending <b>Stranger Things</b></h5>
-                                    </div>
-                                    <div className="position-relative " style={{ paddingBottom: "1.5rem", paddingTop:"1.5rem" }}>
-                                        <p className="card-text">Season 5 is coming out!</p>
-                                            <label className="card-category d-inline-flex mb-1 position-absolute start-0 bottom-1 "><i class="bi bi-film"></i>science-fiction</label>
-
-                                 
-                                    <div className='d-flex flex-wrap justify-content-end '>
-
-
-                                        <a href="/comments" className='link-icon'>
-
-
-                                            <i ><svg xmlns="http://www.w3.org/2000/svg"
-                                                width="30"
-                                                height="30"
-                                                fill="black"
-                                                class="bi bi-chat-dots"
-                                                viewBox="0 0 16 16">
-                                                <path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
-                                                <path d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9 9 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.4 10.4 0 0 1-.524 2.318l-.003.011a11 11 0 0 1-.244.637c-.079.186.074.394.273.362a22 22 0 0 0 .693-.125m.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6-3.004 6-7 6a8 8 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a11 11 0 0 0 .398-2" />
-                                            </svg></i>
-                                        </a>
-                                    </div>
-                                    </div>
-                                    </div>
-                        </div>
-                    </div>
-
-                    <br />
-                    <div className="d-flex justify-content-center">
-                        <div className="card card-primary">
-                            <div className="card-body">
-
-                                <div className='d-flex gap-2'>
-                                    <img src="https://i.pinimg.com/564x/85/6e/5a/856e5aa3b9590b173414fcf601fffb67.jpg" alt="" width="70"
-                                        height="70" className="rounded-circle me-2" />
-                                    <h5 className="card-title"><b>佐藤-san</b> is recommending <b>KAIJYU No.8</b></h5>
-                                </div>
-                                <div className="position-relative " style={{ paddingBottom: "1.5rem",  paddingTop:"1.5rem"}}>
-                                <p className="card-text">Honestly, I barely watch anime stuffs but this one got 
-                                    a pretty good vibe and funny.You'd better watch this one.
-                                </p>
-                                <label className="card-category d-inline-flex mb-1 position-absolute start-0 bottom-1"><i class="bi bi-tv"></i>anime</label>
-                                <div className='d-flex flex-wrap justify-content-end '>
-
-
-                                    <a href="/comments" className='link-icon'>
-                                        <i ><svg xmlns="http://www.w3.org/2000/svg"
-                                            width="30"
-                                            height="30"
-                                            fill="black"
-                                            class="bi bi-chat-dots"
-                                            viewBox="0 0 16 16">
-                                            <path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
-                                            <path d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9 9 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.4 10.4 0 0 1-.524 2.318l-.003.011a11 11 0 0 1-.244.637c-.079.186.074.394.273.362a22 22 0 0 0 .693-.125m.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6-3.004 6-7 6a8 8 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a11 11 0 0 0 .398-2" />
-                                        </svg></i>
-
-
-                                    </a>
-                                </div>
-
-
-
-                            </div>
-
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                {/* friend's friend */}
-
-                <div className="col d-none d-sm-block d-sm-none d-md-block  d-md-none d-lg-block ">
-                        <div className="d-flex  justify-content-end flex-column align-item-center gap-1 ">
-                            <div className="card card-secondary">
+         <div className="scrollable-container m-4" data-bs-offset="0">
+            <div className="container mt-4 mx-2 pt-1">
+                <div className="Line1"></div>
+                <div className="row">
+                    <div className="col ms-5">
+                        {/* Card 1 */}
+                        <div className="d-flex justify-content-center">
+                            <div className="card card-primary">
                                 <div className="card-body d-flex flex-column">
-                                    <div className='d-flex gap-2'>
-                                        <img src="https://i.pinimg.com/564x/61/e4/28/61e42824e50a8edc6aacc483cdf9c230.jpg" alt="" width="50"
-                                            height="50" className="rounded-circle me-2" />
-                                        <h5 className="card-title"><b>Honda-san</b> is recommending <b>Undertale</b></h5>
+                                    <div className="d-flex gap-2">
+                                        <img
+                                            src="https://i.pinimg.com/736x/6b/46/30/6b46301a53a654d80e58f16234fd752b.jpg"
+                                            alt=""
+                                            width="70"
+                                            height="70"
+                                            className="rounded-circle me-2"
+                                        />
+                                        <h5 className="card-title">
+                                            <b>田中ちゃん</b> is recommending <b>『ストレンジャー・シングス』</b>
+                                        </h5>
                                     </div>
-                                    <div className="position-relative " style={{ paddingBottom: "1.5rem" , paddingTop:"1.5rem"}}>
-                                        <p className="card-text">Have you played this one? the story was heartwarming and got a lot of
-                                            cute soundtracks.Plus, it is on sale rn on stream. Check that out! </p>
-                                        <label className="card-category d-inline-flex mb-1 position-absolute start-0 bottom-1"><i class="bi bi-controller"></i> game</label>
-
-                                 
-                                    <div className='d-flex flex-wrap justify-content-end '>
-
-
-                                        <a href="/comments" className='link-icon'>
-
-
-                                            <i ><svg xmlns="http://www.w3.org/2000/svg"
-                                                width="30"
-                                                height="30"
-                                                fill="black"
-                                                class="bi bi-chat-dots"
-                                                viewBox="0 0 16 16">
-                                                <path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
-                                                <path d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9 9 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.4 10.4 0 0 1-.524 2.318l-.003.011a11 11 0 0 1-.244.637c-.079.186.074.394.273.362a22 22 0 0 0 .693-.125m.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6-3.004 6-7 6a8 8 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a11 11 0 0 0 .398-2" />
-                                            </svg></i>
-                                        </a>
-                                    </div>
-                                    </div>
-                                </div>
-                            </div>
-                       
-
-
-
-
-                                <br />
-
-
-                              <div className="card card-secondary">
-                                    <div className="card-body d-flex flex-wrap">
-
-                                        <div className='d-flex gap-2'>
-                                            <img src="https://i.pinimg.com/564x/b2/f7/f1/b2f7f1d421c4974b8918947700d534cc.jpg" alt="" width="50"
-
-                                            height="50" className="rounded-circle me-2" />
-                                            <h5 className="card-title"><b>Hashimoto-san</b> is recommending<b> Hayday</b></h5>
-                                        
-                                        </div>
-                                        <div className="content-wrapper" style={{ paddingBottom: "1.5rem", paddingTop:"1.5rem" }}>
-                                            <p className="card-text">hope you download it.
-                                            Then we can share some materials. </p>
-                                        <label className="card-category d-inline-flex mb-1 position-absolute start-0 bottom-1"><i class="bi bi-controller"></i> game</label>
-                                        </div>
-                                        <div className='d-flex justify-content-end ms-auto'>
-
-
-                                            <a href="/comments" className='link-icon'>
-
-
-                                            <i ><svg xmlns="http://www.w3.org/2000/svg"
-                                            width="30"
-                                            height="30"
-                                            fill="black"
-                                            class="bi bi-chat-dots"
-                                            viewBox="0 0 16 16">
-                                            <path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
-                                            <path d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9 9 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.4 10.4 0 0 1-.524 2.318l-.003.011a11 11 0 0 1-.244.637c-.079.186.074.394.273.362a22 22 0 0 0 .693-.125m.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6-3.004 6-7 6a8 8 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a11 11 0 0 0 .398-2" />
-                                             </svg></i>
+                                    <div className="position-relative" style={{ padding: "1.5rem 0" }}>
+                                        <p className="card-text">シーズン5がもうすぐ出るんだって！</p>
+                                        <label className="card-category d-inline-flex mb-1 position-absolute start-0 bottom-1">
+                                            <i className="bi bi-film"></i>ドラマ
+                                        </label>
+                                        <div className="d-flex flex-wrap justify-content-end">
+                                            <a href="/comments" className="link-icon">
+                                                <i>
+                                                    <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        width="30"
+                                                        height="30"
+                                                        fill="black"
+                                                        className="bi bi-chat-dots"
+                                                        viewBox="0 0 16 16"
+                                                    >
+                                                        <path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
+                                                        <path d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9 9 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.4 10.4 0 0 1-.524 2.318l-.003.011a11 11 0 0 1-.244.637c-.079.186.074.394.273.362a22 22 0 0 0 .693-.125m.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6-3.004 6-7 6a8 8 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a11 11 0 0 0 .398-2" />
+                                                    </svg>
+                                                </i>
                                             </a>
                                         </div>
-                                 </div>
-                              </div>
-                                        <br />
-                             <div className="d-flex justify-content-right">
-                                 <div className="card card-secondary">
-                                     <div className="card-body">
-                                        <div className='d-flex gap-2'>
-                                         <img src="https://i.pinimg.com/564x/c9/c7/35/c9c73582182228d8c1b7744ea5b11e6c.jpg" alt="" width="50"
-                                            height="50" className="rounded-circle me-2" />
-                                         <h5 className="card-title"><b>Momo-san</b> is recommending <b>Red, White & Royal Blue</b></h5>
-                                     </div>
-                                    <div className="content-wrapper" style={{ paddingBottom: "1.5rem", paddingTop:"1.5rem" }}>
-                                        <p className="card-text">This was the sweetest story that I've read before{'>/////<'} Especially, the letter part,
-                                         you must not miss that. </p>
-                                     <label className="card-category d-inline-flex mb-1 position-absolute start-0 bottom-1"><i class="bi bi-book px-1"></i> romance</label>
-                                 </div>
-                                    <div className='d-flex justify-content-end ms-auto'>
-                                         <a href="/comments" className='link-icon' >
-                                         <i ><svg xmlns="http://www.w3.org/2000/svg"
-                                            width="30"
-                                            height="30"
-                                            fill="black"
-                                            class="bi bi-chat-dots"
-                                            viewBox="0 0 16 16">
-                                            <path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
-                                            <path d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9 9 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.4 10.4 0 0 1-.524 2.318l-.003.011a11 11 0 0 1-.244.637c-.079.186.074.394.273.362a22 22 0 0 0 .693-.125m.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6-3.004 6-7 6a8 8 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a11 11 0 0 0 .398-2" />
-                                             </svg></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
+                        <br />
 
-                                         </a>
-                                 </div>
+                        {/* Card 2 */}
+                        <div className="d-flex justify-content-center">
+                            <div className="card card-primary">
+                                <div className="card-body">
+                                    <div className="d-flex gap-2">
+                                        <img
+                                            src="https://i.pinimg.com/564x/82/3d/b0/823db000ffca17e06e7548d8828e5da8.jpg"
+                                            alt=""
+                                            width="70"
+                                            height="70"
+                                            className="rounded-circle me-2"
+                                        />
+                                        <h5 className="card-title">
+                                            <b>佐藤ちゃん</b> is recommending <b>怪獣8号</b>
+                                        </h5>
+                                    </div>
+                                    <div className="position-relative" style={{ padding: "1.5rem 0" }}>
+                                        <p className="card-text">
+                                            正直、あんまりアニメとか見ないけど、これは雰囲気もいいし、結構面白かったよ。見て損はないと思う！
+                                        </p>
+                                        <label className="card-category d-inline-flex mb-1 position-absolute start-0 bottom-1">
+                                            <i className="bi bi-tv"></i> アニメ
+                                        </label>
+                                        <div className="d-flex flex-wrap justify-content-end">
+                                            <a href="/comments" className="link-icon">
+                                                <i>
+                                                    <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        width="30"
+                                                        height="30"
+                                                        fill="black"
+                                                        className="bi bi-chat-dots"
+                                                        viewBox="0 0 16 16"
+                                                    >
+                                                        <path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
+                                                        <path d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9 9 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.4 10.4 0 0 1-.524 2.318l-.003.011a11 11 0 0 1-.244.637c-.079.186.074.394.273.362a22 22 0 0 0 .693-.125m.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6-3.004 6-7 6a8 8 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a11 11 0 0 0 .398-2" />
+                                                    </svg>
+                                                </i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                             </div>
+                        <br />
+
+                        {/* Card 2 */}
+                        <div className="d-flex justify-content-center">
+                            <div className="card card-primary">
+                                <div className="card-body">
+                                    <div className="d-flex gap-2">
+                                        <img
+                                            src="https://i.pinimg.com/736x/b7/a0/6b/b7a06b885290207e51688b77a1704d93.jpg"
+                                            alt=""
+                                            width="70"
+                                            height="70"
+                                            className="rounded-circle me-2"
+                                        />
+                                        <h5 className="card-title">
+                                            <b>鈴木ちゃん</b> is recommending <b>ゼルダの伝説</b>
+                                        </h5>
+                                    </div>
+                                    <div className="position-relative" style={{ padding: "1.5rem 0" }}>
+                                        <p className="card-text">
+                                            これ、めちゃくちゃ楽しいよ。オープンワールドが広大で、探索するものが山ほどある！『ブレス オブ ザ ワイルド』が好きなら、絶対ハマるはず。もう、本当にハイラルの世界にどっぷりハマっちゃうよ。
+                                        </p>
+                                        <label className="card-category d-inline-flex mb-1 position-absolute start-0 bottom-1">
+                                            <i className="bi bi-tv"></i> ゲーム
+                                        </label>
+                                        <div className="d-flex flex-wrap justify-content-end">
+                                            <a href="/comments" className="link-icon">
+                                                <i>
+                                                    <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        width="30"
+                                                        height="30"
+                                                        fill="black"
+                                                        className="bi bi-chat-dots"
+                                                        viewBox="0 0 16 16"
+                                                    >
+                                                        <path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
+                                                        <path d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9 9 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.4 10.4 0 0 1-.524 2.318l-.003.011a11 11 0 0 1-.244.637c-.079.186.074.394.273.362a22 22 0 0 0 .693-.125m.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6-3.004 6-7 6a8 8 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a11 11 0 0 0 .398-2" />
+                                                    </svg>
+                                                </i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
+                    {/* Friend's Friend Column */}
+                    <div className="col d-none d-lg-block">
+                        <div className="d-flex justify-content-end flex-column align-items-center gap-1">
+                            {/* Card 3 */}
+                            <div className="card card-secondary">
+                                <div className="card-body d-flex flex-column">
+                                    <div className="d-flex gap-2">
+                                        <img
+                                            src="https://i.pinimg.com/736x/9e/7d/e1/9e7de1f500148992bb20a0ea81eb4352.jpg"
+                                            alt=""
+                                            width="70"
+                                            height="70"
+                                            className="rounded-circle me-2"
+                                        />
+                                        <h5 className="card-title">
+                                            <b>オリビアさん</b> is recommending <b>アンダーテイル</b>
+                                        </h5>
+                                    </div>
+                                    <div className="position-relative" style={{ padding: "1.5rem 0" }}>
+                                        <p className="card-text">
+                                            これプレイしたことある？ストーリーが心温まるし、かわいい音楽もたくさん入ってるよ。しかも今、Steamでセール中らしいから、ぜひ見てみて！
+                                        </p>
+                                        <label className="card-category d-inline-flex mb-1 position-absolute start-0 bottom-1">
+                                            <i className="bi bi-controller"></i> ゲーム
+                                        </label>
+                                        <div className="d-flex flex-wrap justify-content-end">
+                                            <a href="/comments" className="link-icon">
+                                                <i>
+                                                    <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        width="30"
+                                                        height="30"
+                                                        fill="black"
+                                                        className="bi bi-chat-dots"
+                                                        viewBox="0 0 16 16"
+                                                    >
+                                                        <path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
+                                                        <path d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9 9 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.4 10.4 0 0 1-.524 2.318l-.003.011a11 11 0 0 1-.244.637c-.079.186.074.394.273.362a22 22 0 0 0 .693-.125m.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6-3.004 6-7 6a8 8 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a11 11 0 0 0 .398-2" />
+                                                    </svg>
+                                                </i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>    
+                            </div>
+                            {/* Card 5 */}
+                            <div className="card card-secondary">
+                                <div className="card-body d-flex flex-column">
+                                    <div className="d-flex gap-2">
+                                        <img
+                                            src="https://i.pinimg.com/736x/6c/fc/ae/6cfcae96b9b0d27c3061b276b0e42ef6.jpg"
+                                            alt=""
+                                            width="70"
+                                            height="70"
+                                            className="rounded-circle me-2"
+                                        />
+                                        <h5 className="card-title">
+                                            <b>オンさん</b> is recommending <b>スパイファミリー</b>
+                                        </h5>
+                                    </div>
+                                    <div className="position-relative" style={{ padding: "1.5rem 0" }}>
+                                        <p className="card-text">
+                                            笑えるし、心が温まるアニメなんだ。キャラクターがめっちゃ個性的で、あの偽の家族設定？最高すぎる。笑いたい時とか、ほっこりしたい時にぜひ見てみて！
+                                        </p>
+                                        <label className="card-category d-inline-flex mb-1 position-absolute start-0 bottom-1">
+                                            <i className="bi bi-tv"></i> アニメ
+                                        </label>
+                                        <div className="d-flex flex-wrap justify-content-end">
+                                            <a href="/comments" className="link-icon">
+                                                <i>
+                                                    <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        width="30"
+                                                        height="30"
+                                                        fill="black"
+                                                        className="bi bi-chat-dots"
+                                                        viewBox="0 0 16 16"
+                                                    >
+                                                        <path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
+                                                        <path d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9 9 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.4 10.4 0 0 1-.524 2.318l-.003.011a11 11 0 0 1-.244.637c-.079.186.074.394.273.362a22 22 0 0 0 .693-.125m.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6-3.004 6-7 6a8 8 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a11 11 0 0 0 .398-2" />
+                                                    </svg>
+                                                </i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div> 
+
+                            <br />
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        </div>
-
     );
 };
 
