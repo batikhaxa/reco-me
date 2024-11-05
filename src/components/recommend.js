@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Choices from 'choices.js';
 import 'choices.js/public/assets/styles/choices.min.css';
 
+<script src="https://cdn.jsdelivr.net/gh/xcash/bootstrap-autocomplete@master/dist/latest/bootstrap-autocomplete.min.js"></script>
 const Recommend = () => {
     const [title, setTitle] = useState('Title');
 
@@ -19,6 +20,32 @@ const Recommend = () => {
         setTitle(event.target.value);
     };
 
+
+    const removeTag = (tagToRemove) => {
+        setTags(tags.filter(tag => tag !== tagToRemove));
+    };
+    //add more tag
+    
+    const [tags, setTags] = useState([]);
+    const [inputValue, setInputValue] = useState("");
+
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter' && inputValue.trim() !== "") {
+            e.preventDefault();
+            if (!tags.includes(inputValue.trim())) {
+                setTags([...tags, inputValue.trim()]);
+            }
+            setInputValue("");
+
+
+        }
+//autocomplete
+        document.addEventListener('DOMContentLoaded', e => {
+            document.getElementById('#tag_choose').autocomplete()
+        }, false);
+
+
+    };
     return (
         <div className="container" style={{ paddingTop: '3em' }}>
             <div id="recommend-card" className="card shadow-none p-1" style={{ marginLeft: '100px', width: '500px' }}>
@@ -29,6 +56,8 @@ const Recommend = () => {
                         contentEditable="true"
                         suppressContentEditableWarning={true}
                         onInput={handleTitleChange}
+                     
+                        
                     >
                         {title}
                     </h2>   
@@ -42,24 +71,47 @@ const Recommend = () => {
                         ></textarea>
                     </div>
                     {/* Changed in custom-choices.css */}
+                    <div className='form-group'>
                     <div className="tag-container">
                         <label htmlFor="tag_select">tags:</label>
-                        <div className="select-picker">
-                            <select id="tag_select" data-live-search="true">
+                     
+                        <input
+                            type="text"
+                            className="form-control"
+                            placeholder="input tag..."
+                            value={inputValue}
+                            onChange={(e) => setInputValue(e.target.value)}
+                            onKeyDown={handleKeyDown}
+                            style={{ backgroundColor: '#FFEEF2',width:"100px"}}
+                            autocomplete="off"
+                            id="tag_choose"
+                            list="media_list"
+                          
+
+                        />
+                        <datalist id="media_list">
                                 <option>games</option>
                                 <option>anime</option>
                                 <option>movies</option>
                                 <option>music</option>
                                 <option>books</option>
                                 <option>sports</option>
-                                <option value="others">others</option>
-                            </select>
+
+
+                        </datalist>
                         </div>
-                        <div className="selected-tags" id="selected-tags"></div>
+                    
+                        <div className="mt-1">
+                        {tags.map((tag, index) => (
+                            <label key={index} className="card-category d-inline-flex mb-1">
+                            {tag} <button type="button" className="btn-close btn-close-black ms-1" onClick={() => removeTag(tag)} aria-label="Remove tag"></button>
+                            </label>
+                        ))}
+                        </div>
                     </div>
 
-                    <div className="selected-tags" id="selected-tags"></div>
-                    <hr />
+                  
+                   
                     <div className="row-with-btn">
                         <div className="for-select">
                             <select className="form-select" aria-label="audience select">
