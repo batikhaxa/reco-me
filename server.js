@@ -4,6 +4,9 @@ const cors = require('cors');
 const app = express();
 const usersRouter = require('./src/routes/users'); // Correct path to users.js
 
+// Serve static files (like CSS, JS, images) from the 'public' folder
+app.use(express.static('public'));
+
 app.use(cors());
 app.use(express.json()); // This middleware is needed to parse JSON requests
 
