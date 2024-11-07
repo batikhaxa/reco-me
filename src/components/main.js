@@ -8,10 +8,10 @@ const Main = () => {
         const fetchUser = async () => {
             console.log("Attempting to fetch user");
             try {
-                const response = await fetch('/api/user');
-                const data = await response.json(); // directly parse JSON
+                const response = await fetch('/api/user');  // Only use the relative path
+                const data = await response.json();  // This will parse the JSON response
                 console.log('User data:', data);
-                setUser(data);  // set the user state with the fetched data
+                setUser(data);  // Update state with user data
             } catch (error) {
                 console.error('Error fetching user:', error);
             }

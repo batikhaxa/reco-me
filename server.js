@@ -1,18 +1,14 @@
+// server.js (Backend)
 const express = require('express');
-const cors = require('cors');  // Import the cors module
+const cors = require('cors');
 const app = express();
+const usersRouter = require('./src/routes/users'); // Correct path to users.js
 
-// Enable CORS for all origins (you can customize this to only allow specific origins)
-app.use(cors());  // This will allow your frontend (port 3000) to make requests to the backend (port 5000)
+app.use(cors());
+app.use(express.json()); // This middleware is needed to parse JSON requests
 
-// Define a route for the homepage
-app.get('/', (req, res) => {
-    res.send('Hello, world!');
-});
-
-// Import and use your API routes
-const usersRouter = require('./src/routes/users');
-app.use('/api', usersRouter);  // This ensures the /api routes are handled by usersRouter
+// Use the users route for /api routes
+app.use('/api', usersRouter);
 
 app.listen(5000, () => {
     console.log('Server is running on http://localhost:5000');

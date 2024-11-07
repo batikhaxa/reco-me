@@ -1,6 +1,7 @@
 {
   "name": "reco-me",
   "version": "0.1.0",
+  "main": "src/index.js",
   "proxy": "http://localhost:5000",
   "private": true,
   "dependencies": {
@@ -48,7 +49,6 @@
     ]
   },
   "description": "a website to share your recommendations to others",
-  "main": "index.js",
   "author": "niko, ong, olivia",
   "license": "ISC"
 }
