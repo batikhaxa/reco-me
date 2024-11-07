@@ -1,3 +1,19 @@
 {
-    "liveServer.settings.port": 5502
+    "liveServer.settings.port": 5502,
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3369,
+            "driver": "MySQL",
+            "name": "recome-connect",
+            "database": "recomedb",
+            "username": "root",
+            "password": "h9OF1s8etZyd"
+        }
+    ]
 }
