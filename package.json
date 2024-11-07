@@ -1,6 +1,7 @@
 {
   "name": "reco-me",
   "version": "0.1.0",
+  "proxy": "http://localhost:5000",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
@@ -9,12 +10,16 @@
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
     "choices.js": "^11.0.2",
+    "cors": "^2.8.5",
+    "express": "^4.21.1",
     "mysql2": "^3.11.4",
+    "path": "^0.12.7",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.27.0",
     "react-script": "^2.0.5",
     "react-scripts": "5.0.1",
+    "url": "^0.11.4",
     "web-vitals": "^2.1.4",
     "webpack": "^5.95.0"
   },
