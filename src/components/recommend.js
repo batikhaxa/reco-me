@@ -71,59 +71,56 @@ const Recommend = () => {
                         ></textarea>
                     </div>
                     {/* Changed in custom-choices.css */}
-                    <div className='form-group'>
-                    <div className="tag-container">
-                        <label htmlFor="tag_select">tags:</label>
-                     
-                        <input
-                            type="text"
-                            className="form-control"
-                            placeholder="input tag..."
-                            value={inputValue}
-                            onChange={(e) => setInputValue(e.target.value)}
-                            onKeyDown={handleKeyDown}
-                            style={{ backgroundColor: '#FFEEF2',width:"100px"}}
-                            autocomplete="off"
-                            id="tag_choose"
-                            list="media_list"
-                          
-
-                        />
-                        <datalist id="media_list">
-                                <option>games</option>
-                                <option>anime</option>
-                                <option>movies</option>
-                                <option>music</option>
-                                <option>books</option>
-                                <option>sports</option>
+                    <div className="form-group">
+                        <div className="tag-container">
+                            <label htmlFor="tag-select">tags:</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                placeholder="input tag..."
+                                value={inputValue}
+                                onChange={(e) => setInputValue(e.target.value)}
+                                onKeyDown={handleKeyDown}
+                                    style={{ backgroundColor: 'transparent'}}
+                                autocomplete="off"
+                                id="tag-select"
+                                list="media_list"
+                            />
+                            <datalist id="media_list">
+                                    <option>games</option>
+                                    <option>anime</option>
+                                    <option>movies</option>
+                                    <option>music</option>
+                                    <option>books</option>
+                                    <option>sports</option>
 
 
-                        </datalist>
+                            </datalist>
                         </div>
+                        
+                            <div className="mt-1">
+                            {tags.map((tag, index) => (
+                                <label key={index} className="card-category d-inline-flex mb-1">
+                                {tag} <button type="button" className="btn-close btn-close-black ms-1" onClick={() => removeTag(tag)} aria-label="Remove tag"></button>
+                                </label>
+                            ))}
+                            </div>
+                        </div>
+
                     
-                        <div className="mt-1">
-                        {tags.map((tag, index) => (
-                            <label key={index} className="card-category d-inline-flex mb-1">
-                            {tag} <button type="button" className="btn-close btn-close-black ms-1" onClick={() => removeTag(tag)} aria-label="Remove tag"></button>
-                            </label>
-                        ))}
+                    
+                        <div className="row-with-btn">
+                            <div className="for-select">
+                                <select className="form-select" aria-label="audience select">
+                                    <option value="everyone">Everyone</option>
+                                    <option value="friends">Friends Only</option>
+                                    <option value="others">@olivia</option>
+                                </select>
+                            </div>
+                            <div className="btn-container">
+                                <button className="post-btn">Post</button>
+                            </div>
                         </div>
-                    </div>
-
-                  
-                   
-                    <div className="row-with-btn">
-                        <div className="for-select">
-                            <select className="form-select" aria-label="audience select">
-                                <option value="everyone">Everyone</option>
-                                <option value="friends">Friends Only</option>
-                                <option value="others">@olivia</option>
-                            </select>
-                        </div>
-                        <div className="btn-container">
-                            <button className="post-btn">Post</button>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
