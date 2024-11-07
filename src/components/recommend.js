@@ -5,6 +5,9 @@ import 'choices.js/public/assets/styles/choices.min.css';
 <script src="https://cdn.jsdelivr.net/gh/xcash/bootstrap-autocomplete@master/dist/latest/bootstrap-autocomplete.min.js"></script>
 const Recommend = () => {
     const [title, setTitle] = useState('Title');
+    const [showFriendsInput, setShowFriendsInput] = useState(false);
+   
+
 
     useEffect(() => {
         const element = document.querySelector('#tag_select');
@@ -24,6 +27,8 @@ const Recommend = () => {
     const removeTag = (tagToRemove) => {
         setTags(tags.filter(tag => tag !== tagToRemove));
     };
+
+
     //add more tag
     
     const [tags, setTags] = useState([]);
@@ -38,14 +43,23 @@ const Recommend = () => {
             setInputValue("");
 
 
-        }
+
+        }      
+
 //autocomplete
         document.addEventListener('DOMContentLoaded', e => {
             document.getElementById('#tag_choose').autocomplete()
         }, false);
 
 
-    };
+  
+};
+ //tags your friends
+const handleSelectChange = (e) => {
+    setShowFriendsInput(e.target.value === "friends");
+
+};
+
     return (
         <div className="container" style={{ paddingTop: '3em' }}>
             <div id="recommend-card" className="card shadow-none p-1" style={{ marginLeft: '100px', width: '500px' }}>
@@ -74,6 +88,7 @@ const Recommend = () => {
                     <div className="form-group">
                         <div className="tag-container">
                             <label htmlFor="tag-select">tags:</label>
+                          
                             <input
                                 type="text"
                                 className="form-control"
@@ -86,6 +101,7 @@ const Recommend = () => {
                                 id="tag-select"
                                 list="media_list"
                             />
+                 
                             <datalist id="media_list">
                                     <option>games</option>
                                     <option>anime</option>
@@ -96,6 +112,7 @@ const Recommend = () => {
 
 
                             </datalist>
+                           
                         </div>
                         
                             <div className="mt-1">
@@ -108,14 +125,27 @@ const Recommend = () => {
                         </div>
 
                     
-                    
                         <div className="row-with-btn">
                             <div className="for-select">
-                                <select className="form-select" aria-label="audience select">
+                            {!showFriendsInput ? (
+                                <select className="form-select" aria-label="audience select" onChange={handleSelectChange}>
                                     <option value="everyone">Everyone</option>
-                                    <option value="friends">Friends Only</option>
-                                    <option value="others">@olivia</option>
+                                    <option value="friends" id="specifics">Friends Only</option>
                                 </select>
+                            ):(
+
+                                <input type='text'id="lists" className="form-control" list="friends_list" placeholder="@..."style={{display: showFriendsInput ? "block" : "none", maxWidth:"100px" }} />
+                                )}
+                                <datalist id="friends_list">
+                                    <option>Olivia</option>
+                                    <option>Ong</option>
+                                    <option>Sunny</option>
+                                    <option>Bazu</option>
+                                    <option>Muri</option>
+                                  
+
+
+                            </datalist>
                             </div>
                             <div className="btn-container">
                                 <button className="post-btn">Post</button>

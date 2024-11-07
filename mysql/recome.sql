@@ -34,6 +34,6 @@ CREATE TABLE posts (
     FOREIGN KEY (recipient_id) REFERENCES Users(user_id) ON DELETE SET NULL
 );
 
-INSERT INTO users (username, displayname, email, password_hash) 
+INSERT INTO users (user_id, username, displayname, email, password_hash) 
 VALUES
-('niko', 'niko', 'mx.niqo@gmail.com', '1234');
+(1, 'niko', 'niko', 'mx.niqo@gmail.com', '1234');
