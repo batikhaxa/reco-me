@@ -1,1 +1,1 @@
-SHOW TABLES;SELECT * FROM Users;
+SELECT * FROM posts;
