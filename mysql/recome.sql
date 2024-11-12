@@ -8,7 +8,7 @@ CREATE TABLE users (
     displayname VARCHAR(100) NOT NULL DEFAULT 'user',
     email VARCHAR(100) NOT NULL UNIQUE,
     password_hash VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP6
 );
 
 CREATE TABLE friendships (
