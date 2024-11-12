@@ -1,23 +1,21 @@
 // src/components/Main.js
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const Main = () => {
-    const [user, setUser] = useState(null);
+    const [displayname, setDisplayname] = useState(''); 
 
     useEffect(() => {
-        const fetchUser = async () => {
-            console.log("Attempting to fetch user");
+        const fetchDisplayname = async () => {
             try {
-                const response = await fetch('/api/user');  // Only use the relative path
-                const data = await response.json();  // This will parse the JSON response
-                console.log('User data:', data);
-                setUser(data);  // Update state with user data
+                const response = await fetch('/api/displayname'); //defined in server.js
+                const data = await response.json();
+                setDisplayname(data.displayname); 
             } catch (error) {
-                console.error('Error fetching user:', error);
+                console.error('Error fetching displayname:', error);
             }
         };
 
-        fetchUser();
+        fetchDisplayname();
     }, []);
     return (
          <div className="scrollable-container m-4" data-bs-offset="0">
@@ -38,7 +36,7 @@ const Main = () => {
                                             className="rounded-circle me-2"
                                         />
                                         <h5 className="card-title">
-                                            <b>{user ? user.user : 'Loading...'}</b> is recommending <b>『ストレンジャー・シングス』</b>
+                                            <b>{displayname}</b> is recommending <b>『ストレンジャー・シングス』</b>
                                         </h5>
                                     </div>
                                     <div className="position-relative" style={{ padding: "1.5rem 0" }}>
