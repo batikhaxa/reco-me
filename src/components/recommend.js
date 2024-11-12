@@ -3,22 +3,17 @@ import Choices from 'choices.js';
 import 'choices.js/public/assets/styles/choices.min.css';
 import Select from 'react-select';
 
-
-
 <script src="https://cdn.jsdelivr.net/gh/xcash/bootstrap-autocomplete@master/dist/latest/bootstrap-autocomplete.min.js"></script>
-
 const Recommend = () => {
     const [title, setTitle] = useState('Title');
     const [audience, setAudience] = useState({ value: "everyone", label: "Everyone" });
     const [isSearchable] = useState(true);
 
-    const audienceOptions =[{value:"everyone", label:"Every one"},
-                 {value:"friends", label:"Friends only"},
+    const audienceOptions =[{value:"everyone", label:"Everyone"},
+                 {value:"friends", label:"Friends Only"},
                  {value:"custom", label:"Olivia"},
-                 {value:"custom", label:"Ong"}
-                 
+                 {value:"custom", label:"Ong"}            
     ]
-
     useEffect(() => {
         const element = document.querySelector('#tag_select');
         if (element) {
@@ -32,8 +27,6 @@ const Recommend = () => {
     const handleTitleChange = (event) => {
         setTitle(event.target.value);
     };
-
-
     const removeTag = (tagToRemove) => {
         setTags(tags.filter(tag => tag !== tagToRemove));
     };

@@ -229,7 +229,7 @@ omm/* ===============================
 }
 
 .choices__list--multiple .choices__item.is-highlighted {
-    background-color: #004a5c;
+    background-color: #c8c8c8;
     border: 1px solid #003642;
 }
 
@@ -500,3 +500,7 @@ omm/* ===============================
             background-position: 0% 50%
         }
     }
+.choices__list--multiple .choices__item {
+    background-color: red;
+    border: 1px solid red;
+}
