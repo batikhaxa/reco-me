@@ -2,15 +2,13 @@
 const express = require('express');
 const cors = require('cors');
 const app = express();
-const usersRouter = require('./src/routes/users'); // Correct path to users.js
+const usersRouter = require('./src/routes/users'); 
 
-// Serve static files (like CSS, JS, images) from the 'public' folder
 app.use(express.static('public'));
 
 app.use(cors());
-app.use(express.json()); // This middleware is needed to parse JSON requests
+app.use(express.json()); 
 
-// Use the users route for /api routes
 app.use('/api', usersRouter);
 
 app.listen(5000, () => {
