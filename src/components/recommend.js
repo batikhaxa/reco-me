@@ -13,17 +13,12 @@ const Recommend = () => {
     const [friendInput, setFriendInput] = useState("");
     const [isSearchable] = useState(true);
 
-
-
     const audienceOptions =[{value:"everyone", label:"Every one"},
                  {value:"friends", label:"Friends only"},
                  {value:"custom", label:"Olivia"},
                  {value:"custom", label:"Ong"}
                  
     ]
-
-   
-
 
     useEffect(() => {
         const element = document.querySelector('#tag_select');
