@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Choices from 'choices.js';
 import 'choices.js/public/assets/styles/choices.min.css';
 import Select from 'react-select';
-import makeAnimated from 'react-select/animated';
+
 
 
 <script src="https://cdn.jsdelivr.net/gh/xcash/bootstrap-autocomplete@master/dist/latest/bootstrap-autocomplete.min.js"></script>
