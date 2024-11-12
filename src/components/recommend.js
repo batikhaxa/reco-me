@@ -10,7 +10,6 @@ import Select from 'react-select';
 const Recommend = () => {
     const [title, setTitle] = useState('Title');
     const [audience, setAudience] = useState({ value: "everyone", label: "Everyone" });
-    const [friendInput, setFriendInput] = useState("");
     const [isSearchable] = useState(true);
 
 
