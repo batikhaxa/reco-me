@@ -1,11 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import Choices from 'choices.js';
 import 'choices.js/public/assets/styles/choices.min.css';
+import Select from 'react-select';
+import makeAnimated from 'react-select/animated';
+
 
 <script src="https://cdn.jsdelivr.net/gh/xcash/bootstrap-autocomplete@master/dist/latest/bootstrap-autocomplete.min.js"></script>
+
 const Recommend = () => {
     const [title, setTitle] = useState('Title');
-    const [showFriendsInput, setShowFriendsInput] = useState(false);
+    const [audience, setAudience] = useState({ value: "everyone", label: "Everyone" });
+    const [friendInput, setFriendInput] = useState("");
+    const [isSearchable] = useState(true);
+
+
+
+    const audienceOptions =[{value:"everyone", label:"Every one"},
+                 {value:"friends", label:"Friends only"},
+                 {value:"custom", label:"Olivia"},
+                 {value:"custom", label:"Ong"}
+                 
+    ]
+
    
 
 
@@ -54,13 +70,10 @@ const Recommend = () => {
 
   
 };
- //tags your friends
-const handleSelectChange = (e) => {
-    setShowFriendsInput(e.target.value === "friends");
 
-};
 
     return (
+        
         <div className="container" style={{ paddingTop: '3em' }}>
             <div id="recommend-card" className="card shadow-none p-1" style={{ marginLeft: '100px', width: '500px' }}>
                 <div className="card-body">
@@ -126,27 +139,26 @@ const handleSelectChange = (e) => {
 
                     
                         <div className="row-with-btn">
-                            <div className="for-select">
-                            {!showFriendsInput ? (
-                                <select className="form-select" aria-label="audience select" onChange={handleSelectChange}>
-                                    <option value="everyone">Everyone</option>
-                                    <option value="friends" id="specifics">Friends Only</option>
-                                </select>
-                            ):(
-
-                                <input type='text'id="lists" className="form-control" list="friends_list" placeholder="@..."style={{display: showFriendsInput ? "block" : "none", maxWidth:"100px" }} />
-                                )}
-                                <datalist id="friends_list">
-                                    <option>Olivia</option>
-                                    <option>Ong</option>
-                                    <option>Sunny</option>
-                                    <option>Bazu</option>
-                                    <option>Muri</option>
-                                  
-
-
-                            </datalist>
-                            </div>
+                        <div className="for-select">
+                            <Select
+                              
+                                value={audience}
+                                onChange={(selectedOption) => setAudience(selectedOption)}
+                                options={audienceOptions}
+                                placeholder="Select Audience"
+                                isSearchable={isSearchable}
+                                menuPlacement="auto"
+                                styles={{
+                                    container: (base) => ({
+                                        ...base,
+                                        width: "100%",
+                                        maxWidth: "200px"
+                                    })
+                                }}
+                            />
+                         
+                             
+                        </div>
                             <div className="btn-container">
                                 <button className="post-btn">Post</button>
                             </div>
