@@ -11,11 +11,15 @@ const Recommend = () => {
     const [title, setTitle] = useState('Title');
     const [audience, setAudience] = useState({ value: "everyone", label: "Everyone" });
     const [friendInput, setFriendInput] = useState("");
+    const [isSearchable] = useState(true);
+
 
 
     const audienceOptions =[{value:"everyone", label:"Every one"},
                  {value:"friends", label:"Friends only"},
-                 {value:"custom", label:"Typing..."}
+                 {value:"custom", label:"Olivia"},
+                 {value:"custom", label:"Ong"}
+                 
     ]
 
    
@@ -137,12 +141,12 @@ const Recommend = () => {
                         <div className="row-with-btn">
                         <div className="for-select">
                             <Select
-                                components={makeAnimated()}
+                              
                                 value={audience}
                                 onChange={(selectedOption) => setAudience(selectedOption)}
                                 options={audienceOptions}
                                 placeholder="Select Audience"
-                                isSearchable
+                                isSearchable={isSearchable}
                                 menuPlacement="auto"
                                 styles={{
                                     container: (base) => ({
@@ -152,24 +156,8 @@ const Recommend = () => {
                                     })
                                 }}
                             />
-                            {audience.value === "custom" && (
-                                <input
-                                    type="text"
-                                    className="form-control mt-2"
-                                    placeholder="@... (select a friend)"
-                                    value={friendInput}
-                                    onChange={(e) => setFriendInput(e.target.value)}
-                                    list="friends_list"
-                                    style={{ maxWidth: "200px" }}
-                                />
-                            )}
-                            <datalist id="friends_list">
-                                <option>Olivia</option>
-                                <option>Ong</option>
-                                <option>Sunny</option>
-                                <option>Bazu</option>
-                                <option>Muri</option>
-                            </datalist>
+                         
+                             
                         </div>
                             <div className="btn-container">
                                 <button className="post-btn">Post</button>
