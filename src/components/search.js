@@ -19,7 +19,7 @@ const Search = () => {
     };
 
     return (
-        <div className="container" style={{ padding: '2em', paddingLeft: '3em', paddingTop: '4em' }}>
+        <div className="container m-5">
             <div className="card" style={{ width: "30rem" }}>
                 <div className="card-body">
                     <div className="d-flex align-items-center">

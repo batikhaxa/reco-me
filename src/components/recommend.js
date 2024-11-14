@@ -61,8 +61,8 @@ const Recommend = () => {
 
     return (
         
-        <div className="container" style={{ paddingTop: '3em' }}>
-            <div id="recommend-card" className="card shadow-none p-1" style={{ marginLeft: '100px', width: '500px' }}>
+        <div className="container m-5">
+            <div id="recommend-card" className="card shadow-none p-1" style={{ width: '500px' }}>
                 <div className="card-body">
                     {/* Editable title */}
                     <h2
