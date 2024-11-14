@@ -128,12 +128,6 @@ $input-border-width: 0px;
 
 @import '../node_modules/bootstrap/scss/bootstrap';
 
-.form-control {
-    display: flex;
-    max-width: auto;
-    flex-grow: 1;
-}
-
 .tag-label {
     color: black;
     border-radius: 0.5rem;
