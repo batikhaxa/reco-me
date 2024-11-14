@@ -3,16 +3,20 @@ import Choices from 'choices.js';
 import 'choices.js/public/assets/styles/choices.min.css';
 import Select from 'react-select';
 
+
+
+
 <script src="https://cdn.jsdelivr.net/gh/xcash/bootstrap-autocomplete@master/dist/latest/bootstrap-autocomplete.min.js"></script>
 const Recommend = () => {
     const [title, setTitle] = useState('Title');
     const [audience, setAudience] = useState({ value: "everyone", label: "Everyone" });
     const [isSearchable] = useState(true);
 
+        
     const audienceOptions =[{value:"everyone", label:"Everyone"},
                  {value:"friends", label:"Friends Only"},
-                 {value:"custom", label:"Olivia"},
-                 {value:"custom", label:"Ong"}            
+                 {value:"custom1", label:"Olivia"},
+                 {value:"custom2", label:"Ong"}            
     ]
     useEffect(() => {
         const element = document.querySelector('#tag_select');
@@ -53,9 +57,6 @@ const Recommend = () => {
         document.addEventListener('DOMContentLoaded', e => {
             document.getElementById('#tag_choose').autocomplete()
         }, false);
-
-
-  
 };
 
 
@@ -96,7 +97,7 @@ const Recommend = () => {
                                 value={inputValue}
                                 onChange={(e) => setInputValue(e.target.value)}
                                 onKeyDown={handleKeyDown}
-                                    style={{ backgroundColor: 'transparent'}}
+                                style={{ backgroundColor: 'transparent'}}
                                 autocomplete="off"
                                 id="tag-select"
                                 list="media_list"
@@ -123,10 +124,11 @@ const Recommend = () => {
                             ))}
                             </div>
                         </div>
-
+                                {/* friends */}
                     
                         <div className="row-with-btn">
                         <div className="for-select">
+
                             <Select
                               
                                 value={audience}
@@ -136,11 +138,20 @@ const Recommend = () => {
                                 isSearchable={isSearchable}
                                 menuPlacement="auto"
                                 styles={{
-                                    container: (base) => ({
+                                 
+                                    container:(base)=>({
                                         ...base,
                                         width: "100%",
-                                        maxWidth: "200px"
-                                    })
+                                        maxWidth: "200px",
+                                       
+                                    }),option:(base,state)=>({
+                                         ...base,
+                                         backgroundColor: state.isSelected ?"red" : "white",
+                                         ':hover': {
+                                           backgroundColor: state.isFocused ? "grey" : "black"
+                                         }
+                                    })        
+                                   
                                 }}
                             />
                          
