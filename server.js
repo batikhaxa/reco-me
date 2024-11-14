@@ -30,10 +30,14 @@ app.get('/api/posts/primary', async (req, res) => {
 
 // posts from friends of friends (excluding direct friends)
 app.get('/api/posts/secondary', async (req, res) => {
-    const loggedInUserId = 1; // temp
+    const loggedInUserId = 1; // Temporary hardcoded user ID
+
     try {
         const [rows] = await pool.query(`
-            SELECT posts.*, users.displayname AS displayname, friends.displayname AS sourceFriendDisplayName
+            SELECT posts.*, 
+                   users.displayname AS displayname, 
+                   friends.displayname AS sourceFriendDisplayName,
+                   friends.user_id AS sourceFriendId
             FROM posts
             JOIN users ON posts.sender_id = users.user_id
             JOIN friendships f1 ON f1.user_id = ? AND f1.status = 'accepted'
@@ -50,7 +54,6 @@ app.get('/api/posts/secondary', async (req, res) => {
         res.status(500).json({ error: 'Database error in fetching secondary posts' });
     }
 });
-
 
 app.listen(5000, () => {
     console.log('Server is running on http://localhost:5000');

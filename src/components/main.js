@@ -19,7 +19,6 @@ const Main = () => {
         const fetchSecondaryPosts = async () => {
             try {
                 const response = await fetch('/api/posts/secondary');
-                console.log('fetching secondary posts');
                 const data = await response.json();
                 setPostsSecondary(data);
             } catch (error) {
@@ -36,7 +35,7 @@ const Main = () => {
                 <div className="Line1"></div>
                 <div className="row">
                     <div className="col">
-                        {/* Map through posts and display each one */}
+                        {/* map through posts */}
                         {postsPrimary.map((post, index) => (
                             <div key={index} className="d-flex justify-content-start">
                                 <div className="card card-primary mb-5">
@@ -103,7 +102,7 @@ const Main = () => {
                                                 className="rounded-circle me-2"
                                             />
                                             <h5 className="card-title">
-                                                <b>{post.displayname}</b>, friend of <b>{post.sourceFriendDisplayName}</b>, is recommending <b>{post.title}</b>
+                                                <b>{post.displayname}</b>, friend of {post.sourceFriendId}: <b>{post.sourceFriendDisplayName}</b>, is recommending <b>{post.title}</b>
                                                 {post.recipient_type === 'specific' && post.recipient_id === loggedInUserId ? (
                                                     <span> to <b>you</b></span>  // Show "to you" if recipient is the logged-in user
                                                 ) : null}
