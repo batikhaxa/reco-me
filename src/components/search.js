@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 const Search = () => {
     const [tags, setTags] = useState([]);
     const [inputValue, setInputValue] = useState("");
-
     const handleKeyDown = (e) => {
         if (e.key === 'Enter' && inputValue.trim() !== "") {
             e.preventDefault();
@@ -13,11 +12,9 @@ const Search = () => {
             setInputValue("");
         }
     };
-
     const removeTag = (tagToRemove) => {
         setTags(tags.filter(tag => tag !== tagToRemove));
     };
-
     return (
         <div className="container m-5">
             <div className="card" style={{ width: "30rem" }}>
