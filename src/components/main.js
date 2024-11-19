@@ -1,12 +1,42 @@
 // src/components/Main.js
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef} from 'react';
 
 const Main = () => {
     const [postsPrimary, setPostsPrimary] = useState([]);
     const [postsSecondary, setPostsSecondary] = useState([]);
+    const primaryRefs = useRef([]);
     const loggedInUserId = 1;
 
-    useEffect(() => {
+
+    
+
+    const getPrimaryCardPosition = (sourceFriendId) => {
+        const matchedIndex = postsPrimary.findIndex(
+            (post) => post.displayname === sourceFriendId
+        );
+        if (matchedIndex !== -1 && primaryRefs.current[matchedIndex]) {
+            return primaryRefs.current[matchedIndex].getBoundingClientRect();
+        }
+        return null;
+    };
+    
+
+    //making a line
+    const renderLine = (index) => (
+        <div className='flex-start'
+            style={{
+                position:"absolute",
+                top: "calc(100vh+20%)", // Place it at the center vertically of the card
+                left: "-20%",  // Align to the left side of the card
+                width: "150px",  // length
+                height: "4px",  //thickness
+                backgroundColor: "red",
+                transform: "translateY(70px)",  // Adjust the position of the line align to the card
+                zIndex: -1,  // Ensure it is behind the content of the card
+            }}
+        />
+    );
+      useEffect(() => {
         const fetchPrimaryPosts = async () => {
             try {
                 const response = await fetch('/api/posts/primary');
@@ -27,18 +57,30 @@ const Main = () => {
         };
         fetchPrimaryPosts();
         fetchSecondaryPosts();
-    }, []);
 
-    return (
-        <div className="scrollable-container m-4" data-bs-offset="0">
-            <div className="container m-3">
-                <div className="Line1"></div>
+     
+      
+    }, []);
+    //move the secondary card depending on friend
+
+   
+
+    return (  
+       
+   
+        <div className="scrollable-container m-4" data-bs-offset="0" style={{position:"relative" }}>
+            
+            <div className="container m-3" >
                 <div className="row">
-                    <div className="col">
+                    <div className="col  ">
+                  
                         {/* map through posts */}
+                    
                         {postsPrimary.map((post, index) => (
-                            <div key={index} className="d-flex justify-content-start">
-                                <div className="card card-primary mb-5">
+                            <div key={index} className="d-flex justify-content-start" style={{position:"relative" }} ref={(el) => (primaryRefs.current[index] = el)}>
+                                  {renderLine(index)}
+                                <div className="card card-primary mb-5" >
+
                                     <div className="card-body d-flex flex-column">
                                         <div className="d-flex gap-2">
                                             <img
@@ -88,9 +130,25 @@ const Main = () => {
                         ))}
                     </div>
                     {/* Friends friends */}
+
+                    
                     <div className="col ms-5">
                         {postsSecondary.map((post, index) => (
-                            <div key={index} className="d-flex justify-content-start">
+                            
+                            
+                            <div key={index} className="d-flex justify-content-start"
+                            style={getPrimaryCardPosition(post.sourceFriendId)
+                                    ? {
+                                        position: 'absolute',
+                                        top: `${getPrimaryCardPosition(post.sourceFriendDisplayName).top}px`,
+                                        left: `${getPrimaryCardPosition(post.sourceFriendDisplayName).left + 300}px`, // Adjust offset as needed
+                                        transform: 'translateY(-50%)', // Center vertically relative to the primary card
+                                        zIndex: 1
+                                      }
+                                    : { position: 'relative'}
+
+                                       }
+                            >
                                 <div className="card card-secondary mb-3">
                                     <div className="card-body d-flex flex-column">
                                         <div className="d-flex gap-2">
@@ -102,7 +160,8 @@ const Main = () => {
                                                 className="rounded-circle me-2"
                                             />
                                             <h5 className="card-title">
-                                                <b>{post.displayname}</b>, friend of {post.sourceFriendId}: <b>{post.sourceFriendDisplayName}</b>, is recommending <b>{post.title}</b>
+                                                <b>{post.displayname}</b>, friend of
+                                                @: <b>{post.sourceFriendDisplayName}</b>, is recommending <b>{post.title}</b>
                                                 {post.recipient_type === 'specific' && post.recipient_id === loggedInUserId ? (
                                                     <span> to <b>you</b></span>  // Show "to you" if recipient is the logged-in user
                                                 ) : null}
@@ -143,6 +202,7 @@ const Main = () => {
                 </div>
             </div>
         </div>
+ 
     );
 };
 
