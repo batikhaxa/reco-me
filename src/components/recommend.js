@@ -68,7 +68,7 @@ const Recommend = () => {
         };
 
         try {
-            const response = await axios.post('http://localhost:5000/api/posts', newPost);
+            const response = await axios.post('/api/posts', newPost);
             if (response.data.success) {
                 // Set the success message
                 setPostResult('Post created successfully!');

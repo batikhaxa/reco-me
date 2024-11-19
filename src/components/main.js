@@ -6,10 +6,7 @@ const Main = () => {
     const [postsSecondary, setPostsSecondary] = useState([]);
     const primaryRefs = useRef([]);
     const loggedInUserId = 1;
-
-
     
-
     const getPrimaryCardPosition = (sourceFriendId) => {
         const matchedIndex = postsPrimary.findIndex(
             (post) => post.displayname === sourceFriendId
@@ -19,8 +16,6 @@ const Main = () => {
         }
         return null;
     };
-    
-
     //making a line
     const renderLine = (index) => (
         <div className='flex-start'
