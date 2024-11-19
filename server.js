@@ -8,9 +8,47 @@ app.use(express.static('public'));
 app.use(cors());
 app.use(express.json());
 
+// search posts based on tags (from friends only)
+app.get('/api/posts/search', async (req, res) => {
+    const { userId, tags } = req.query;
+
+    if (!userId || !tags) {
+        return res.status(400).json({ error: 'userId and tags are required' });
+    }
+
+    const tagArray = tags.split(','); // Tags come as a comma-separated string
+
+    // Prepare query with placeholders for tags
+    const tagConditions = tagArray.map(() => 'posts.tags LIKE ?').join(' AND ');
+
+    try {
+        const [rows] = await pool.query(`
+            SELECT posts.*, users.displayname
+            FROM posts
+            JOIN users ON posts.sender_id = users.user_id
+            JOIN friendships ON friendships.user_id = ? 
+                AND friendships.friend_id = posts.sender_id 
+                AND friendships.status = 'accepted'
+            WHERE (posts.recipient_type != 'specific' OR posts.recipient_id = ?)
+            AND ${tagConditions}
+            ORDER BY posts.created_at DESC
+        `, [userId, userId, ...tagArray.map(tag => `%${tag.trim()}%`)]);
+
+        res.json(rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Database error in searching posts' });
+    }
+});
+
 // Fetch friends of the logged-in user
 app.get('/api/friends', async (req, res) => {
-    const loggedInUserId = 1; 
+    // Get userId from query parameters
+    const { userId } = req.query;
+
+    if (!userId) {
+        return res.status(400).json({ error: 'userId is required' });
+    }
 
     try {
         const [rows] = await pool.query(`
@@ -18,7 +56,7 @@ app.get('/api/friends', async (req, res) => {
             FROM users u
             JOIN friendships f ON f.friend_id = u.user_id
             WHERE f.user_id = ? AND f.status = 'accepted'
-        `, [loggedInUserId]);
+        `, [userId]);
 
         res.json(rows);
     } catch (error) {
@@ -27,7 +65,8 @@ app.get('/api/friends', async (req, res) => {
     }
 });
 
-// create post
+
+// create posts
 app.post('/api/posts', async (req, res) => {
     const { sender_id, recipient_type, recipient_id, title, content, tags } = req.body;
 
@@ -37,6 +76,7 @@ app.post('/api/posts', async (req, res) => {
              VALUES (?, ?, ?, ?, ?, ?)`,
             [sender_id, recipient_type, recipient_id || null, title, content, tags.join(', ')]
         );
+
         res.status(201).json({ success: true, post_id: result.insertId });
     } catch (error) {
         console.error(error);
@@ -81,9 +121,11 @@ app.get('/api/posts/secondary', async (req, res) => {
             JOIN friendships f2 ON f2.user_id = f1.friend_id AND f2.friend_id = posts.sender_id AND f2.status = 'accepted'
             LEFT JOIN friendships direct ON direct.user_id = ? AND direct.friend_id = posts.sender_id
             JOIN users AS friends ON friends.user_id = f1.friend_id
-            WHERE posts.recipient_type = 'everyone' AND direct.friend_id IS NULL
+            WHERE posts.recipient_type = 'everyone' 
+              AND direct.friend_id IS NULL
+              AND posts.sender_id != ?  -- Exclude the logged-in user's posts
             ORDER BY posts.created_at DESC
-        `, [loggedInUserId, loggedInUserId]);
+        `, [loggedInUserId, loggedInUserId, loggedInUserId]);
 
         res.json(rows);
     } catch (error) {

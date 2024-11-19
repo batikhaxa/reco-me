@@ -30,15 +30,15 @@ const Main = () => {
     }, []);
 
     return (
-        <div className="scrollable-container m-4" data-bs-offset="0">
-            <div className="container m-3">
+        <div className="scrollable-container" data-bs-offset="0">
+            <div className="container m-5">
                 <div className="Line1"></div>
                 <div className="row">
                     <div className="col">
                         {/* map through posts */}
                         {postsPrimary.map((post, index) => (
                             <div key={index} className="d-flex justify-content-start">
-                                <div className="card card-primary mb-5">
+                                <div className="card card-primary mb-3">
                                     <div className="card-body d-flex flex-column">
                                         <div className="d-flex gap-2">
                                             <img
