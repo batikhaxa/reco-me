@@ -64,9 +64,9 @@ const Main = () => {
     return (  
        
    
-        <div className="scrollable-container m-4" data-bs-offset="0" style={{position:"relative" }}>
+        <div className="scrollable-container" data-bs-offset="0" style={{position:"relative" }}>
             
-            <div className="container m-3" >
+            <div className="container m-5" >
 
                 <div className="row">
                     <div className="col  ">
