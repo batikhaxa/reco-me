@@ -158,9 +158,9 @@ const Main = () => {
                                                 height="70"
                                                 className="rounded-circle me-2"
                                             />
-                                            <h5 className="card-title">
-                                                <b>{post.displayname}</b>, friend of
-                                                @: <b>{post.sourceFriendDisplayName}</b>, is recommending <b>{post.title}</b>
+                                            <h5 className="card-title"> {/* you should use sourceFriendId to tsunagu the line correctly*/}
+                                                <b>{post.displayname}</b>, friend of {post.sourceFriendId}: 
+                                                <b>{post.sourceFriendDisplayName}</b>, is recommending <b>{post.title}</b>
                                                 {post.recipient_type === 'specific' && post.recipient_id === loggedInUserId ? (
                                                     <span> to <b>you</b></span>  // Show "to you" if recipient is the logged-in user
                                                 ) : null}

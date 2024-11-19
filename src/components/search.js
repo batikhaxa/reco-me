@@ -10,7 +10,7 @@ const Search = () => {
     const loggedInUserId = 1;
 
     const handleKeyDown = (e) => {
-        if (e.key === 'Enter' && inputValue.trim() !== "") {
+        if ((e.key === 'Enter' || e.key === ',') && inputValue.trim() !== "") {
             e.preventDefault();
             if (!tags.includes(inputValue.trim())) {
                 setTags([...tags, inputValue.trim()]);
@@ -18,6 +18,7 @@ const Search = () => {
             setInputValue("");
         }
     };
+
 
     const removeTag = (tagToRemove) => {
         setTags(tags.filter(tag => tag !== tagToRemove));
