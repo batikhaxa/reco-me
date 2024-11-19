@@ -2,22 +2,22 @@ import React, { useEffect, useState } from 'react';
 import Choices from 'choices.js';
 import 'choices.js/public/assets/styles/choices.min.css';
 import Select from 'react-select';
-
-<script src="https://cdn.jsdelivr.net/gh/xcash/bootstrap-autocomplete@master/dist/latest/bootstrap-autocomplete.min.js"></script>
+import axios from 'axios';
 
 const Recommend = () => {
     const [title, setTitle] = useState('');
     const [audience, setAudience] = useState({ value: "everyone", label: "Everyone" });
-    const [isSearchable] = useState(true);
+    //const [isSearchable] = useState(true);
     const [tags, setTags] = useState([]);
     const [inputValue, setInputValue] = useState("");
+    const [postContent, setPostContent] = useState(""); 
 
-    const audienceOptions = [
+    const [audienceOptions, setAudienceOptions] = useState([
         { value: "everyone", label: "Everyone" },
         { value: "friends", label: "Friends Only" },
-        { value: "custom1", label: "Olivia" },
-        { value: "custom2", label: "Ong" }
-    ];
+    ]);
+
+    const loggedInUserId = 1; // temp!!
 
     useEffect(() => {
         const element = document.querySelector('#tag_select');
@@ -26,10 +26,73 @@ const Recommend = () => {
                 searchEnabled: true
             });
         }
-    }, []); 
+        const fetchFriends = async () => {
+            try {
+                console.log("fetchFriends called");
+                const response = await fetch('/api/friends');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                console.log("API Response:", data);
+                setAudienceOptions((prevOptions) => {
+                    const newOptions = data.filter((newOption) =>
+                        !prevOptions.some((existingOption) => existingOption.value === newOption.value)
+                    );
+                    return [...prevOptions, ...newOptions];
+                });
+
+
+            } catch (error) {
+                console.error('Error fetching friends:', error);
+            }
+        };
+
+        fetchFriends();
+    }, []);
+
+    const handlePost = async () => {
+        const recipient_type =
+            audience.value === "everyone" || audience.value === "friends"
+                ? audience.value
+                : "specific";
+
+        const recipient_id = recipient_type === "specific" ? audience.value : null;
+
+        const newPost = {
+            sender_id: loggedInUserId,
+            recipient_type,
+            recipient_id,
+            title,
+            content: postContent,
+            tags,
+        };
+
+        try {
+            const response = await axios.post('/api/posts', newPost);
+            if (response.data.success) {
+                alert('Post created successfully!');
+                // Clear fields after successful post
+                setTitle('');
+                setPostContent('');
+                setTags([]);
+                setAudience({ value: "everyone", label: "Everyone" });
+            }
+        } catch (error) {
+            console.error('Error creating post:', error);
+            alert('Failed to create post.');
+        }
+    };
 
     const handleTitleChange = (event) => {
         setTitle(event.target.value);
+    };
+
+    const handlePostContentChange = (event) => {
+        setPostContent(event.target.value);
+        const textarea = event.target;
+        textarea.style.height = "auto"; // reset height
+        textarea.style.height = `${textarea.scrollHeight}px`; // set height to content
     };
 
     const removeTag = (tagToRemove) => {
@@ -44,9 +107,6 @@ const Recommend = () => {
             }
             setInputValue("");
         }
-        document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('#tag_choose').autocomplete();
-        }, false);
     };
 
     return (
@@ -68,20 +128,25 @@ const Recommend = () => {
                                 }}
                             />
                         </div>
+
                         {/* Text Input */}
                         <div className="form-group mt-3 mb-3">
                             <textarea
                                 className="form-control"
                                 id="postContent"
                                 placeholder="Describe what you're recommending..."
-                                rows="3"
+                                rows="1"
+                                value={postContent}
+                                onChange={handlePostContentChange}
                                 style={{
                                     resize: 'none',
-                                    backgroundColor: 'transparent', 
-                                    color: 'black', // Text color
+                                    backgroundColor: 'transparent',
+                                    color: 'black',
+                                    overflow: 'hidden', // prevent scrollbars
                                 }}
                             ></textarea>
                         </div>
+
                         {/* Tags */}
                         <div className="form-group">
                             <div className="tag-container">
@@ -132,7 +197,6 @@ const Recommend = () => {
                                 onChange={(selectedOption) => setAudience(selectedOption)}
                                 options={audienceOptions}
                                 placeholder="Select Audience"
-                                isSearchable={isSearchable}
                                 menuPlacement="auto"
                                 styles={{
                                     container: (base) => ({
@@ -142,10 +206,10 @@ const Recommend = () => {
                                     }),
                                     control: (base, state) => ({
                                         ...base,
-                                        border: "1px solid #ccc", // Set a custom border color or none
-                                        boxShadow: state.isFocused ? "none" : "none", // Remove focus outline
+                                        border: "1px solid #ccc",
+                                        boxShadow: state.isFocused ? "none" : "none",
                                         ':hover': {
-                                            borderColor: "#ccc", // Optionally change the border color on hover
+                                            borderColor: "#ccc",
                                         },
                                     }),
                                     option: (base, state) => ({
@@ -158,11 +222,12 @@ const Recommend = () => {
                                     })
                                 }}
                             />
-
                         </div>
 
                         <div className="btn-container">
-                            <button className="post-btn">Post</button>
+                            <button className="post-btn" onClick={handlePost}>
+                                Post
+                            </button>
                         </div>
                     </div>
                 </div>

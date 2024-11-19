@@ -8,6 +8,43 @@ app.use(express.static('public'));
 app.use(cors());
 app.use(express.json());
 
+// Fetch friends of the logged-in user
+app.get('/api/friends', async (req, res) => {
+    const loggedInUserId = 1; 
+
+    try {
+        const [rows] = await pool.query(`
+            SELECT u.user_id AS value, u.displayname AS label
+            FROM users u
+            JOIN friendships f ON f.friend_id = u.user_id
+            WHERE f.user_id = ? AND f.status = 'accepted'
+        `, [loggedInUserId]);
+
+        res.json(rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Database error in fetching friends' });
+    }
+});
+
+// create post
+app.post('/api/posts', async (req, res) => {
+    const { sender_id, recipient_type, recipient_id, title, content, tags } = req.body;
+
+    try {
+        const [result] = await pool.query(
+            `INSERT INTO posts (sender_id, recipient_type, recipient_id, title, content, tags) 
+             VALUES (?, ?, ?, ?, ?, ?)`,
+            [sender_id, recipient_type, recipient_id || null, title, content, tags.join(', ')]
+        );
+        res.status(201).json({ success: true, post_id: result.insertId });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Database error while creating post' });
+    }
+});
+
+
 //posts from friends
 app.get('/api/posts/primary', async (req, res) => {
     const loggedInUserId = 1; //temp

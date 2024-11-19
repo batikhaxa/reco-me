@@ -43,13 +43,18 @@ VALUES
 ('alice', 'Alice', 'alice@example.com', '5678'),
 ('bob', 'Bob', 'bob@example.com', '91011'),
 ('charlie', 'Charlie', 'charlie@example.com', '121314'),
-('david', 'David', 'david@example.com', '151617');  -- Added another user for more variety
+('david', 'David', 'david@example.com', '151617'),
+('ong', 'Ong', 'ong@example.com', '6969'),
+('olivia', 'Olivia', 'olivia@example.com', '1000');
+
 
 -- Sample Friendships
 INSERT INTO friendships (user_id, friend_id, status) 
 VALUES
 (1, 2, 'accepted'),  -- Niko and Alice are friends
 (1, 3, 'accepted'),  -- Niko and Bob are friends
+(1, 6, 'accepted'),  -- Niko and Ong are friends
+(1, 7, 'accepted'),  -- Niko and Olivia are friends
 (2, 3, 'accepted'),  -- Alice and Bob are friends
 (3, 4, 'accepted'),  -- Bob and Charlie are friends
 (4, 5, 'accepted');  -- Charlie and David are friends
