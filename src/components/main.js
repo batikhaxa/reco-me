@@ -58,6 +58,7 @@ const Main = () => {
         fetchPrimaryPosts();
         fetchSecondaryPosts();
 
+
      
       
     }, []);
@@ -71,15 +72,18 @@ const Main = () => {
         <div className="scrollable-container m-4" data-bs-offset="0" style={{position:"relative" }}>
             
             <div className="container m-3" >
+
                 <div className="row">
                     <div className="col  ">
                   
                         {/* map through posts */}
                     
                         {postsPrimary.map((post, index) => (
+
                             <div key={index} className="d-flex justify-content-start" style={{position:"relative" }} ref={(el) => (primaryRefs.current[index] = el)}>
                                   {renderLine(index)}
                                 <div className="card card-primary mb-5" >
+
 
                                     <div className="card-body d-flex flex-column">
                                         <div className="d-flex gap-2">

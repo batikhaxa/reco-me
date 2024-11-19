@@ -36,23 +36,38 @@ CREATE TABLE posts (
     FOREIGN KEY (recipient_id) REFERENCES Users(user_id) ON DELETE SET NULL
 );
 
--- Sample Users
+-- Users
 INSERT INTO users (username, displayname, email, password_hash) 
 VALUES
 ('niko', 'niko', 'mx.niqo@gmail.com', '1234'),
 ('alice', 'Alice', 'alice@example.com', '5678'),
 ('bob', 'Bob', 'bob@example.com', '91011'),
 ('charlie', 'Charlie', 'charlie@example.com', '121314'),
-('david', 'David', 'david@example.com', '151617');  -- Added another user for more variety
+('david', 'David', 'david@example.com', '151617'),
+('ong', 'Ong', 'ong@example.com', '6969'),
+('olivia', 'Olivia', 'olivia@example.com', '1000'),
+('emma', 'Emma', 'emma@example.com', '1111'),
+('liam', 'Liam', 'liam@example.com', '2222'),
+('sophia', 'Sophia', 'sophia@example.com', '3333'),
+('mason', 'Mason', 'mason@example.com', '4444'); 
 
 -- Sample Friendships
 INSERT INTO friendships (user_id, friend_id, status) 
 VALUES
 (1, 2, 'accepted'),  -- Niko and Alice are friends
 (1, 3, 'accepted'),  -- Niko and Bob are friends
+(1, 6, 'accepted'),  -- Niko and Ong are friends
+(1, 7, 'accepted'),  -- Niko and Olivia are friends
+(7, 1, 'accepted'),  -- Niko and Olivia are friends
 (2, 3, 'accepted'),  -- Alice and Bob are friends
 (3, 4, 'accepted'),  -- Bob and Charlie are friends
-(4, 5, 'accepted');  -- Charlie and David are friends
+(1, 8, 'accepted'),  -- Niko and Emma are friends
+(1, 9, 'accepted'),  -- Niko and Liam are friends
+(1, 10, 'accepted'), -- Niko and Sophia are friends
+(1, 11, 'accepted'), -- Niko and Mason are friends
+(8, 9, 'accepted'),  -- Emma and Liam are friends
+(9, 10, 'accepted'), -- Liam and Sophia are friends
+(10, 11, 'accepted'); -- Sophia and Mason are friends
 
 -- Sample Posts with Titles and Custom Timestamps
 INSERT INTO posts (sender_id, recipient_type, recipient_id, title, content, tags, created_at)
@@ -66,8 +81,41 @@ VALUES
 -- Posts by Bob (Friend of Niko and Alice)
 (3, 'specific', 4, 'The Great Gatsby', 'Charlie, this one is for you. Loved the book!', 'book', '2024-11-09 14:00:00'),
 (3, 'friends', NULL, 'Interstellar', 'A must-watch movie for sci-fi fans!', 'movie, sci-fi', '2024-11-08 13:00:00'),
+(3, 'friends', NULL, 'Silent Hill', 'The greatest game adaption', 'movie, horror', '2024-11-08 13:30:00'),
 (3, 'everyone', NULL, 'JavaScript for Beginners', 'For anyone interested in programming!', 'programming, tutorial', '2024-11-07 12:00:00'),
 -- Posts by Charlie (Friend of Bob, friends with Niko indirectly)
 (4, 'everyone', NULL, 'Best of Mozart', 'For all my friends: the best music playlist.', 'music, playlist', '2024-11-06 11:00:00'),
 -- Posts by David (Friend of Charlie, not connected to Niko directly)
-(5, 'everyone', NULL, 'Photography Tips', 'Sharing some tips for amateur photographers!', 'photography, tips', '2024-11-05 10:30:00');
+(5, 'everyone', NULL, 'Photography Tips', 'Sharing some tips for amateur photographers!', 'photography, tips', '2024-11-05 10:30:00'),
+-- Posts by Olivia (Friend of Niko)
+(7, 'specific', 1, 'Monster', 'This is my favourite anime, and it suits your vibe Niko. Youll definitely enjoy it!', 'anime, psychological', '2024-12-24 10:00:00'),
+-- Posts by Eva (Friend of Bob, not friends with Niko directly)
+(8, 'specific', 5, 'Time Management Hacks', 'David, this might help you stay on top of things!', 'self-help, productivity', '2024-11-04 09:00:00'),
+-- Posts by Frank (Friend of David, not connected to Niko directly)
+(9, 'friends', NULL, 'Guitar Lessons', 'I started learning guitar. Anyone interested in some tips?', 'music, lessons', '2024-11-03 08:00:00'),
+-- Posts by Grace (Friend of Ong, not connected to Niko directly)
+(10, 'everyone', NULL, 'Traveling Solo', 'My tips for anyone planning to travel alone, it’s a life-changing experience.', 'travel, tips', '2024-11-02 07:30:00');
+-- Posts by Emma (Friend of Niko)
+
+INSERT INTO posts (sender_id, recipient_type, recipient_id, title, content, tags, created_at)
+VALUES
+(8, 'friends', NULL, 'The Matrix', 'Classic sci-fi with a philosophical twist. A must-watch!', 'movie, sci-fi', '2024-11-13 15:00:00'),
+(8, 'specific', 1, 'Blade Runner 2049', 'Niko, this film blew my mind. Thought-provoking and visually stunning!', 'movie, cyberpunk', '2024-11-14 18:00:00');
+
+-- Posts by Liam (Friend of Niko)
+INSERT INTO posts (sender_id, recipient_type, recipient_id, title, content, tags, created_at)
+VALUES
+(9, 'everyone', NULL, 'The Grand Budapest Hotel', 'Wes Anderson at his best. Highly recommend for a quirky experience.', 'movie, comedy', '2024-11-12 14:30:00'),
+(9, 'friends', NULL, 'Whiplash', 'This one hits all the right notes. You won’t regret it.', 'movie, drama', '2024-11-11 12:00:00');
+
+-- Posts by Sophia (Friend of Niko)
+INSERT INTO posts (sender_id, recipient_type, recipient_id, title, content, tags, created_at)
+VALUES
+(10, 'friends', NULL, 'Parasite', 'A masterpiece that dives deep into class disparity.', 'movie, thriller', '2024-11-10 20:00:00'),
+(10, 'specific', 1, 'Spirited Away', 'Niko, you will absolutely love this Ghibli classic.', 'movie, fantasy', '2024-11-09 22:00:00');
+
+-- Posts by Mason (Friend of Niko)
+INSERT INTO posts (sender_id, recipient_type, recipient_id, title, content, tags, created_at)
+VALUES
+(11, 'everyone', NULL, 'Mad Max: Fury Road', 'High-octane action like you’ve never seen before.', 'movie, action', '2024-11-08 18:00:00'),
+(11, 'friends', NULL, 'The Dark Knight', 'A superhero movie that redefined the genre. Incredible.', 'movie, superhero', '2024-11-07 16:00:00');
