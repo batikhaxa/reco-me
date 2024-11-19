@@ -113,7 +113,7 @@ const Recommend = () => {
     return (
         <div className="scrollable-container" data-bs-offset="0">
             <div className="container m-5">
-                <div id="recommend-card" className="card shadow-none p-1" style={{ width: '500px', marginBottom: '200px' }}>
+                <div id="recommend-card" className="card shadow-none p-1" style={{ width: '500px', marginBottom: '300px' }}>
                     <div className="card-body">
                         <form>
                             {/* Editable title */}
