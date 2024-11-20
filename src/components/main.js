@@ -6,24 +6,27 @@ const Main = () => {
     const [postsSecondary, setPostsSecondary] = useState([]);
     const primaryRefs = useRef([]);
     const loggedInUserId = 1;
-    
-    const getPrimaryCardPosition = (sourceFriendId) => {
+
+    //move the secondary card depending on friend
+
+    const getPrimaryCardPosition = (sourceFriendDisplayName) => {
         const matchedIndex = postsPrimary.findIndex(
-            (post) => post.displayname === sourceFriendId
+            (post) => post.displayname === sourceFriendDisplayName
         );
         if (matchedIndex !== -1 && primaryRefs.current[matchedIndex]) {
             return primaryRefs.current[matchedIndex].getBoundingClientRect();
         }
         return null;
     };
+    
     //making a line
-    const renderLine = (index) => (
+    const renderLine = () => (
         <div className='flex-start'
             style={{
                 position:"absolute",
                 top: "calc(100vh+20%)", // Place it at the center vertically of the card
                 left: "-20%",  // Align to the left side of the card
-                width: "150px",  // length
+                width: "100%",  // length
                 height: "4px",  //thickness
                 backgroundColor: "red",
                 transform: "translateY(70px)",  // Adjust the position of the line align to the card
@@ -57,8 +60,7 @@ const Main = () => {
      
       
     }, []);
-    //move the secondary card depending on friend
-
+    
    
 
     return (  
@@ -132,22 +134,23 @@ const Main = () => {
 
                     
                     <div className="col ms-5">
-                        {postsSecondary.map((post, index) => (
-                            
-                            
-                            <div key={index} className="d-flex justify-content-start"
-                            style={getPrimaryCardPosition(post.sourceFriendId)
-                                    ? {
-                                        position: 'absolute',
-                                        top: `${getPrimaryCardPosition(post.sourceFriendDisplayName).top}px`,
-                                        left: `${getPrimaryCardPosition(post.sourceFriendDisplayName).left + 300}px`, // Adjust offset as needed
-                                        transform: 'translateY(-50%)', // Center vertically relative to the primary card
-                                        zIndex: 1
-                                      }
-                                    : { position: 'relative'}
+                        {postsSecondary.map((post, index) => {
+                             const primaryPosition = getPrimaryCardPosition(post.sourceFriendDisplayName);
 
-                                       }
-                            >
+                            return(
+                                <div key={index} className="d-flex justify-content-start"
+                                    style={
+                                            primaryPosition
+                                                ? {
+                                                    position: 'absolute',
+                                                    top: `${primaryPosition.top + window.scrollY+ 85}px`, //adjust the height
+                                                    left: `${primaryPosition.left  + window.scrollX+ 290}px`, 
+                                                    transform: 'translateY(-50%)', 
+                                                    zIndex: 1,
+                                                    }
+                                                    : { position: 'relative' } 
+                                } >
+                                     {renderLine(index)}
                                 <div className="card card-secondary mb-3">
                                     <div className="card-body d-flex flex-column">
                                         <div className="d-flex gap-2">
@@ -196,7 +199,8 @@ const Main = () => {
                                     </div>
                                 </div>
                             </div>
-                        ))}
+                            )
+                        })}
                     </div>
                 </div>
             </div>
