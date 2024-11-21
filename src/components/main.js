@@ -143,10 +143,9 @@ const Main = () => {
                                     style={
                                             primaryPosition
                                                 ? {
-                                                    position: 'absolute',
-                                                    top: `${primaryPosition.top + window.scrollY+ 100}px`, //adjust the height
+                                                    top: `${primaryPosition.top + window.scrollY+ 85}px`, //adjust the height
                                                     left: `${primaryPosition.left  + window.scrollX+ 290}px`, 
-                                                    transform: 'translateY(-50%)', 
+                                                    // transform: 'translateY(-50%)', 
                                                     zIndex: 1,
                                                     }
                                               ? secondaryPosition:
@@ -160,7 +159,7 @@ const Main = () => {
                                                  }:{ position: 'relative' } 
                                                     }
                                                         ref={(el) => (primaryRefs.current[index] = el)}>
-                                     {/* {renderLine(index)} */}
+                                     {renderLine(index)} 
                                 <div className="card card-secondary mb-3">
                                     <div className="card-body d-flex flex-column">
                                         <div className="d-flex gap-2">
