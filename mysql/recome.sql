@@ -62,9 +62,6 @@ VALUES
 (2, 3, 'accepted'),  -- Alice and Bob are friends
 (3, 4, 'accepted'),  -- Bob and Charlie are friends
 (1, 8, 'accepted'),  -- Niko and Emma are friends
-(1, 9, 'accepted'),  -- Niko and Liam are friends
-(1, 10, 'accepted'), -- Niko and Sophia are friends
-(1, 11, 'accepted'), -- Niko and Mason are friends
 (8, 9, 'accepted'),  -- Emma and Liam are friends
 (9, 10, 'accepted'), -- Liam and Sophia are friends
 (10, 11, 'accepted'); -- Sophia and Mason are friends
