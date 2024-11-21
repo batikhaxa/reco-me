@@ -78,7 +78,7 @@ const Main = () => {
                         {postsPrimary.map((post, index) => (
 
                             <div key={index} className="d-flex justify-content-start" style={{position:"relative" }} ref={(el) => (primaryRefs.current[index] = el)}>
-                                  {/* {renderLine(index)} */}
+                                   {renderLine(index)} 
                                 <div className="card card-primary mb-5" >
 
 
@@ -135,8 +135,8 @@ const Main = () => {
                         {postsSecondary.map((post, index) => {
                              const primaryPosition = getPrimaryCardPosition(post.sourceFriendDisplayName);
 
-                             const secondaryPosition = getPrimaryCardPosition(post.displayname);
 
+                             const secondaryPosition = getPrimaryCardPosition(post.displayname);
 
                             return(
                                 <div key={index} className="d-flex justify-content-start"
