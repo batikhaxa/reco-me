@@ -70,15 +70,15 @@ const Main = () => {
             
             <div className="container m-5" >
 
-                <div className="row">
-                    <div className="col  ">
+                <div className="row justify-content-start">
+                    <div className="col col-lg-5 border">
                   
                         {/* map through posts */}
                     
                         {postsPrimary.map((post, index) => (
 
                             <div key={index} className="d-flex justify-content-start" style={{position:"relative" }} ref={(el) => (primaryRefs.current[index] = el)}>
-                                  {renderLine(index)}
+                                  {/* {renderLine(index)} */}
                                 <div className="card card-primary mb-5" >
 
 
@@ -131,11 +131,12 @@ const Main = () => {
                         ))}
                     </div>
                     {/* Friends friends */}
-
-                    
-                    <div className="col ms-5">
+                    <div className="col col-lg-5 border">
                         {postsSecondary.map((post, index) => {
                              const primaryPosition = getPrimaryCardPosition(post.sourceFriendDisplayName);
+
+                             const secondaryPosition = getPrimaryCardPosition(post.displayname);
+
 
                             return(
                                 <div key={index} className="d-flex justify-content-start"
@@ -143,14 +144,23 @@ const Main = () => {
                                             primaryPosition
                                                 ? {
                                                     position: 'absolute',
-                                                    top: `${primaryPosition.top + window.scrollY+ 85}px`, //adjust the height
+                                                    top: `${primaryPosition.top + window.scrollY+ 100}px`, //adjust the height
                                                     left: `${primaryPosition.left  + window.scrollX+ 290}px`, 
                                                     transform: 'translateY(-50%)', 
                                                     zIndex: 1,
                                                     }
-                                                    : { position: 'relative' } 
-                                } >
-                                     {renderLine(index)}
+                                              ? secondaryPosition:
+                                                 {
+                                                    position: 'absolute',
+                                                     top: `${secondaryPosition.top + window.scrollY+ 100}px`,
+                                                     transform: 'translateY(-50%)',
+
+
+
+                                                 }:{ position: 'relative' } 
+                                                    }
+                                                        ref={(el) => (primaryRefs.current[index] = el)}>
+                                     {/* {renderLine(index)} */}
                                 <div className="card card-secondary mb-3">
                                     <div className="card-body d-flex flex-column">
                                         <div className="d-flex gap-2">

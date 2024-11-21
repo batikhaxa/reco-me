@@ -150,10 +150,8 @@ $input-border-width: 0px;
 .scrollable-container {
     position: relative;
     flex-grow: 1;
-    //overflow-x: hidden; /* Vertical scrolling only */
     padding: 0;
     box-sizing: border-box;
-    //-ms-overflow-style: none;
     scrollbar-width: thin;
 }
 

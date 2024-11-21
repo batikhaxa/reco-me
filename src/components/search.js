@@ -56,8 +56,8 @@ const Search = () => {
             <div className="container m-5">
                 <div className="row justify-content-start">
                     {/* First Column */}
-                    <div className="col">
-                        <div className="card mb-3" style={{ width: "30rem" }}>
+                    <div className="col col-lg-5 border">
+                        <div className="card mb-3">
                             <div className="card-body">
                                 <div className="d-flex align-items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search-heart me-2" viewBox="0 0 16 16">
@@ -132,7 +132,7 @@ const Search = () => {
                     {/* End of First Column */}
 
                     {/* Second Column */}
-                    <div className="col">
+                    <div className="col col-lg-5 border">
                         {loading ? (
                             <p>Loading...</p>
                         ) : (
