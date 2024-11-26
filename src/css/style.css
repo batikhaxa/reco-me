@@ -31,3 +31,12 @@ textarea {
     /* Match the sidebar width */
   }
 }
+
+#menu-toggle-button {
+  background-color: white;
+  border-radius: 0;
+  padding-left: 1rem;
+  border-width: 0px 0px 1px 0px;
+    /* 25px top, 10px right, 4px bottom and 35px left */
+  border-color: rgb(246, 246, 246);
+}

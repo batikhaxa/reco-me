@@ -2,27 +2,40 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 const NavPills = () => (
-    <ul className="nav nav-pills flex-column mb-auto fs-6 fw-semibold">
+    <ul className="nav nav-pills flex-column mb-auto fw-semiboldf fs-5 fs-sm-6">
         <li className="nav-item">
-            <NavLink to="/home" className="nav-link link-body-emphasis" activeClassName="active">
+            <NavLink
+                to="/home"
+                className="nav-link link-body-emphasis"
+                activeClassName="active"
+            >
                 <i className="bi bi-house"></i>
                 home
             </NavLink>
         </li>
         <li className="nav-item">
-            <NavLink to="/recommend" className="nav-link link-body-emphasis" activeClassName="active">
+            <NavLink
+                to="/recommend"
+                className="nav-link link-body-emphasis"
+                activeClassName="active"
+            >
                 <i className="bi bi-hand-thumbs-up"></i>
                 recommend
             </NavLink>
         </li>
         <li className="nav-item">
-            <NavLink to="/search" className="nav-link link-body-emphasis" activeClassName="active">
+            <NavLink
+                to="/search"
+                className="nav-link link-body-emphasis"
+                activeClassName="active"
+            >
                 <i className="bi bi-search-heart"></i>
                 search
             </NavLink>
         </li>
     </ul>
 );
+
 
 const UserDropdown = () => (
     <div className="dropdown mt-auto">
@@ -62,18 +75,22 @@ const UserDropdown = () => (
 const Sidebar = () => {
     return (
         <>
-            <button
-                className="sticky-top btn position-absolute top-0 start-0 d-sm-none d-flex justify-content-start align-items-center w-100"
+            {/* Sticky top button */}
+            <div
+                className="sticky-top position-absolute btn d-sm-none d-flex justify-content-start align-items-center w-100"
+                id="menu-toggle-button"
                 type="button"
                 data-bs-toggle="offcanvas"
                 data-bs-target="#offcanvasSidebar"
                 aria-controls="offcanvasSidebar"
-                style={{ paddingLeft: '1rem', borderRadius: '0px', backgroundColor: 'white', borderBottom: '10px', borderColor: 'lightgrey'}} // Add left padding for spacing
+                style={{
+                    zIndex: 1030, // Ensures it's above regular content but below the sidebar when toggled
+                }}
             >
-                <i 
-                    className="bi bi-list me-2" 
-                    style={{ fontSize: "3rem"}}>
-                </i> 
+                <i
+                    className="bi bi-list me-2"
+                    style={{ fontSize: "3rem" }}>
+                </i>
                 <img
                     src="/img/iconblack.png"
                     className="bi pe-none m-1"
@@ -81,8 +98,7 @@ const Sidebar = () => {
                     height="50"
                     alt="icon"
                 />
-            </button>
-
+            </div>
 
             {/* Toggled sidebar */}
             <div
@@ -90,6 +106,9 @@ const Sidebar = () => {
                 tabIndex="-1"
                 id="offcanvasSidebar"
                 aria-labelledby="offcanvasSidebarLabel"
+                style={{
+                    zIndex: 1050, // Higher z-index so it appears above the button
+                }}
             >
                 <div className="offcanvas-header">
                     <a
@@ -114,18 +133,17 @@ const Sidebar = () => {
                 </div>
                 <div className="offcanvas-body d-flex flex-column">
                     <NavPills />
-                    <hr />
-                    {/* Push UserDropdown to the bottom */}
                     <div className="mt-auto">
+                        <hr />
                         <UserDropdown />
                     </div>
                 </div>
             </div>
 
-            {/* sidebar for larger screens */}
+            {/* Sidebar for larger screens */}
             <div
                 className="flex-shrink-0 p-3 bg-body-tertiary bg-gradient d-none d-sm-block d-flex flex-column"
-                style={{ width: "280px", height: "100vh" }}
+                style={{ width: "300px", height: "100vh" }}
             >
                 <a
                     href="/"
@@ -140,14 +158,13 @@ const Sidebar = () => {
                     />
                     <span id="sidebar-title" className="fs-3">reco.me</span>
                 </a>
-                <div className="d-flex flex-column">
+                <div className="offcanvas-body d-flex flex-column">
                     <NavPills />
-                    <hr />
-                    {/* Push UserDropdown to the bottom */}
                     <div className="mt-auto">
+                        <hr />
                         <UserDropdown />
                     </div>
-                </div>'
+                </div>
             </div>
         </>
     );
