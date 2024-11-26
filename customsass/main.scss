@@ -134,8 +134,17 @@ $input-border-width: 0px;
 }
 
 .card {
-    width: 100%;
+    max-width: 500px;
+   
 }
+
+.card-primary{
+width: 500px;
+overflow: hidden;
+display: block;
+}
+
+
 
 .bi {
     margin-right: 10px;
