@@ -56,7 +56,7 @@ const Search = () => {
             <div className="container m-5">
                 <div className="row justify-content-start">
                     {/* First Column */}
-                    <div className="col col-lg-5 border">
+                    <div className="col-12 col-md-9 col-lg-5 border">
                         <div className="card mb-3">
                             <div className="card-body">
                                 <div className="d-flex align-items-center">
@@ -132,7 +132,7 @@ const Search = () => {
                     {/* End of First Column */}
 
                     {/* Second Column */}
-                    <div className="col col-lg-5 border">
+                    <div className="col-12 col-md-9 col-lg-5 border">
                         {loading ? (
                             <p>Loading...</p>
                         ) : (

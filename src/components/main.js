@@ -130,8 +130,8 @@ const Main = () => {
             
             <div className="container m-5" >
 
-                <div className="row justify-content-start">
-                    <div className="col col-lg-5 border">
+                <div className="row g-5 justify-content-start">
+                    <div className="col col-lg-5">
                   
                         {/* map through posts */}
                     
@@ -191,7 +191,7 @@ const Main = () => {
                         ))}
                     </div>
                     {/* Friends friends */}
-                    <div className="col col-lg-5 border">
+                    <div className="col col-lg-5">
                         {postsSecondary.map((post, index) => {
                              const primaryPosition = getPrimaryCardPosition(post.sourceFriendDisplayName);
                              const secondaryPosition = secondaryRefs.current[index]?.getBoundingClientRect();
