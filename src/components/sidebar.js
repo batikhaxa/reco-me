@@ -52,7 +52,7 @@ const UserDropdown = () => (
                 height="50"
                 className="rounded-circle me-2 ms-2"
             />
-            <strong className="text-white fw-light fs-5">niko</strong>
+            <strong className="text-white fw-light fs-4">niko</strong>
         </a>
         <ul className="dropdown-menu ms-5 text-small shadow">
             <li>
@@ -65,7 +65,7 @@ const UserDropdown = () => (
             </li>
             <li>
                 <a className="dropdown-item" href="/signout">
-                    sign Out
+                    sign out
                 </a>
             </li>
         </ul>
@@ -122,7 +122,7 @@ const Sidebar = () => {
                             height="60"
                             alt="icon"
                         />
-                        <span id="sidebar-title" className="fs-3">reco.me</span>
+                        <span id="sidebar-title" className="fs-2">reco.me</span>
                     </a>
                     <button
                         type="button"
@@ -152,8 +152,8 @@ const Sidebar = () => {
                     <img
                         src="/img/icon.png"
                         className="bi pe-none me-2"
-                        width="60"
-                        height="60"
+                        width="70"
+                        height="70"
                         alt="icon"
                     />
                     <span id="sidebar-title" className="fs-3">reco.me</span>
