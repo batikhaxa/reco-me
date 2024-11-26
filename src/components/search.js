@@ -53,10 +53,10 @@ const Search = () => {
 
     return (
         <div className="scrollable-container" data-bs-offset="0">
-            <div className="container m-5">
+            <div className="container mx-0 mx-sm-5 mx-lg-5 mt-5">
                 <div className="row justify-content-start">
                     {/* First Column */}
-                    <div className="col-12 col-md-9 col-lg-5">
+                    <div className="col-12 col-sm-12 col-md-9 col-lg-5">
                         <div className="card mb-3">
                             <div className="card-body">
                                 <div className="d-flex align-items-center">

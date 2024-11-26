@@ -75,9 +75,9 @@ const UserDropdown = () => (
 const Sidebar = () => {
     return (
         <>
-            {/* Sticky top button */}
+            {/* Sticky top button for small and medium screens */}
             <div
-                className="sticky-top position-absolute btn d-sm-none d-flex justify-content-start align-items-center w-100"
+                className="sticky-top position-absolute btn d-md-none d-flex justify-content-start align-items-center w-100"
                 id="menu-toggle-button"
                 type="button"
                 data-bs-toggle="offcanvas"
@@ -89,8 +89,8 @@ const Sidebar = () => {
             >
                 <i
                     className="bi bi-list me-2"
-                    style={{ fontSize: "3rem" }}>
-                </i>
+                    style={{ fontSize: "3rem" }}
+                ></i>
                 <img
                     src="/img/iconblack.png"
                     className="bi pe-none m-1"
@@ -100,7 +100,7 @@ const Sidebar = () => {
                 />
             </div>
 
-            {/* Toggled sidebar */}
+            {/* Toggled sidebar for small and medium screens */}
             <div
                 className="offcanvas offcanvas-start bg-body-tertiary bg-gradient d-flex flex-column"
                 tabIndex="-1"
@@ -142,7 +142,7 @@ const Sidebar = () => {
 
             {/* Sidebar for larger screens */}
             <div
-                className="flex-shrink-0 p-3 bg-body-tertiary bg-gradient d-none d-sm-block d-flex flex-column"
+                className="flex-shrink-0 p-3 bg-body-tertiary bg-gradient d-none d-md-flex flex-column"
                 style={{ width: "300px", height: "100vh" }}
             >
                 <a

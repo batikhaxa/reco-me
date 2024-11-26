@@ -112,10 +112,10 @@ const Recommend = () => {
 
     return (
         <div className="scrollable-container" data-bs-offset="0">
-            <div className="container m-5">
+            <div className="container mx-0 mx-sm-5 mx-lg-5 mt-5">
                 <row>
                     <div className="col-12 col-md-9 col-lg-12">
-                        <div id="recommend-card" className="card shadow-none p-1" style={{ width:'100%',maxWidth: '500px', marginBottom: '300px' }}>
+                        <div id="recommend-card" className="card shadow-none p-1" style={{ width:'100%', maxWidth: '500px' }}>
                             <div className="card-body">
                                 <form>
                                     {/* Editable title */}
@@ -236,9 +236,9 @@ const Recommend = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="mt-2 ms-2" id="post-result">
-                            {postResult && <p>{postResult}</p>} {/* Display the result message */}
-                        </div>
+                    </div>
+                    <div className="mt-2 ms-2" id="post-result">
+                        {postResult && <p>{postResult}</p>} {/* Display the result message */}
                     </div>
                 </row>
             </div>
