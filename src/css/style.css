@@ -24,3 +24,10 @@ textarea {
   background-color: var(--bs-body-bg);
   /* Matches the body's background */
 }
+
+@media (max-width: 576px) {
+  #offcanvasSidebar {
+    width: 280px;
+    /* Match the sidebar width */
+  }
+}

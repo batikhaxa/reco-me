@@ -15,36 +15,8 @@ const App = () => {
 
   return (
     <Router>
-      <div className="d-flex flex-nowrap full-height">
-        {/* Sidebar for larger screens */}
-        <div className={`d-flex flex-nowrap full-height ${isSidebarVisible ? 'show' : ''}`}>
-          <Sidebar />
-        </div>
-
-        {/* Sticky Navbar for smaller screens */}
-        <div className="sticky-sm-top d-md-none bg-light shadow">
-          <button
-            className="btn btn-primary m-2"
-            onClick={toggleSidebar}
-          >
-            Menu
-          </button>
-        </div>
-
-        {/* Sidebar overlay for small screens */}
-        {isSidebarVisible && (
-          <div className="position-fixed top-0 start-0 h-100 bg-light z-3">
-            <Sidebar />
-            <button
-              className="btn btn-danger m-2 position-absolute top-0 end-0"
-              onClick={toggleSidebar}
-            >
-              Close
-            </button>
-          </div>
-        )}
-
-        {/* Main Content Area */}
+      <main className="d-flex flex-nowrap full-height min-vh-100">
+        <Sidebar />
         <div className="content flex-grow-1 overflow-auto">
           <Routes>
             <Route path="/" element={<Navigate to="/home" replace />} />
@@ -53,7 +25,7 @@ const App = () => {
             <Route path="/search" element={<Search />} />
           </Routes>
         </div>
-      </div>
+      </main>
     </Router>
   );
 };
