@@ -4,10 +4,50 @@ const cors = require('cors');
 const app = express();
 const pool = require('./db');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const secretKey = 'your_jwt_secret';
 const saltRounds = 10;
 app.use(express.static('public'));
 app.use(cors());
 app.use(express.json());
+
+app.post('/api/login', async (req, res) => {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+        return res.status(400).json({ error: 'Email and password are required' });
+    }
+
+    try {
+        // Fetch user with matching email
+        const [users] = await pool.query('SELECT * FROM users WHERE email = ?', [email]);
+
+        if (users.length === 0) {
+            return res.status(400).json({ error: 'Invalid email or password' });
+        }
+
+        const user = users[0];
+
+        // Compare the password with the hashed password in the database
+        const passwordMatch = await bcrypt.compare(password, user.password_hash);
+
+        if (!passwordMatch) {
+            return res.status(400).json({ error: 'Invalid email or password' });
+        }
+
+        // !! token !!
+        const token = jwt.sign({ user_id: user.id, email: user.email }, secretKey, { expiresIn: '1h' });
+
+        res.status(200).json({
+            message: 'Login successful',
+            user: { id: user.id, email: user.email, displayname: user.displayname },
+            token, // Optional: use this token for authentication in frontend
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
 
 app.post('/api/registration', async (req, res) => {
     const { displayname, username, email, password } = req.body;

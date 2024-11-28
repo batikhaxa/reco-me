@@ -29,7 +29,6 @@ const Recommend = () => {
         }
         const fetchFriends = async (userId) => {
             try {
-                console.log("fetchFriends called");
                 const response = await fetch(`/api/friends?userId=${userId}`);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
