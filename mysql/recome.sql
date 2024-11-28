@@ -62,9 +62,6 @@ VALUES
 (2, 3, 'accepted'),  -- Alice and Bob are friends
 (3, 4, 'accepted'),  -- Bob and Charlie are friends
 (1, 8, 'accepted'),  -- Niko and Emma are friends
-(1, 9, 'accepted'),  -- Niko and Liam are friends
-(1, 10, 'accepted'), -- Niko and Sophia are friends
-(1, 11, 'accepted'), -- Niko and Mason are friends
 (8, 9, 'accepted'),  -- Emma and Liam are friends
 (9, 10, 'accepted'), -- Liam and Sophia are friends
 (10, 11, 'accepted'); -- Sophia and Mason are friends
@@ -102,7 +99,7 @@ VALUES
 (8, 'friends', NULL, 'The Matrix', 'Classic sci-fi with a philosophical twist. A must-watch!', 'movie, sci-fi', '2024-11-13 15:00:00'),
 (8, 'specific', 1, 'Blade Runner 2049', 'Niko, this film blew my mind. Thought-provoking and visually stunning!', 'movie, cyberpunk', '2024-11-14 18:00:00');
 
--- Posts by Liam (Friend of Niko)
+-- Posts by Liam (Friend of Emma)
 INSERT INTO posts (sender_id, recipient_type, recipient_id, title, content, tags, created_at)
 VALUES
 (9, 'everyone', NULL, 'The Grand Budapest Hotel', 'Wes Anderson at his best. Highly recommend for a quirky experience.', 'movie, comedy', '2024-11-12 14:30:00'),

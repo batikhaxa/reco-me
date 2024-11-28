@@ -112,131 +112,135 @@ const Recommend = () => {
 
     return (
         <div className="scrollable-container" data-bs-offset="0">
-            <div className="container m-5">
-                <div id="recommend-card" className="card shadow-none p-1" style={{ width: '500px', marginBottom: '300px' }}>
-                    <div className="card-body">
-                        <form>
-                            {/* Editable title */}
-                            <div className="form-group">
-                                <input
-                                    className="form-control form-control-lg bg-transparent"
-                                    type="text"
-                                    placeholder="Title"
-                                    value={title}
-                                    onChange={handleTitleChange}
-                                    style={{
-                                        fontSize: '1.5rem',
-                                        padding: '0.8rem',
-                                    }}
-                                />
-                            </div>
+            <div className="container mx-0 mx-sm-5 mx-lg-5 mt-5">
+                <row>
+                    <div className="col-12 col-md-9 col-lg-12">
+                        <div id="recommend-card" className="card shadow-none p-1" style={{ width:'100%', maxWidth: '500px' }}>
+                            <div className="card-body">
+                                <form>
+                                    {/* Editable title */}
+                                    <div className="form-group">
+                                        <input
+                                            className="form-control form-control-lg bg-transparent"
+                                            type="text"
+                                            placeholder="Title"
+                                            value={title}
+                                            onChange={handleTitleChange}
+                                            style={{
+                                                fontSize: '1.5rem',
+                                                padding: '0.8rem',
+                                            }}
+                                        />
+                                    </div>
 
-                            {/* Text Input */}
-                            <div className="form-group mt-3 mb-3">
-                                <textarea
-                                    className="form-control"
-                                    id="postContent"
-                                    placeholder="Describe what you're recommending..."
-                                    rows="1"
-                                    value={postContent}
-                                    onChange={handlePostContentChange}
-                                    style={{
-                                        resize: 'none',
-                                        backgroundColor: 'transparent',
-                                        color: 'black',
-                                        overflow: 'hidden', // prevent scrollbars
-                                    }}
-                                ></textarea>
-                            </div>
+                                    {/* Text Input */}
+                                    <div className="form-group mt-3 mb-3">
+                                        <textarea
+                                            className="form-control"
+                                            id="postContent"
+                                            placeholder="Describe what you're recommending..."
+                                            rows="1"
+                                            value={postContent}
+                                            onChange={handlePostContentChange}
+                                            style={{
+                                                resize: 'none',
+                                                backgroundColor: 'transparent',
+                                                color: 'black',
+                                                overflow: 'hidden', // prevent scrollbars
+                                            }}
+                                        ></textarea>
+                                    </div>
 
-                            {/* Tags */}
-                            <div className="form-group">
-                                <div className="tag-container">
-                                    <label htmlFor="tag-select" className="ms-2">tags:</label>
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        placeholder="input tag..."
-                                        value={inputValue}
-                                        onChange={(e) => setInputValue(e.target.value)}
-                                        onKeyDown={handleKeyDown}
-                                        style={{ backgroundColor: 'transparent' }}
-                                        autocomplete="off"
-                                        id="tag-select"
-                                        list="media_list"
-                                    />
-                                    <datalist id="media_list">
-                                        <option>games</option>
-                                        <option>anime</option>
-                                        <option>movies</option>
-                                        <option>music</option>
-                                        <option>books</option>
-                                        <option>sports</option>
-                                    </datalist>
+                                    {/* Tags */}
+                                    <div className="form-group">
+                                        <div className="tag-container">
+                                            <label htmlFor="tag-select" className="ms-2">tags:</label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                placeholder="input tag..."
+                                                value={inputValue}
+                                                onChange={(e) => setInputValue(e.target.value)}
+                                                onKeyDown={handleKeyDown}
+                                                style={{ backgroundColor: 'transparent' }}
+                                                autocomplete="off"
+                                                id="tag-select"
+                                                list="media_list"
+                                            />
+                                            <datalist id="media_list">
+                                                <option>games</option>
+                                                <option>anime</option>
+                                                <option>movies</option>
+                                                <option>music</option>
+                                                <option>books</option>
+                                                <option>sports</option>
+                                            </datalist>
+                                        </div>
+
+                                        <div className="mt-1">
+                                            {tags.map((tag, index) => (
+                                                <label key={index} className="card-category d-inline-flex mb-1">
+                                                    {tag}
+                                                    <button
+                                                        type="button"
+                                                        className="btn-close btn-close-black ms-1"
+                                                        onClick={() => removeTag(tag)}
+                                                        aria-label="Remove tag"
+                                                    ></button>
+                                                </label>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </form>
+
+                                {/* Audience selection */}
+                                <div className="row-with-btn">
+                                    <div className="for-select">
+                                        <Select
+                                            value={audience}
+                                            onChange={(selectedOption) => setAudience(selectedOption)}
+                                            options={audienceOptions}
+                                            placeholder="Select Audience"
+                                            menuPlacement="auto"
+                                            styles={{
+                                                container: (base) => ({
+                                                    ...base,
+                                                    width: "100%",
+                                                    maxWidth: "200px",
+                                                }),
+                                                control: (base, state) => ({
+                                                    ...base,
+                                                    border: "1px solid #ccc",
+                                                    boxShadow: state.isFocused ? "none" : "none",
+                                                    ':hover': {
+                                                        borderColor: "#ccc",
+                                                    },
+                                                }),
+                                                option: (base, state) => ({
+                                                    ...base,
+                                                    color: state.isSelected ? "black" : "#333333",
+                                                    backgroundColor: state.isSelected ? "rgb(231, 231, 231)" : "white",
+                                                    ':hover': {
+                                                        backgroundColor: state.isFocused ? "rgb(245, 245, 245)" : "rgb(245, 245, 245)",
+                                                    }
+                                                })
+                                            }}
+                                        />
+                                    </div>
+
+                                    <div className="btn-container">
+                                        <button className="post-btn" onClick={handlePost}>
+                                            Post
+                                        </button>
+                                    </div>
                                 </div>
-
-                                <div className="mt-1">
-                                    {tags.map((tag, index) => (
-                                        <label key={index} className="card-category d-inline-flex mb-1">
-                                            {tag}
-                                            <button
-                                                type="button"
-                                                className="btn-close btn-close-black ms-1"
-                                                onClick={() => removeTag(tag)}
-                                                aria-label="Remove tag"
-                                            ></button>
-                                        </label>
-                                    ))}
-                                </div>
-                            </div>
-                        </form>
-
-                        {/* Audience selection */}
-                        <div className="row-with-btn">
-                            <div className="for-select">
-                                <Select
-                                    value={audience}
-                                    onChange={(selectedOption) => setAudience(selectedOption)}
-                                    options={audienceOptions}
-                                    placeholder="Select Audience"
-                                    menuPlacement="auto"
-                                    styles={{
-                                        container: (base) => ({
-                                            ...base,
-                                            width: "100%",
-                                            maxWidth: "200px",
-                                        }),
-                                        control: (base, state) => ({
-                                            ...base,
-                                            border: "1px solid #ccc",
-                                            boxShadow: state.isFocused ? "none" : "none",
-                                            ':hover': {
-                                                borderColor: "#ccc",
-                                            },
-                                        }),
-                                        option: (base, state) => ({
-                                            ...base,
-                                            color: state.isSelected ? "black" : "#333333",
-                                            backgroundColor: state.isSelected ? "rgb(231, 231, 231)" : "white",
-                                            ':hover': {
-                                                backgroundColor: state.isFocused ? "rgb(245, 245, 245)" : "rgb(245, 245, 245)",
-                                            }
-                                        })
-                                    }}
-                                />
-                            </div>
-
-                            <div className="btn-container">
-                                <button className="post-btn" onClick={handlePost}>
-                                    Post
-                                </button>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className="mt-2 ms-2" id="post-result">
-                    {postResult && <p>{postResult}</p>} {/* Display the result message */}
-                </div>
+                    <div className="mt-2 ms-2" id="post-result">
+                        {postResult && <p>{postResult}</p>} {/* Display the result message */}
+                    </div>
+                </row>
             </div>
         </div>
     );

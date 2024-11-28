@@ -5,6 +5,7 @@ const Main = () => {
     const [postsPrimary, setPostsPrimary] = useState([]);
     const [postsSecondary, setPostsSecondary] = useState([]);
     const primaryRefs = useRef([]);
+    const secondaryRefs = useRef([]);
     const loggedInUserId = 1;
 
     //move the secondary card depending on friend
@@ -18,22 +19,81 @@ const Main = () => {
         }
         return null;
     };
+
+    const getSecondaryCardStyle =(primaryPosition,secondaryPosition)=>{
+        if(primaryPosition){
+                return{
+                    position: 'absolute',
+                    top: `${primaryPosition.top + window.scrollY+85}px`, //adjust the height
+                    left: `${primaryPosition.left  + window.scrollX+ 290}px`, 
+                     transform: 'translateY(-50%)', 
+                    zIndex: 1,
+                }
+           }else if(secondaryPosition){
+                return{
+                    position: 'absolute',
+                    top: `${secondaryPosition.top + window.scrollY+ 1000}px`,
+                    left: `${primaryPosition.left  + window.scrollX+ 290}px`,
+                    transform: 'translateY(-50%)',
+
+                }
+
+           }else{
+                    return{
+
+                        position: 'relative'
+                    }
+        }
+
+    }
     
-    //making a line
-    const renderLine = () => (
-        <div className='flex-start'
-            style={{
-                position:"absolute",
-                top: "calc(100vh+20%)", // Place it at the center vertically of the card
-                left: "-20%",  // Align to the left side of the card
-                width: "100%",  // length
-                height: "4px",  //thickness
-                backgroundColor: "red",
-                transform: "translateY(70px)",  // Adjust the position of the line align to the card
-                zIndex: -1,  // Ensure it is behind the content of the card
-            }}
-        />
-    );
+    const renderLine = () => {
+       
+        
+        const line = {
+            position:"absolute",
+            top: "calc(100vh+20%)", // Place it at the center vertically of the card
+            left: "-20%",  // Align to the left side of the card
+            width: "100%",  // length
+            height: "4px",  //thickness
+            backgroundColor: "red",
+            transform: "translateY(70px)",  // Adjust the position of the line align to the card
+            zIndex: -1,  // Ensure it is behind the content of the card
+          
+           
+        };
+            return <div className='flex-start' style={line}></div>
+
+           
+   
+        };
+
+    //making a line checking the card first
+    const rendersecondLine = (primaryPosition,secondaryPosition) => {
+        if (!primaryPosition || !secondaryPosition) {
+            console.log("Primary or Secondary Position is null:", { primaryPosition, secondaryPosition });
+            return null;
+        }
+    
+        console.log("Primary Position:", primaryPosition);
+        console.log("Secondary Position:", secondaryPosition);
+
+        const line = {
+            position:"absolute",
+            top: "calc(100vh+20%)", 
+            left: `${(secondaryPosition.right-(secondaryPosition.width*3)-10)}px`, 
+            width: `100%`,// length
+            height: "4px",  //thickness
+            backgroundColor: "red",
+            transform: "translateY(70px)",  
+             
+        };
+            console.log("Line Styles:", line);
+            return <div style={line}></div>
+
+           
+   
+        };
       useEffect(() => {
         const fetchPrimaryPosts = async () => {
             try {
@@ -70,15 +130,15 @@ const Main = () => {
             
             <div className="container m-5" >
 
-                <div className="row">
-                    <div className="col  ">
+                <div className="row g-5 justify-content-start">
+                    <div className="col col-lg-5">
                   
                         {/* map through posts */}
                     
                         {postsPrimary.map((post, index) => (
 
                             <div key={index} className="d-flex justify-content-start" style={{position:"relative" }} ref={(el) => (primaryRefs.current[index] = el)}>
-                                  {renderLine(index)}
+                                   {renderLine()} 
                                 <div className="card card-primary mb-5" >
 
 
@@ -131,26 +191,19 @@ const Main = () => {
                         ))}
                     </div>
                     {/* Friends friends */}
-
-                    
-                    <div className="col ms-5">
+                    <div className="col col-lg-5">
                         {postsSecondary.map((post, index) => {
                              const primaryPosition = getPrimaryCardPosition(post.sourceFriendDisplayName);
-
+                             const secondaryPosition = secondaryRefs.current[index]?.getBoundingClientRect();
+                          
                             return(
                                 <div key={index} className="d-flex justify-content-start"
-                                    style={
-                                            primaryPosition
-                                                ? {
-                                                    position: 'absolute',
-                                                    top: `${primaryPosition.top + window.scrollY+ 85}px`, //adjust the height
-                                                    left: `${primaryPosition.left  + window.scrollX+ 290}px`, 
-                                                    transform: 'translateY(-50%)', 
-                                                    zIndex: 1,
-                                                    }
-                                                    : { position: 'relative' } 
-                                } >
-                                     {renderLine(index)}
+                                    style={getSecondaryCardStyle(primaryPosition,secondaryPosition)}
+                                     ref={(el) => (secondaryRefs.current[index] = el)}>
+
+
+
+                                     {rendersecondLine(primaryPosition,secondaryPosition)} 
                                 <div className="card card-secondary mb-3">
                                     <div className="card-body d-flex flex-column">
                                         <div className="d-flex gap-2">

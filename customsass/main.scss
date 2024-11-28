@@ -133,14 +133,18 @@ $input-border-width: 0px;
     border-radius: 0.5rem;
 }
 
-.card-primary {
-    width: 30rem;
+.card {
+    max-width: 500px;
+   
 }
 
-.card-secondary {
-    width: 28rem;
-    margin-bottom: 20px;
+.card-primary{
+width: 500px;
+overflow: hidden;
+display: block;
 }
+
+
 
 .bi {
     margin-right: 10px;
@@ -150,10 +154,8 @@ $input-border-width: 0px;
 .scrollable-container {
     position: relative;
     flex-grow: 1;
-    //overflow-x: hidden; /* Vertical scrolling only */
     padding: 0;
     box-sizing: border-box;
-    //-ms-overflow-style: none;
     scrollbar-width: thin;
 }
 

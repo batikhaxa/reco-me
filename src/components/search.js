@@ -53,11 +53,11 @@ const Search = () => {
 
     return (
         <div className="scrollable-container" data-bs-offset="0">
-            <div className="container m-5">
+            <div className="container mx-0 mx-sm-5 mx-lg-5 mt-5">
                 <div className="row justify-content-start">
                     {/* First Column */}
-                    <div className="col">
-                        <div className="card mb-3" style={{ width: "30rem" }}>
+                    <div className="col-12 col-sm-12 col-md-9 col-lg-5">
+                        <div className="card mb-3">
                             <div className="card-body">
                                 <div className="d-flex align-items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search-heart me-2" viewBox="0 0 16 16">
@@ -132,7 +132,7 @@ const Search = () => {
                     {/* End of First Column */}
 
                     {/* Second Column */}
-                    <div className="col">
+                    <div className="col-12 col-md-9 col-lg-5">
                         {loading ? (
                             <p>Loading...</p>
                         ) : (
