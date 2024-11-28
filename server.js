@@ -3,10 +3,54 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const pool = require('./db');
-
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 app.use(express.static('public'));
 app.use(cors());
 app.use(express.json());
+
+app.post('/api/registration', async (req, res) => {
+    const { displayname, username, email, password } = req.body;
+
+    if (!displayname || !username || !email || !password) {
+        return res.status(400).json({ error: 'All fields are required' });
+    }
+
+    try {
+        // Check if the email or username already exists
+        const [existingUser] = await pool.query('SELECT * FROM users WHERE email = ? OR username = ?', [email, username]);
+        
+        if (existingUser.length > 0) {
+            return res.status(400).json({ error: 'Email or Username is already registered' });
+        }
+
+        // Hash the password
+        bcrypt.hash(password, saltRounds, async (err, hashedPassword) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).json({ error: 'Error hashing password' });
+            }
+
+            // Save the new user to the database
+            try {
+                const [result] = await pool.query(
+                    'INSERT INTO users (displayname, username, email, password_hash) VALUES (?, ?, ?, ?)',
+                    [displayname, username, email, hashedPassword]
+                );
+            
+                res.status(201).json({ success: true, user_id: result.insertId });
+            } catch (error) {
+                console.error(error);
+                res.status(500).json({ error: 'Database error while registering user' });
+            }
+            
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error checking email or username in database' });
+    }
+});
+
 
 // search posts based on tags (from friends only)
 app.get('/api/posts/search', async (req, res) => {

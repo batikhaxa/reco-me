@@ -5,6 +5,8 @@ import Sidebar from './components/sidebar';
 import Main from './components/main';
 import Recommend from './components/recommend';
 import Search from './components/search';
+import Registration from './components/Registration';
+import Login from './components/Login';
 
 const App = () => {
   return (
@@ -17,6 +19,8 @@ const App = () => {
             <Route path="/home" element={<Main />} />
             <Route path="/recommend" element={<Recommend />} />
             <Route path="/search" element={<Search />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/registration" element={<Registration />} />
           </Routes>
         </div>
       </main>

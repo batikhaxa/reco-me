@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -15,6 +16,7 @@ const Login = () => {
             <div id="login-card" className="card shadow-none p-1" style={{ marginLeft: '100px', width: '500px' }}>
                 <div className="card-body">
                     <h2>Login</h2>
+                    {/* Using Link to navigate to the sign-up page */}
                     <form onSubmit={handleSubmit}>
                         <div className="form-floating mb-3">
                             <input
@@ -41,6 +43,7 @@ const Login = () => {
                             <label htmlFor="loginPassword">Password</label>
                         </div>
                         <button type="submit" className="btn btn-primary w-100">Login</button>
+                        <p>Don't have an account? <Link to="/Registration">Sign up here</Link></p>
                     </form>
                 </div>
             </div>

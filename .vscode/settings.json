@@ -14,6 +14,20 @@
             "database": "recomedb",
             "username": "root",
             "password": "h9OF1s8etZyd"
+        },
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3369,
+            "driver": "MySQL",
+            "name": "recomeconnect",
+            "database": "recomedb",
+            "username": "root",
+            "password": "h9OF1s8etZyd"
         }
     ]
 }
