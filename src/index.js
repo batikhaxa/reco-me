@@ -6,6 +6,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 import './css/main.min.css';
 import './css/custom-choices.css';
 import './css/style.css';
+import './css/Login.min.css';
 import App from './App';
 //import 'bootstrap/dist/css/bootstrap.min.css'; 
 
