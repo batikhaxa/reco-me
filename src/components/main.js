@@ -20,32 +20,50 @@ const Main = () => {
         return null;
     };
 
-    const getSecondaryCardStyle =(primaryPosition,secondaryPosition)=>{
-        if(primaryPosition){
-                return{
-                    position: 'absolute',
-                    top: `${primaryPosition.top + window.scrollY+85}px`, //adjust the height
-                    left: `${primaryPosition.left  + window.scrollX+ 290}px`, 
-                     transform: 'translateY(-50%)', 
-                    zIndex: 1,
-                }
-           }else if(secondaryPosition){
-                return{
-                    position: 'absolute',
-                    top: `${secondaryPosition.top + window.scrollY+ 1000}px`,
-                    left: `${primaryPosition.left  + window.scrollX+ 290}px`,
-                    transform: 'translateY(-50%)',
 
-                }
+const cardDisplayCount = new Map();
 
-           }else{
-                    return{
+const getSecondaryCardStyle = (primaryPosition, secondaryPosition) => {
+    if (primaryPosition) {
+        return {
+            position: 'absolute',
+            top: `${primaryPosition.top + window.scrollY - 70}px`, // Adjust the height
+            left: `${primaryPosition.right + 5}px`,
+            transform: 'translateX(-50%)',
+            zIndex: 1700,
+        };
+    } else if (secondaryPosition) {
 
-                        position: 'relative'
-                    }
+        const friendSourceName = secondaryPosition.dataset.sourceFriendDisplayName;
+
+   
+        const currentCount = cardDisplayCount.get(friendSourceName) || 0;
+
+        // Only display if the count is less than 2
+        if (currentCount < 2) {
+         
+            cardDisplayCount.set(friendSourceName, currentCount + 1);
+
+            return {
+                position: 'absolute',
+                marginTop:"10px",
+                top: `${secondaryPosition.bottom + window.scrollY + 200}px`,
+                left: `${secondaryPosition.right + 30}px`,
+                zIndex: 1700,
+            };
+        } else {
+            console.log(
+                `Skipping secondary card for ${friendSourceName}, already shown 2 cards.`
+            );
+            return null;
         }
-
+    } else {
+        return {
+            position: 'relative',
+        };
     }
+};
+
     
     const renderLine = () => {
        
@@ -69,7 +87,7 @@ const Main = () => {
         };
 
     //making a line checking the card first
-    const rendersecondLine = (primaryPosition,secondaryPosition) => {
+        /*    const rendersecondLine = (primaryPosition,secondaryPosition) => {
         if (!primaryPosition || !secondaryPosition) {
             console.log("Primary or Secondary Position is null:", { primaryPosition, secondaryPosition });
             return null;
@@ -80,12 +98,12 @@ const Main = () => {
 
         const line = {
             position:"absolute",
-            top: "calc(100vh+20%)", 
-            left: `${(secondaryPosition.right-(secondaryPosition.width*3)-10)}px`, 
-            width: `100%`,// length
+            top: "calc(100vh+20%)", // Place it at the center vertically of the card
+            left: `${(primaryPosition.left -(primaryPosition.width))+30}px`,  // Start the line based on the primary card's right and offset by 200% of its width
+            width: `${primaryPosition.width/2}px`,// length
             height: "4px",  //thickness
             backgroundColor: "red",
-            transform: "translateY(70px)",  
+            transform: "translateY(70px)",  // Adjust the position of the line align to the card
              
         };
             console.log("Line Styles:", line);
@@ -94,7 +112,9 @@ const Main = () => {
            
    
         };
+        */
       useEffect(() => {
+
         const fetchPrimaryPosts = async () => {
             try {
                 const response = await fetch('/api/posts/primary');
@@ -113,6 +133,8 @@ const Main = () => {
                 console.error('Error fetching secondary posts:', error);
             }
         };
+        
+      
         fetchPrimaryPosts();
         fetchSecondaryPosts();
 
@@ -130,8 +152,8 @@ const Main = () => {
             
             <div className="container m-5" >
 
-                <div className="row g-5 justify-content-start">
-                    <div className="col col-lg-5">
+                <div className="row justify-content-start">
+                    <div className="col col-lg-5 border">
                   
                         {/* map through posts */}
                     
@@ -191,7 +213,7 @@ const Main = () => {
                         ))}
                     </div>
                     {/* Friends friends */}
-                    <div className="col col-lg-5">
+                    <div className="col col-lg-5 border d-flex flex-wrap ">
                         {postsSecondary.map((post, index) => {
                              const primaryPosition = getPrimaryCardPosition(post.sourceFriendDisplayName);
                              const secondaryPosition = secondaryRefs.current[index]?.getBoundingClientRect();
@@ -203,7 +225,7 @@ const Main = () => {
 
 
 
-                                     {rendersecondLine(primaryPosition,secondaryPosition)} 
+                                     {/* {rendersecondLine(primaryPosition,secondaryPosition)}  */}
                                 <div className="card card-secondary mb-3">
                                     <div className="card-body d-flex flex-column">
                                         <div className="d-flex gap-2">
