@@ -35,8 +35,6 @@ const getSecondaryCardStyle = (primaryPosition, secondaryPosition) => {
     } else if (secondaryPosition) {
 
         const friendSourceName = secondaryPosition.dataset.sourceFriendDisplayName;
-
-   
         const currentCount = cardDisplayCount.get(friendSourceName) || 0;
 
         // Only display if the count is less than 2
@@ -49,6 +47,7 @@ const getSecondaryCardStyle = (primaryPosition, secondaryPosition) => {
                 marginTop:"10px",
                 top: `${secondaryPosition.bottom + window.scrollY + 200}px`,
                 left: `${secondaryPosition.right + 30}px`,
+                transform:"translateY(40%)",
                 zIndex: 1700,
             };
         } else {
@@ -129,11 +128,30 @@ const getSecondaryCardStyle = (primaryPosition, secondaryPosition) => {
                 const response = await fetch('/api/posts/secondary');
                 const data = await response.json();
                 setPostsSecondary(data);
+
+
+                setTimeout(() => {
+
+                    if(secondaryRefs.current.length>0){
+                        secondaryRefs.current.forEach((ref,index)=>{
+                            if(ref){
+                            console.log(`secondary position of ${index} :`,ref.getBoundingClientRect())
+
+                            }
+            
+                        })
+                    }
+                    
+                },0);
+
             } catch (error) {
                 console.error('Error fetching secondary posts:', error);
             }
+
+
         };
-        
+
+    
       
         fetchPrimaryPosts();
         fetchSecondaryPosts();
@@ -142,6 +160,7 @@ const getSecondaryCardStyle = (primaryPosition, secondaryPosition) => {
      
       
     }, []);
+
     
    
 
