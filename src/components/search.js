@@ -107,7 +107,7 @@ const Search = () => {
                                                         ) : null}
                                                     </h5>
                                                 </div>
-                                                <div className="position-relative d-flex: column" style={{ padding: "1.5rem 0" }}>
+                                                <div className="position-relative d-flex: column">
                                                     <p className="card-text">{post.content}</p>
                                                     <div className="d-flex flex-wrap">
                                                         {(post.tags?.includes(', ') ? post.tags.split(', ') : [post.tags || 'Unknown']).map((tag, tagIndex) => (
@@ -156,7 +156,7 @@ const Search = () => {
                                                         ) : null}
                                                     </h5>
                                                 </div>
-                                                <div className="position-relative d-flex: column" style={{ padding: "1.5rem 0" }}>
+                                                <div className="position-relative d-flex: column">
                                                     <p className="card-text">{post.content}</p>
                                                     <div className="d-flex flex-wrap">
                                                         {(post.tags?.includes(', ') ? post.tags.split(', ') : [post.tags || 'Unknown']).map((tag, tagIndex) => (

@@ -1,10 +1,10 @@
-// src/components/Main.js
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const Main = () => {
     const [postsPrimary, setPostsPrimary] = useState([]);
     const [postsSecondary, setPostsSecondary] = useState([]);
     const loggedInUserId = 1;
+
     useEffect(() => {
         const fetchPrimaryPosts = async () => {
             try {
@@ -15,6 +15,7 @@ const Main = () => {
                 console.error('Error fetching primary posts:', error);
             }
         };
+
         const fetchSecondaryPosts = async () => {
             try {
                 const response = await fetch('/api/posts/secondary');
@@ -24,93 +25,127 @@ const Main = () => {
                 console.error('Error fetching secondary posts:', error);
             }
         };
+
         fetchPrimaryPosts();
         fetchSecondaryPosts();
     }, []);
+
+    // Find the latest post for each user in the primary posts
+    const latestPostByUser = postsPrimary.reduce((acc, post) => {
+        if (!acc[post.sender_id] || new Date(post.created_at) > new Date(acc[post.sender_id].created_at)) {
+            acc[post.sender_id] = post;
+        }
+        return acc;
+    }, {});
+
     return (
         <div className="scrollable-container" data-bs-offset="0">
             <div className="container mx-0 mx-sm-5 mx-lg-5 mt-5">
                 <div className="row justify-content-start">
-                    {/* Primary Posts */}
-                    <div className="col-12 col-sm-12 col-md-9 col-lg-5">
-                        {postsPrimary.map((post, index) => (
-                            <div key={index} className="d-flex justify-content-start">
-                                <div className="card card-main mb-3">
-                                    <div className="card-body d-flex flex-column">
-                                        <div className="d-flex gap-2">
-                                            <img
-                                                src={post.profileImage || 'https://i.pinimg.com/564x/e8/d7/d0/e8d7d05f392d9c2cf0285ce928fb9f4a.jpg'}
-                                                alt=""
-                                                width="70"
-                                                height="70"
-                                                className="rounded-circle me-2"
-                                            />
-                                            <h5 className="card-title">
-                                                <b>{post.displayname}</b> is recommending <b>{post.title}</b>
-                                                {post.recipient_type === 'specific' && post.recipient_id === loggedInUserId && (
-                                                    <span> to <b>you</b></span>
-                                                )}
-                                            </h5>
-                                        </div>
-                                        <p className="card-text">{post.content}</p>
-                                        <div className="d-flex flex-wrap">
-                                            {(post.tags?.split(', ') || ['Unknown']).map((tag, tagIndex) => (
-                                                <label key={tagIndex} className="card-category d-inline-flex mb-1">
-                                                    <i className="bi bi-film"></i> {tag}
-                                                </label>
-                                            ))}
-                                        </div>
-                                        <div className="d-flex flex-wrap justify-content-end">
-                                            <a href="/comments" className="link-icon">
-                                                <i className="bi bi-chat-dots"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
+                    {postsPrimary.map((primaryPost, index) => {
+                        // Only attach secondary posts to the latest primary post per user
+                        // Group secondary posts by sourceFriendId and keep only the most recent post for each
+                        const latestSecondaryPosts = postsSecondary.reduce((acc, post) => {
+                            if (
+                                !acc[post.sourceFriendId] ||
+                                new Date(post.created_at) > new Date(acc[post.sourceFriendId].created_at)
+                            ) {
+                                acc[post.sourceFriendId] = post;
+                            }
+                            return acc;
+                        }, {});
 
-                    {/* Secondary Posts */}
-                    <div className="col-12 col-sm-12 col-md-9 col-lg-5">
-                        {postsSecondary.map((post, index) => (
-                            <div key={index} className="d-flex justify-content-start">
-                                <div className="card card-main mb-3">
-                                    <div className="card-body d-flex flex-column">
-                                        <div className="d-flex gap-2">
-                                            <img
-                                                src={post.profileImage || 'https://i.pinimg.com/564x/e8/d7/d0/e8d7d05f392d9c2cf0285ce928fb9f4a.jpg'}
-                                                alt=""
-                                                width="70"
-                                                height="70"
-                                                className="rounded-circle me-2"
-                                            />
-                                            <h5 className="card-title">
-                                                <b>{post.displayname}</b>, friend of {post.sourceFriendId}:
-                                                <b> {post.sourceFriendDisplayName}</b>, is recommending <b>{post.title}</b>
-                                                {post.recipient_type === 'specific' && post.recipient_id === loggedInUserId && (
-                                                    <span> to <b>you</b></span>
-                                                )}
-                                            </h5>
-                                        </div>
-                                        <p className="card-text">{post.content}</p>
-                                        <div className="d-flex flex-wrap">
-                                            {(post.tags?.split(', ') || ['Unknown']).map((tag, tagIndex) => (
-                                                <label key={tagIndex} className="card-category d-inline-flex mb-1">
-                                                    <i className="bi bi-film"></i> {tag}
-                                                </label>
-                                            ))}
-                                        </div>
-                                        <div className="d-flex flex-wrap justify-content-end">
-                                            <a href="/comments" className="link-icon">
-                                                <i className="bi bi-chat-dots"></i>
-                                            </a>
+                        // Use only the latest secondary posts for each sourceFriendId
+                        const relatedSecondaryPosts =
+                            latestPostByUser[primaryPost.sender_id] === primaryPost
+                                ? Object.values(latestSecondaryPosts).filter(
+                                    (post) => post.sourceFriendId === primaryPost.sender_id
+                                )
+                                : [];
+
+
+                        return (
+                            <div key={index} className="row mb-4">
+                                {/* Primary Post */}
+                                <div className="col-12 col-sm-12 col-md-9 col-lg-5">
+                                    <div className="card card-main mb-3">
+                                        <div className="card-body d-flex flex-column">
+                                            <div className="d-flex gap-2">
+                                                <img
+                                                    src={primaryPost.profileImage || 'https://i.pinimg.com/564x/e8/d7/d0/e8d7d05f392d9c2cf0285ce928fb9f4a.jpg'}
+                                                    alt=""
+                                                    width="70"
+                                                    height="70"
+                                                    className="rounded-circle me-2"
+                                                />
+                                                <h5 className="card-title">
+                                                    <b>{primaryPost.displayname}</b> recommends <b>{primaryPost.title}</b>
+                                                    {primaryPost.recipient_type === 'specific' &&
+                                                        primaryPost.recipient_id === loggedInUserId && (
+                                                            <span> to <b>you</b></span>
+                                                        )}
+                                                </h5>
+                                            </div>
+                                            <p className="card-text">{primaryPost.content}</p>
+                                            <div className="d-flex flex-wrap">
+                                                {(primaryPost.tags?.split(', ') || ['Unknown']).map((tag, tagIndex) => (
+                                                    <label key={tagIndex} className="card-category d-inline-flex mb-1">
+                                                        <i className="bi bi-film"></i> {tag}
+                                                    </label>
+                                                ))}
+                                            </div>
+                                            <div className="d-flex flex-wrap justify-content-end">
+                                                <a href="/comments" className="link-icon">
+                                                    <i className="bi bi-chat-dots"></i>
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+
+                                {/* Secondary Posts */}
+                                <div className="col-12 col-sm-12 col-md-9 col-lg-5">
+                                    {relatedSecondaryPosts.map((secondaryPost, secIndex) => (
+                                        <div key={secIndex} className="card card-secondary mb-3">
+                                            <div className="card-body d-flex flex-column">
+                                                <div className="d-flex gap-2">
+                                                    <img
+                                                        src={secondaryPost.profileImage || 'https://i.pinimg.com/564x/e8/d7/d0/e8d7d05f392d9c2cf0285ce928fb9f4a.jpg'}
+                                                        alt=""
+                                                        width="70"
+                                                        height="70"
+                                                        className="rounded-circle me-2"
+                                                    />
+                                                    <h5 className="card-title">
+                                                        <b>{secondaryPost.displayname}</b>, friend of{' '}
+                                                        <b>{secondaryPost.sourceFriendDisplayName}</b>, recommends{' '}
+                                                        <b>{secondaryPost.title}</b>
+                                                        {secondaryPost.recipient_type === 'specific' &&
+                                                            secondaryPost.recipient_id === loggedInUserId && (
+                                                                <span> to <b>you</b></span>
+                                                            )}
+                                                    </h5>
+                                                </div>
+                                                <p className="card-text">{secondaryPost.content}</p>
+                                                <div className="d-flex flex-wrap">
+                                                    {(secondaryPost.tags?.split(', ') || ['Unknown']).map((tag, tagIndex) => (
+                                                        <label key={tagIndex} className="card-category d-inline-flex mb-1">
+                                                            <i className="bi bi-film"></i> {tag}
+                                                        </label>
+                                                    ))}
+                                                </div>
+                                                <div className="d-flex flex-wrap justify-content-end">
+                                                    <a href="/comments" className="link-icon">
+                                                        <i className="bi bi-chat-dots"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
-                        ))}
-                    </div>
+                        );
+                    })}
                 </div>
             </div>
         </div>
