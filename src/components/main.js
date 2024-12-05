@@ -29,22 +29,18 @@ const Main = () => {
         fetchPrimaryPosts();
         fetchSecondaryPosts();
     }, []);
-
-    // Find the latest post for each user in the primary posts
     const latestPostByUser = postsPrimary.reduce((acc, post) => {
         if (!acc[post.sender_id] || new Date(post.created_at) > new Date(acc[post.sender_id].created_at)) {
             acc[post.sender_id] = post;
         }
         return acc;
     }, {});
-
     return (
         <div className="scrollable-container" data-bs-offset="0">
             <div className="container mx-0 mx-sm-5 mx-lg-5 mt-5">
                 <div className="row justify-content-start">
                     {postsPrimary.map((primaryPost, index) => {
-                        // Only attach secondary posts to the latest primary post per user
-                        // Group secondary posts by sourceFriendId and keep only the most recent post for each
+                        // group secondary posts by sourceFriendId and keep only the most recent post for each
                         const latestSecondaryPosts = postsSecondary.reduce((acc, post) => {
                             if (
                                 !acc[post.sourceFriendId] ||
@@ -54,18 +50,14 @@ const Main = () => {
                             }
                             return acc;
                         }, {});
-
-                        // Use only the latest secondary posts for each sourceFriendId
                         const relatedSecondaryPosts =
                             latestPostByUser[primaryPost.sender_id] === primaryPost
                                 ? Object.values(latestSecondaryPosts).filter(
                                     (post) => post.sourceFriendId === primaryPost.sender_id
                                 )
                                 : [];
-
-
                         return (
-                            <div key={index} className="row mb-4">
+                            <div key={index} className="row">
                                 {/* Primary Post */}
                                 <div className="col-12 col-sm-12 col-md-9 col-lg-5">
                                     <div className="card card-main mb-3">
