@@ -57,10 +57,10 @@ const Main = () => {
                                 )
                                 : [];
                         return (
-                            <div key={index} className="row">
+                            <div key={index} className="row m-0">
                                 {/* Primary Post */}
                                 <div className="col-12 col-sm-12 col-md-9 col-lg-5">
-                                    <div className="card card-main mb-3">
+                                    <div className="card mb-4 card-main">
                                         <div className="card-body d-flex flex-column">
                                             <div className="d-flex gap-2">
                                                 <img
@@ -96,9 +96,9 @@ const Main = () => {
                                 </div>
 
                                 {/* Secondary Posts */}
-                                <div className="col-12 col-sm-12 col-md-9 col-lg-5">
+                                <div className="col-12 col-sm-12 col-md-9 col-lg-5 d-none d-md-block">
                                     {relatedSecondaryPosts.map((secondaryPost, secIndex) => (
-                                        <div key={secIndex} className="card card-secondary mb-3">
+                                        <div key={secIndex} className="card card-secondary mb-0">
                                             <div className="card-body d-flex flex-column">
                                                 <div className="d-flex gap-2">
                                                     <img
