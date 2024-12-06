@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const LoginRegister = () => {
+const LoginRegister = ({ onLoginSuccess }) => {
     const [isSigningUp, setIsSigningUp] = useState(false);
 
     // Login state
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loginMessage, setLoginMessage] = useState('');
 
     // Registration state
+    
     const [username, setUsername] = useState('');
     const [displayname, setDisplayname] = useState('');
     const [regEmail, setRegEmail] = useState('');
@@ -44,6 +47,8 @@ const LoginRegister = () => {
                 setLoginMessage(`Login successful! Welcome, ${response.data.user.displayname}.`);
                 setEmail('');
                 setPassword('');
+                onLoginSuccess();
+                navigate('/home');
             })
             .catch((error) => {
                 setLoading(false);
