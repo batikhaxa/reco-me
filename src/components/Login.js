@@ -98,33 +98,38 @@ const LoginRegister = () => {
         <div className="container mx-0 mx-sm-5 mx-lg-5 mt-5">
             <div className={`mt-5 cont border ${isSigningUp ? 's--signup' : ''}`}>
                 <div className="form sign-in">
-                    <h2 className="fs-2 p-3">👋 welcome back!</h2>
-                    <form onSubmit={handleLogin}>
-                        <label>
-                            <span>Email</span>
-                            <input
-                                type="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                required
-                            />
-                        </label>
-                        <label>
-                            <span>Password</span>
-                            <input
-                                type="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                            />
-                        </label>
-                        <p className="forgot-pass">Forgot password?</p>
-                        <button type="submit" className="submit" disabled={loading}>
-                            {loading ? 'Logging in...' : 'Sign In'}
-                        </button>
-                    </form>
-                    {error && <div className="alert alert-danger">{error}</div>}
-                    {loginMessage && <div className="alert alert-success">{loginMessage}</div>}
+                <div className='container border'>
+                <div className='col-1 align-items-center'> 
+                    <h2 className="fs-2 p-3 ">👋 Welcome back!</h2>
+                   
+                                    <form onSubmit={handleLogin}style={{marginBottom:"2rem"}}>
+                                        <label style={{marginBottom:"2rem"}}>
+                                            <span>Email</span>
+                                            <input
+                                                type="email"
+                                                value={email}
+                                                onChange={(e) => setEmail(e.target.value)}
+                                                required
+                                            />
+                                        </label>
+                                        <label style={{marginBottom:"2rem"}}>
+                                            <span>Password</span>
+                                            <input
+                                                type="password"
+                                                value={password}
+                                                onChange={(e) => setPassword(e.target.value)}
+                                                required
+                                            />
+                                        </label>
+                                        <p className="forgot-pass">Forgot password?</p>
+                                        <button type="submit" className="submit" disabled={loading}>
+                                            {loading ? 'Logging in...' : 'Sign In'}
+                                        </button>
+                                    </form>
+                                    {error && <div className="alert alert-danger">{error}</div>}
+                                    {loginMessage && <div className="alert alert-success">{loginMessage}</div>}
+                                </div>
+                        </div>
                 </div>
 
                 <div className="sub-cont">
