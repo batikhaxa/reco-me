@@ -8,8 +8,11 @@ import LoginRegister from './components/Login';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = () => {
-  // Debug flag for login state
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const handleLoginSuccess = () => {
+    setIsLoggedIn(true); // Update login state
+  };
 
   return (
     <Router>
@@ -17,7 +20,7 @@ const App = () => {
         {/* Public routes */}
         {!isLoggedIn && (
           <>
-            <Route path="/login" element={<LoginRegister />} />
+            <Route path="/login" element={<LoginRegister onLoginSuccess={handleLoginSuccess} />} />
             <Route path="/register" element={<LoginRegister />} />
             <Route path="*" element={<Navigate to="/login" replace />} />
           </>
