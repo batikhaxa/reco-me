@@ -51,6 +51,15 @@ VALUES
 ('sophia', 'Sophia', 'sophia@example.com', '3333'),
 ('mason', 'Mason', 'mason@example.com', '4444'); 
 
+-- Adding New Users
+INSERT INTO users (username, displayname, email, password_hash) 
+VALUES
+('ethan', 'Ethan', 'ethan@example.com', '5555'),   -- Friend of Charlie
+('ava', 'Ava', 'ava@example.com', '6666'),         -- Friend of Emma
+('harper', 'Harper', 'harper@example.com', '7777'),-- Friend of Ava
+('lucas', 'Lucas', 'lucas@example.com', '8888');   -- Friend of Harper
+
+
 -- Sample Friendships
 INSERT INTO friendships (user_id, friend_id, status) 
 VALUES
@@ -66,6 +75,15 @@ VALUES
 (9, 10, 'accepted'), -- Liam and Sophia are friends
 (10, 11, 'accepted'); -- Sophia and Mason are friends
 
+-- Additional Friends of Niko's Friends
+INSERT INTO friendships (user_id, friend_id, status) 
+VALUES
+(4, 5, 'accepted'),  -- Charlie and Ethan are friends
+(5, 6, 'accepted'),  -- Ethan and Ong are friends
+(8, 12, 'accepted'), -- Emma and Ava are friends
+(12, 13, 'accepted'), -- Ava and Harper are friends
+(13, 14, 'accepted'); -- Harper and Lucas are friends
+
 -- Sample Posts with Titles and Custom Timestamps
 INSERT INTO posts (sender_id, recipient_type, recipient_id, title, content, tags, created_at)
 VALUES
@@ -78,6 +96,7 @@ VALUES
 -- Posts by Bob (Friend of Niko and Alice)
 (3, 'specific', 4, 'The Great Gatsby', 'Charlie, this one is for you. Loved the book!', 'book', '2024-11-09 14:00:00'),
 (3, 'friends', NULL, 'Interstellar', 'A must-watch movie for sci-fi fans!', 'movie, sci-fi', '2024-11-08 13:00:00'),
+(3, 'friends', NULL, 'Interstellar2', 'A must-watch movie for sci-fi fans!', 'movie, sci-fi', '2024-11-08 13:01:00'),
 (3, 'friends', NULL, 'Silent Hill', 'The greatest game adaption', 'movie, horror', '2024-11-08 13:30:00'),
 (3, 'everyone', NULL, 'JavaScript for Beginners', 'For anyone interested in programming!', 'programming, tutorial', '2024-11-07 12:00:00'),
 -- Posts by Charlie (Friend of Bob, friends with Niko indirectly)
@@ -116,3 +135,21 @@ INSERT INTO posts (sender_id, recipient_type, recipient_id, title, content, tags
 VALUES
 (11, 'everyone', NULL, 'Mad Max: Fury Road', 'High-octane action like you’ve never seen before.', 'movie, action', '2024-11-08 18:00:00'),
 (11, 'friends', NULL, 'The Dark Knight', 'A superhero movie that redefined the genre. Incredible.', 'movie, superhero', '2024-11-07 16:00:00');
+
+-- Posts by Ethan (Friend of Charlie)
+INSERT INTO posts (sender_id, recipient_type, recipient_id, title, content, tags, created_at)
+VALUES
+(5, 'everyone', NULL, 'Dune (2021)', 'A visually stunning adaptation of Frank Herbert\'s classic.', 'movie, sci-fi', '2024-12-01 12:00:00'),
+(5, 'friends', NULL, 'Inception', 'A mind-bending journey through dreams within dreams.', 'movie, thriller', '2024-11-28 10:00:00');
+
+-- Posts by Ava (Friend of Emma)
+INSERT INTO posts (sender_id, recipient_type, recipient_id, title, content, tags, created_at)
+VALUES
+(12, 'everyone', NULL, 'To Kill a Mockingbird', 'A timeless tale of justice and morality.', 'book, classic', '2024-12-03 14:00:00'),
+(12, 'friends', NULL, 'Pride and Prejudice', 'A witty exploration of love and societal expectations.', 'book, romance', '2024-11-30 09:00:00');
+
+-- Posts by Harper (Friend of Ava)
+INSERT INTO posts (sender_id, recipient_type, recipient_id, title, content, tags, created_at)
+VALUES
+(13, 'everyone', NULL, 'The Witcher 3: Wild Hunt', 'An epic RPG with a richly detailed world.', 'game, RPG', '2024-12-02 20:00:00'),
+(13, 'friends', NULL, 'Hollow Knight', 'A beautifully crafted metroidvania.', 'game, indie', '2024-11-29 19:00:00');

@@ -7,7 +7,6 @@ import axios from 'axios';
 const Recommend = () => {
     const [title, setTitle] = useState('');
     const [audience, setAudience] = useState({ value: "everyone", label: "Everyone" });
-    const [isSearchable] = useState(true);
     const [tags, setTags] = useState([]);
     const [inputValue, setInputValue] = useState("");
     const [postContent, setPostContent] = useState(""); 
@@ -112,7 +111,7 @@ const Recommend = () => {
     return (
         <div className="scrollable-container" data-bs-offset="0">
             <div className="container mx-0 mx-sm-5 mx-lg-5 mt-5">
-                <row>
+                <row className="m-0">
                     <div className="col-12 col-md-9 col-lg-12">
                         <div id="recommend-card" className="card shadow-none p-1" style={{ width:'100%', maxWidth: '500px' }}>
                             <div className="card-body">

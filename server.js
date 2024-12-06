@@ -180,6 +180,7 @@ app.get('/api/posts/primary', async (req, res) => {
             JOIN friendships ON (friendships.user_id = ? AND friendships.friend_id = posts.sender_id AND friendships.status = 'accepted')
             WHERE (posts.recipient_type != 'specific' OR posts.recipient_id = ?)
             ORDER BY posts.created_at DESC
+            LIMIT 50;
         `, [loggedInUserId, loggedInUserId]);
 
         res.json(rows);
@@ -209,6 +210,7 @@ app.get('/api/posts/secondary', async (req, res) => {
               AND direct.friend_id IS NULL
               AND posts.sender_id != ?  -- Exclude the logged-in user's posts
             ORDER BY posts.created_at DESC
+            LIMIT 50;
         `, [loggedInUserId, loggedInUserId, loggedInUserId]);
 
         res.json(rows);

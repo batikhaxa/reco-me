@@ -54,7 +54,7 @@ const Search = () => {
     return (
         <div className="scrollable-container" data-bs-offset="0">
             <div className="container mx-0 mx-sm-5 mx-lg-5 mt-5">
-                <div className="row justify-content-start">
+                <div className="row justify-content-start m-0">
                     {/* First Column */}
                     <div className="col-12 col-sm-12 col-md-9 col-lg-5">
                         <div className="card mb-3">
@@ -107,7 +107,7 @@ const Search = () => {
                                                         ) : null}
                                                     </h5>
                                                 </div>
-                                                <div className="position-relative d-flex: column" style={{ padding: "1.5rem 0" }}>
+                                                <div className="position-relative d-flex: column">
                                                     <p className="card-text">{post.content}</p>
                                                     <div className="d-flex flex-wrap">
                                                         {(post.tags?.includes(', ') ? post.tags.split(', ') : [post.tags || 'Unknown']).map((tag, tagIndex) => (
@@ -156,7 +156,7 @@ const Search = () => {
                                                         ) : null}
                                                     </h5>
                                                 </div>
-                                                <div className="position-relative d-flex: column" style={{ padding: "1.5rem 0" }}>
+                                                <div className="position-relative d-flex: column">
                                                     <p className="card-text">{post.content}</p>
                                                     <div className="d-flex flex-wrap">
                                                         {(post.tags?.includes(', ') ? post.tags.split(', ') : [post.tags || 'Unknown']).map((tag, tagIndex) => (

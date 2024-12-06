@@ -95,35 +95,62 @@ const LoginRegister = () => {
     };
 
     return (
-        <div className="container mx-0 mx-sm-5 mx-lg-5 mt-5">
-            <div className={`mt-5 cont border ${isSigningUp ? 's--signup' : ''}`}>
-                <div className="form sign-in">
-                <div className='container border'>
-                <div className='col-1 align-items-center'> 
-                    <h2 className="fs-2 p-3 ">👋 Welcome back!</h2>
+        <div className="container  mx-0 mx-sm-5 mx-lg-5 mt-5">
+            
+            <div className={`mt-5 cont border ${isSigningUp ? 's--signup' : ''}`} style={{backgroundColor:"#FCEEF2"}}>
+            <div className='container mt-5 d-flex align-items-center '> 
+                <div className="form sign-in" 
+                style={{marginLeft:"100px",}}>
+               
+                <div className='col-7' style={{backgroundColor:""}}> 
+                    <h2 className="fs-2 p-3 mb-3">👋 Welcome back!</h2>
                    
-                                    <form onSubmit={handleLogin}style={{marginBottom:"2rem"}}>
+                                    <form onSubmit={handleLogin}>
                                         <label style={{marginBottom:"2rem"}}>
-                                            <span>Email</span>
+                                       
                                             <input
+                                                style={{width:"300px",
+                                                    background:"transparent",
+                                                    border:"none",
+                                                    borderBottom:"1px solid white"
+                                                }}
                                                 type="email"
                                                 value={email}
+                                                placeholder='email'
                                                 onChange={(e) => setEmail(e.target.value)}
                                                 required
                                             />
                                         </label>
                                         <label style={{marginBottom:"2rem"}}>
-                                            <span>Password</span>
                                             <input
+                                                style={{width:"300px",
+                                                background:"transparent",
+                                                border:"none",
+                                                  borderBottom:"1px solid white"
+                                                }}
                                                 type="password"
                                                 value={password}
+                                                 placeholder='password'
                                                 onChange={(e) => setPassword(e.target.value)}
                                                 required
                                             />
                                         </label>
                                         <p className="forgot-pass">Forgot password?</p>
-                                        <button type="submit" className="submit" disabled={loading}>
-                                            {loading ? 'Logging in...' : 'Sign In'}
+
+                                        <button type="submit"  disabled={loading} 
+                                        style={{
+                                            backgroundColor: "pink",
+                                            border: "2px  #000", 
+                                            borderRadius: "10px", 
+                                            boxShadow: "none", 
+                                            padding: "3px", 
+                                            width: "100px",
+                                            textAlign: "center",
+                                            fontSize: "1rem",
+                                            margin:"auto 120px"
+                                        }}>
+                                            {loading ? 'Logging in...' : 'SIGN IN'}
+                                       
                                         </button>
                                     </form>
                                     {error && <div className="alert alert-danger">{error}</div>}
