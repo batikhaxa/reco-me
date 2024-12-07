@@ -97,6 +97,9 @@ $card-border-radius: 25px;
     align-items: center;
     margin-top: 0.75rem;
 }
+label{
+   margin-bottom:"2rem"
+}
 
 .nav-link {
     &:hover, &:focus, &.active {

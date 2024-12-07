@@ -102,16 +102,16 @@ const LoginRegister = ({ onLoginSuccess }) => {
     return (
         <div className="container  mx-0 mx-sm-5 mx-lg-5 mt-5">
             
-            <div className={`mt-5 cont border ${isSigningUp ? 's--signup' : ''}`} style={{backgroundColor:"#FCEEF2"}}>
+            <div className={`mt-5 cont  ${isSigningUp ? 's--signup' : ''}`} style={{backgroundColor:"#FFEEF2"}}>
             <div className='container mt-5 d-flex align-items-center '> 
                 <div className="form sign-in" 
                 style={{marginLeft:"100px",}}>
                
-                <div className='col-7' style={{backgroundColor:""}}> 
-                    <h2 className="fs-2 p-3 mb-3">👋 Welcome back!</h2>
+                <div className='col-7'> 
+                    <h2 className="fs-2 p-3 mb-3"style={{fontFamily:"monospace"}}>👋 welcome back!</h2>
                    
                                     <form onSubmit={handleLogin}>
-                                        <label style={{marginBottom:"2rem"}}>
+                                        <label style={{marginBottom:"5rem"}}>
                                        
                                             <input
                                                 style={{width:"300px",
@@ -126,7 +126,7 @@ const LoginRegister = ({ onLoginSuccess }) => {
                                                 required
                                             />
                                         </label>
-                                        <label style={{marginBottom:"2rem"}}>
+                                        <label style={{marginBottom:"1rem"}}>
                                             <input
                                                 style={{width:"300px",
                                                 background:"transparent",
@@ -140,19 +140,20 @@ const LoginRegister = ({ onLoginSuccess }) => {
                                                 required
                                             />
                                         </label>
-                                        <p className="forgot-pass">Forgot password?</p>
+                                        <p className="forgot-pass" style={{marginBottom:"2rem" ,fontFamily:"monospace",color:"black"}}>forgot password?</p>
 
                                         <button type="submit"  disabled={loading} 
                                         style={{
-                                            backgroundColor: "pink",
+                                            backgroundColor: "#ffcad1",
                                             border: "2px  #000", 
-                                            borderRadius: "10px", 
+                                            borderRadius: "20px", 
                                             boxShadow: "none", 
-                                            padding: "3px", 
+                                            padding: "px", 
                                             width: "100px",
                                             textAlign: "center",
                                             fontSize: "1rem",
-                                            margin:"auto 120px"
+                                            margin:"auto 120px",
+                                            fontFamily:"monospace"
                                         }}>
                                             {loading ? 'Logging in...' : 'SIGN IN'}
                                        
@@ -164,9 +165,12 @@ const LoginRegister = ({ onLoginSuccess }) => {
                         </div>
                 </div>
 
-                <div className="sub-cont">
+                <div className="sub-cont" style={{backgroundColor:"#FFEEF2"}} >
                     <div className="img bg-gradient">
                         <div className="img__text m--up">
+                   
+                       
+                     
                             <a
                                 href="/"
                                 className="d-flex align-items-center link-body-emphasis text-decoration-none"
@@ -180,10 +184,11 @@ const LoginRegister = ({ onLoginSuccess }) => {
                                 />
                                 <span id="sidebar-title" className="fs-2">reco.me</span>
                             </a>
+                            <p style={{marginTop:"200px"}}>If you already have an account, just sign in. We've missed you!</p>
                         </div>
+
                         <div className="img__text m--in">
-                            <h2>One of us?</h2>
-                            <p>If you already have an account, just sign in. We've missed you!</p>
+                       <p style={{marginTop:"70px"}}>If you already have an account, just sign in. We've missed you!</p>
                         </div>
                         <div
                             className="img__btn"
@@ -194,52 +199,92 @@ const LoginRegister = ({ onLoginSuccess }) => {
                         </div>
                     </div>
 
-                    <div className="form sign-up">
-                        <h2>Time to feel like home,</h2>
-                        {error && <div className="alert alert-danger">{error}</div>}
-                        {success && <div className="alert alert-success">{success}</div>}
-                        <form onSubmit={handleRegister}>
-                            <label>
-                                <span>Username</span>
-                                <input
-                                    type="text"
-                                    value={username}
-                                    onChange={(e) => setUsername(e.target.value)}
-                                    required
-                                />
-                            </label>
-                            <label>
-                                <span>Display Name</span>
-                                <input
-                                    type="text"
-                                    value={displayname}
-                                    onChange={(e) => setDisplayname(e.target.value)}
-                                    required
-                                />
-                            </label>
-                            <label>
-                                <span>Email</span>
-                                <input
-                                    type="email"
-                                    value={regEmail}
-                                    onChange={(e) => setRegEmail(e.target.value)}
-                                    required
-                                />
-                            </label>
-                            <label>
-                                <span>Password</span>
-                                <input
-                                    type="password"
-                                    value={regPassword}
-                                    onChange={(e) => setRegPassword(e.target.value)}
-                                    required
-                                />
-                            </label>
-                            <button type="submit" className="submit" disabled={loading}>
-                                {loading ? 'Registering...' : 'Sign Up'}
-                            </button>
-                        </form>
+                    <div className='container mt-3 d-flex align-items-center '> 
+                    <div className="form sign-up mt-5" style={{marginLeft:"100px"}}>
+
+                        <div className='col-9'> 
+                            {error && <div className="alert alert-danger">{error}</div>}
+                            {success && <div className="alert alert-success">{success}</div>}
+                            <form onSubmit={handleRegister}>
+                                <label style={{marginBottom:"3rem"}}>
+                                    <input
+                                        style={{width:"300px",
+                                            background:"transparent",
+                                            border:"none",
+                                            borderBottom:"1px solid white"
+                                        }}
+                                        type="text"
+                                        value={username}
+                                        placeholder='username'
+                                        onChange={(e) => setUsername(e.target.value)}
+                                        required
+                                    />
+                                </label>
+                                <label style={{marginBottom:"3rem"}}>
+                                
+                                    <input
+                                    style={{width:"300px",
+                                        background:"transparent",
+                                        border:"none",
+                                        borderBottom:"1px solid white"
+                                    }}
+                                        type="text"
+                                        value={displayname}
+                                        placeholder='display name'
+                                        onChange={(e) => setDisplayname(e.target.value)}
+                                        required
+                                    />
+                                </label>
+                                <label style={{marginBottom:"3rem"}}>
+                                    
+                                    <input
+                                    style={{width:"300px",
+                                        background:"transparent",
+                                        border:"none",
+                                        borderBottom:"1px solid white"
+                                    }}
+                                        type="email"
+                                        value={regEmail}
+                                        placeholder='email'
+                                        onChange={(e) => setRegEmail(e.target.value)}
+                                        required
+                                    />
+                                </label>
+                                <label style={{marginBottom:"3rem"}}>
+                                    <input
+                                        style={{width:"300px",
+                                            background:"transparent",
+                                            border:"none",
+                                            borderBottom:"1px solid white"
+                                        }}
+                                        type="password"
+                                        value={regPassword}
+                                        placeholder='password'
+                                        onChange={(e) => setRegPassword(e.target.value)}
+                                        required
+                                    />
+                                </label>
+                                <button type="submit" className="submit" disabled={loading}
+                                
+                                style={{
+                                    backgroundColor: "#ffcad1",
+                                    border: "2px  #000", 
+                                    borderRadius: "20px", 
+                                    boxShadow: "none", 
+                                    padding: "10px", 
+                                    width: "100px",
+                                    textAlign: "center",
+                                    fontSize: "1rem",
+                                    margin:"auto 120px", 
+                                    fontFamily:"monospace"
+                                }}>
+                                    {loading ? 'Registering...' : 'SIGN UP'}
+                                </button>
+                            </form>
+                        </div>
                     </div>
+                   
+                </div>
                 </div>
             </div>
         </div>
