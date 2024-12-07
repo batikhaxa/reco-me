@@ -96,7 +96,7 @@ const Main = () => {
                                 </div>
 
                                 {/* Secondary Posts */}
-                                <div className="col-12 col-sm-12 col-md-9 col-lg-5 d-none d-md-block">
+                                <div className="col-12 col-sm-12 col-md-9 col-lg-5 d-none d-md-none d-lg-block">
                                     {relatedSecondaryPosts.map((secondaryPost, secIndex) => (
                                         <div key={secIndex} className="card card-secondary mb-0">
                                             <div className="card-body d-flex flex-column">
@@ -144,4 +144,4 @@ const Main = () => {
     );
 };
 
-export default Main;
+export default Main; 

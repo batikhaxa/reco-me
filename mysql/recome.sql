@@ -139,14 +139,13 @@ VALUES
 -- Posts by Ethan (Friend of Charlie)
 INSERT INTO posts (sender_id, recipient_type, recipient_id, title, content, tags, created_at)
 VALUES
-(5, 'everyone', NULL, 'Dune (2021)', 'A visually stunning adaptation of Frank Herbert\'s classic.', 'movie, sci-fi', '2024-12-01 12:00:00'),
 (5, 'friends', NULL, 'Inception', 'A mind-bending journey through dreams within dreams.', 'movie, thriller', '2024-11-28 10:00:00');
 
 -- Posts by Ava (Friend of Emma)
 INSERT INTO posts (sender_id, recipient_type, recipient_id, title, content, tags, created_at)
 VALUES
-(12, 'everyone', NULL, 'To Kill a Mockingbird', 'A timeless tale of justice and morality.', 'book, classic', '2024-12-03 14:00:00'),
-(12, 'friends', NULL, 'Pride and Prejudice', 'A witty exploration of love and societal expectations.', 'book, romance', '2024-11-30 09:00:00');
+(13, 'everyone', NULL, 'To Kill a Mockingbird', 'A timeless tale of justice and morality.', 'book, classic', '2024-12-03 14:00:00'),
+(13, 'friends', NULL, 'Pride and Prejudice', 'A witty exploration of love and societal expectations.', 'book, romance', '2024-11-30 09:00:00');
 
 -- Posts by Harper (Friend of Ava)
 INSERT INTO posts (sender_id, recipient_type, recipient_id, title, content, tags, created_at)
