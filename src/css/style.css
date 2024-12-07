@@ -58,3 +58,12 @@ textarea {
   display: block;
   /* Ensure proper block-level behavior */
 }
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  /* Ensure it's behind other content */
+  pointer-events: none;
+  /* Prevent it from interfering with user interactions */
+}

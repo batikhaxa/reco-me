@@ -1,9 +1,63 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState, useRef } from 'react';
 
 const Main = () => {
     const [postsPrimary, setPostsPrimary] = useState([]);
     const [postsSecondary, setPostsSecondary] = useState([]);
     const loggedInUserId = 1;
+
+    const drawLines = () => {
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // Clear the canvas
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        ctx.strokeStyle = 'red';
+        ctx.lineWidth = 5;
+
+        // Draw lines for primary posts
+        postsPrimary.forEach((primaryPost) => {
+            const primaryEl = primaryRefs.current[primaryPost.post_id];
+            if (!primaryEl) return;
+
+            const primaryRect = primaryEl.getBoundingClientRect();
+            const canvasRect = canvas.getBoundingClientRect();
+
+            const startX = primaryRect.left + primaryRect.width / 2 - canvasRect.left;
+            const startY = primaryRect.top + primaryRect.height / 2 - canvasRect.top;
+            const endX = -100; // Sidebar is at x = 0
+            const endY = startY; // Maintain vertical alignment
+
+            ctx.beginPath();
+            ctx.moveTo(startX, startY);
+            ctx.lineTo(endX, endY);
+            ctx.stroke();
+
+            console.log(`Line from (${startX}, ${startY}) to (${endX}, ${endY})`);
+        });
+
+        // Draw lines for secondary posts
+        postsSecondary.forEach((secondaryPost) => {
+            const secondaryEl = secondaryRefs.current[secondaryPost.post_id];
+            if (!secondaryEl) return;
+
+            const secondaryRect = secondaryEl.getBoundingClientRect();
+            const canvasRect = canvas.getBoundingClientRect();
+
+            const startX = secondaryRect.left + secondaryRect.width / 2 - canvasRect.left;
+            const startY = secondaryRect.top + secondaryRect.height / 2 - canvasRect.top;
+            const endX = 0; // Sidebar is at x = 0
+            const endY = startY; // Maintain vertical alignment
+
+            ctx.beginPath();
+            ctx.moveTo(startX, startY);
+            ctx.lineTo(endX, endY);
+            ctx.stroke();
+            console.log(`Line from (${startX}, ${startY}) to (${endX}, ${endY})`);
+        });
+    };
 
     useEffect(() => {
         const fetchPrimaryPosts = async () => {
@@ -29,14 +83,48 @@ const Main = () => {
         fetchPrimaryPosts();
         fetchSecondaryPosts();
     }, []);
-    const latestPostByUser = postsPrimary.reduce((acc, post) => {
-        if (!acc[post.sender_id] || new Date(post.created_at) > new Date(acc[post.sender_id].created_at)) {
-            acc[post.sender_id] = post;
-        }
-        return acc;
-    }, {});
+
+    const canvasRef = useRef(null);
+    const primaryRefs = useRef({});
+    const secondaryRefs = useRef({});
+
+    useLayoutEffect(() => {
+        console.log("Drawing lines for postsPrimary:", postsPrimary);
+        console.log("Drawing lines for postsSecondary:", postsSecondary);
+        drawLines();
+    }, [postsPrimary, postsSecondary]);
+
+    const latestPostByUser = React.useMemo(() => {
+        return postsPrimary.reduce((acc, post) => {
+            if (!acc[post.sender_id] || new Date(post.created_at) > new Date(acc[post.sender_id].created_at)) {
+                acc[post.sender_id] = post;
+            }
+            return acc;
+        }, {});
+    }, [postsPrimary]);
+
+    useEffect(() => {
+        const handleResize = () => {
+            const canvas = canvasRef.current;
+            if (canvas) {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                drawLines(); // Redraw lines on resize
+            }
+        };
+
+        handleResize(); // Initial resize
+        window.addEventListener("resize", handleResize); // Listen for resize events
+        return () => window.removeEventListener("resize", handleResize); // Cleanup on unmount
+    }, []); // Empty dependency array to ensure it runs only once
+
     return (
         <div className="scrollable-container" data-bs-offset="0">
+            <canvas
+                ref={canvasRef}
+                id="connection-lines"
+                style={{ position: 'absolute', zIndex: -1, top: 0, left: 0 }}
+            />
             <div className="container mx-0 mx-sm-5 mx-lg-5 mt-5">
                 <div className="row justify-content-start">
                     {postsPrimary.map((primaryPost, index) => {
@@ -64,6 +152,7 @@ const Main = () => {
                                         <div className="card-body d-flex flex-column">
                                             <div className="d-flex gap-2">
                                                 <img
+                                                    ref={(el) => (primaryRefs.current[primaryPost.post_id] = el)}
                                                     src={primaryPost.profileImage || 'https://i.pinimg.com/564x/e8/d7/d0/e8d7d05f392d9c2cf0285ce928fb9f4a.jpg'}
                                                     alt=""
                                                     width="70"
@@ -98,10 +187,11 @@ const Main = () => {
                                 {/* Secondary Posts */}
                                 <div className="col-12 col-sm-12 col-md-9 col-lg-5 d-none d-md-none d-lg-block">
                                     {relatedSecondaryPosts.map((secondaryPost, secIndex) => (
-                                        <div key={secIndex} className="card card-secondary mb-0">
+                                        <div key={secIndex} className="card card-secondary mb-0 ms-3">
                                             <div className="card-body d-flex flex-column">
                                                 <div className="d-flex gap-2">
                                                     <img
+                                                        ref={(el) => (secondaryRefs.current[secondaryPost.post_id] = el)}
                                                         src={secondaryPost.profileImage || 'https://i.pinimg.com/564x/e8/d7/d0/e8d7d05f392d9c2cf0285ce928fb9f4a.jpg'}
                                                         alt=""
                                                         width="70"
