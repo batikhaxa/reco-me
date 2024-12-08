@@ -86,10 +86,24 @@ const Main = () => {
     const secondaryRefs = useRef({});
 
     useLayoutEffect(() => {
-        console.log("Drawing lines for postsPrimary:", postsPrimary);
-        console.log("Drawing lines for postsSecondary:", postsSecondary);
-        drawLines();
-    }, [postsPrimary, postsSecondary]);
+        const handleLayoutUpdate = () => {
+            drawLines(); 
+        };
+        handleLayoutUpdate();
+        const handleResize = () => {
+            const canvas = canvasRef.current;
+            if (canvas) {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                drawLines(); 
+            }
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, [postsPrimary, postsSecondary]); 
 
     const latestPostByUser = React.useMemo(() => {
         return postsPrimary.reduce((acc, post) => {
