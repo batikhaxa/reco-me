@@ -114,21 +114,6 @@ const Main = () => {
         }, {});
     }, [postsPrimary]);
 
-    useEffect(() => {
-        const handleResize = () => {
-            const canvas = canvasRef.current;
-            if (canvas) {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-                drawLines(); // Redraw lines on resize
-            }
-        };
-
-        handleResize(); // Initial resize
-        window.addEventListener("resize", handleResize); // Listen for resize events
-        return () => window.removeEventListener("resize", handleResize); // Cleanup on unmount
-    }, []); // Empty dependency array to ensure it runs only once
-
     return (
         <div className="scrollable-container" data-bs-offset="0">
             <canvas
