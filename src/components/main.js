@@ -8,13 +8,14 @@ const Main = () => {
     const drawLines = () => {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
+        const container = document.querySelector('.scrollable-container');
+        canvas.height = container.scrollHeight; 
         canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        ctx.strokeStyle = 'red';
-        ctx.lineWidth = 5;
+        ctx.strokeStyle = '#FFCCE3';
+        ctx.lineWidth = 3;
 
         postsPrimary.forEach((primaryPost) => {
             const primaryEl = primaryRefs.current[primaryPost.post_id];
@@ -33,7 +34,7 @@ const Main = () => {
             ctx.lineTo(endX, endY);
             ctx.stroke();
 
-            console.log(`Line from (${startX}, ${startY}) to (${endX}, ${endY})`);
+            // console.log(`Line from (${startX}, ${startY}) to (${endX}, ${endY})`);
         });
 
         postsSecondary.forEach((secondaryPost) => {
@@ -45,14 +46,14 @@ const Main = () => {
 
             const startX = secondaryRect.left + secondaryRect.width / 2 - canvasRect.left;
             const startY = secondaryRect.top + secondaryRect.height / 2 - canvasRect.top;
-            const endX = 0; // Sidebar is at x = 0
-            const endY = startY; // Maintain vertical alignment
+            const endX = 0; 
+            const endY = startY; 
 
             ctx.beginPath();
             ctx.moveTo(startX, startY);
             ctx.lineTo(endX, endY);
             ctx.stroke();
-            console.log(`Line from (${startX}, ${startY}) to (${endX}, ${endY})`);
+            // console.log(`Line from (${startX}, ${startY}) to (${endX}, ${endY})`);
         });
     };
 
@@ -115,7 +116,7 @@ const Main = () => {
     }, [postsPrimary]);
 
     return (
-        <div className="scrollable-container" data-bs-offset="0">
+        <div className="scrollable-container">
             <canvas
                 ref={canvasRef}
                 id="connection-lines"
@@ -183,7 +184,7 @@ const Main = () => {
                                 {/* Secondary Posts */}
                                 <div className="col-12 col-sm-12 col-md-9 col-lg-5 d-none d-md-none d-lg-block">
                                     {relatedSecondaryPosts.map((secondaryPost, secIndex) => (
-                                        <div key={secIndex} className="card card-secondary mb-0 ms-3">
+                                        <div key={secIndex} className="card card-secondary mb-0 ms-3 me-0">
                                             <div className="card-body d-flex flex-column">
                                                 <div className="d-flex gap-2">
                                                     <img
