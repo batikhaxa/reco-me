@@ -11,13 +11,11 @@ const Main = () => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
-        // Clear the canvas
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         ctx.strokeStyle = 'red';
         ctx.lineWidth = 5;
 
-        // Draw lines for primary posts
         postsPrimary.forEach((primaryPost) => {
             const primaryEl = primaryRefs.current[primaryPost.post_id];
             if (!primaryEl) return;
@@ -27,8 +25,8 @@ const Main = () => {
 
             const startX = primaryRect.left + primaryRect.width / 2 - canvasRect.left;
             const startY = primaryRect.top + primaryRect.height / 2 - canvasRect.top;
-            const endX = -100; // Sidebar is at x = 0
-            const endY = startY; // Maintain vertical alignment
+            const endX = -100; 
+            const endY = startY; 
 
             ctx.beginPath();
             ctx.moveTo(startX, startY);
@@ -38,7 +36,6 @@ const Main = () => {
             console.log(`Line from (${startX}, ${startY}) to (${endX}, ${endY})`);
         });
 
-        // Draw lines for secondary posts
         postsSecondary.forEach((secondaryPost) => {
             const secondaryEl = secondaryRefs.current[secondaryPost.post_id];
             if (!secondaryEl) return;
