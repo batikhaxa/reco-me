@@ -35,13 +35,13 @@ app.post('/api/login', async (req, res) => {
             return res.status(400).json({ error: 'Invalid email or password' });
         }
 
-        // !! CHANGE THE TIME EXPIRING HERE !!
+        // !! token !!
         const token = jwt.sign({ user_id: user.id, email: user.email }, secretKey, { expiresIn: '1h' });
 
         res.status(200).json({
             message: 'Login successful',
             user: { id: user.id, email: user.email, displayname: user.displayname },
-            token, 
+            token, // Optional: use this token for authentication in frontend
         });
     } catch (error) {
         console.error(error);
@@ -223,22 +223,3 @@ app.get('/api/posts/secondary', async (req, res) => {
 app.listen(5000, () => {
     console.log('Server is running on http://localhost:5000');
 });
-// Verify token endpoint
-app.post('/api/verify-token', (req, res) => {
-    const token = req.body.token;  // The token should be sent in the request body
-
-    if (!token) {
-        return res.status(400).json({ error: 'Token is required' });
-    }
-
-    // Verify the token
-    jwt.verify(token, secretKey, (err, decoded) => {
-        if (err) {
-            return res.status(401).json({ error: 'Invalid or expired token' });
-        }
-
-        // Token is valid
-        res.status(200).json({ message: 'Token is valid', user: decoded });
-    });
-});
-
