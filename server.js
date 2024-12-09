@@ -107,9 +107,7 @@ app.get('/api/posts/search', async (req, res) => {
 
     try {
         const [rows] = await pool.query(`
-            SELECT posts.*, 
-                   users.displayname, 
-                   users.profile_picture
+            SELECT posts.*, users.displayname
             FROM posts
             JOIN users ON posts.sender_id = users.user_id
             JOIN friendships ON friendships.user_id = ? 
@@ -172,14 +170,11 @@ app.post('/api/posts', async (req, res) => {
 
 
 //posts from friends
-// posts from friends
 app.get('/api/posts/primary', async (req, res) => {
-    const loggedInUserId = 1; // temp
+    const loggedInUserId = 1; //temp
     try {
         const [rows] = await pool.query(`
-            SELECT posts.*, 
-                   users.displayname, 
-                   users.profile_picture
+            SELECT posts.*, users.displayname
             FROM posts
             JOIN users ON posts.sender_id = users.user_id
             JOIN friendships ON (friendships.user_id = ? AND friendships.friend_id = posts.sender_id AND friendships.status = 'accepted')
@@ -196,7 +191,6 @@ app.get('/api/posts/primary', async (req, res) => {
 });
 
 // posts from friends of friends (excluding direct friends)
-// posts from friends of friends (excluding direct friends)
 app.get('/api/posts/secondary', async (req, res) => {
     const loggedInUserId = 1; // Temporary hardcoded user ID
 
@@ -204,7 +198,6 @@ app.get('/api/posts/secondary', async (req, res) => {
         const [rows] = await pool.query(`
             SELECT posts.*, 
                    users.displayname AS displayname, 
-                   users.profile_picture AS profile_picture, 
                    friends.displayname AS sourceFriendDisplayName,
                    friends.user_id AS sourceFriendId
             FROM posts
