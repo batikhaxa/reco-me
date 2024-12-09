@@ -8,6 +8,7 @@ CREATE TABLE users (
     displayname VARCHAR(100) NOT NULL DEFAULT 'user',
     email VARCHAR(100) NOT NULL UNIQUE,
     password_hash VARCHAR(255) NOT NULL,
+    profile_picture VARCHAR(255) DEFAULT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -37,19 +38,19 @@ CREATE TABLE posts (
 );
 
 -- Users
-INSERT INTO users (username, displayname, email, password_hash) 
+INSERT INTO users (username, displayname, email, password_hash, profile_picture) 
 VALUES
-('niko', 'niko', 'mx.niqo@gmail.com', '1234'),
-('alice', 'Alice', 'alice@example.com', '5678'),
-('bob', 'Bob', 'bob@example.com', '91011'),
-('charlie', 'Charlie', 'charlie@example.com', '121314'),
-('david', 'David', 'david@example.com', '151617'),
-('ong', 'Ong', 'ong@example.com', '6969'),
-('olivia', 'Olivia', 'olivia@example.com', '1000'),
-('emma', 'Emma', 'emma@example.com', '1111'),
-('liam', 'Liam', 'liam@example.com', '2222'),
-('sophia', 'Sophia', 'sophia@example.com', '3333'),
-('mason', 'Mason', 'mason@example.com', '4444'); 
+('niko', 'niko', 'mx.niqo@gmail.com', '1234', 'https://example.com/profiles/niko.jpg'),
+('alice', 'Alice', 'alice@example.com', '5678', 'https://i.pinimg.com/736x/13/98/7e/13987ec20a1905d8b4dabd43326fdc7d.jpg'),
+('bob', 'Bob', 'bob@example.com', '91011', 'https://i.pinimg.com/736x/45/5f/0e/455f0ebb609724aa8dedb3b6a78c9267.jpg'),
+('charlie', 'Charlie', 'charlie@example.com', '121314', 'https://i.pinimg.com/736x/93/a2/74/93a274192c7a885412804d411f411753.jpg'),
+('david', 'David', 'david@example.com', '151617', 'https://example.com/profiles/david.jpg'),
+('ong', 'Ong', 'ong@example.com', '6969', 'https://example.com/profiles/ong.jpg'),
+('olivia', 'Olivia', 'olivia@example.com', '1000', 'https://i.pinimg.com/736x/10/ac/7b/10ac7bc571ac643af19843b9ad6e8706.jpg'),
+('emma', 'Emma', 'emma@example.com', '1111', 'https://i.pinimg.com/736x/42/56/a0/4256a0528e17793cc4ce90dd45401511.jpg'),
+('liam', 'Liam', 'liam@example.com', '2222', 'https://i.pinimg.com/736x/52/63/de/5263de535f05f906dde4aa56de2706ac.jpg'),
+('sophia', 'Sophia', 'sophia@example.com', '3333', 'https://example.com/profiles/sophia.jpg'),
+('mason', 'Mason', 'mason@example.com', '4444', 'https://example.com/profiles/mason.jpg');
 
 -- Adding New Users
 INSERT INTO users (username, displayname, email, password_hash) 
@@ -139,14 +140,13 @@ VALUES
 -- Posts by Ethan (Friend of Charlie)
 INSERT INTO posts (sender_id, recipient_type, recipient_id, title, content, tags, created_at)
 VALUES
-(5, 'everyone', NULL, 'Dune (2021)', 'A visually stunning adaptation of Frank Herbert\'s classic.', 'movie, sci-fi', '2024-12-01 12:00:00'),
 (5, 'friends', NULL, 'Inception', 'A mind-bending journey through dreams within dreams.', 'movie, thriller', '2024-11-28 10:00:00');
 
 -- Posts by Ava (Friend of Emma)
 INSERT INTO posts (sender_id, recipient_type, recipient_id, title, content, tags, created_at)
 VALUES
-(12, 'everyone', NULL, 'To Kill a Mockingbird', 'A timeless tale of justice and morality.', 'book, classic', '2024-12-03 14:00:00'),
-(12, 'friends', NULL, 'Pride and Prejudice', 'A witty exploration of love and societal expectations.', 'book, romance', '2024-11-30 09:00:00');
+(13, 'everyone', NULL, 'To Kill a Mockingbird', 'A timeless tale of justice and morality.', 'book, classic', '2024-12-03 14:00:00'),
+(13, 'friends', NULL, 'Pride and Prejudice', 'A witty exploration of love and societal expectations.', 'book, romance', '2024-11-30 09:00:00');
 
 -- Posts by Harper (Friend of Ava)
 INSERT INTO posts (sender_id, recipient_type, recipient_id, title, content, tags, created_at)
