@@ -12,7 +12,6 @@ const LoginRegister = ({ onLoginSuccess }) => {
     const [loginMessage, setLoginMessage] = useState('');
 
     // Registration state
-    
     const [username, setUsername] = useState('');
     const [displayname, setDisplayname] = useState('');
     const [regEmail, setRegEmail] = useState('');
@@ -27,34 +26,59 @@ const LoginRegister = ({ onLoginSuccess }) => {
         setError('');
         setSuccess('');
     }, [isSigningUp]);
-
+    const verifyToken = async (token) => {
+        try {
+            const response = await axios.post('http://localhost:5000/api/verify-token', { token });
+            if (response.data.valid) {
+                console.log('Token is valid');
+            } else {
+                console.log('Token is invalid');
+                setError('Session expired. Please log in again.');
+                localStorage.removeItem('token');
+                navigate('/login'); // Redirect to login page
+            }
+        } catch (err) {
+            console.error('Error verifying token:', err);
+            setError('Error verifying session. Please log in again.');
+            localStorage.removeItem('token');
+            navigate('/login');
+        }
+    };
     const handleLogin = (e) => {
         e.preventDefault();
-
+        
         setLoginMessage('');
         setError('');
-
+        
         if (!email || !password) {
             setError('Please enter both email and password');
             return;
         }
-
+    
         setLoading(true);
-
+    
         axios.post('http://localhost:5000/api/login', { email, password })
             .then((response) => {
+                console.log('Login successful, response:', response);
                 setLoading(false);
-                setLoginMessage(`Login successful! Welcome, ${response.data.user.displayname}.`);
-                setEmail('');
-                setPassword('');
-                onLoginSuccess();
-                navigate('/home');
+                const token = response.data.token;
+    
+                if (token) {
+                    setLoginMessage(`Login successful! Welcome, ${response.data.user.displayname}.`);
+                    onLoginSuccess(token);  // Pass token to parent component
+                    setEmail('');
+                    setPassword('');
+                    navigate('/home');
+                } else {
+                    setError('Token missing in response');
+                }
             })
             .catch((error) => {
                 setLoading(false);
                 setError(error.response?.data?.error || 'Invalid email or password');
             });
     };
+    
 
     const handleRegister = (e) => {
         e.preventDefault();
@@ -100,68 +124,63 @@ const LoginRegister = ({ onLoginSuccess }) => {
     };
 
     return (
-        <div className="container  mx-0 mx-sm-5 mx-lg-5 mt-5">
-            
-            <div className={`mt-5 cont border ${isSigningUp ? 's--signup' : ''}`} style={{backgroundColor:"#FCEEF2"}}>
-            <div className='container mt-5 d-flex align-items-center '> 
-                <div className="form sign-in" 
-                style={{marginLeft:"100px",}}>
-               
-                <div className='col-7' style={{backgroundColor:""}}> 
-                    <h2 className="fs-2 p-3 mb-3">👋 Welcome back!</h2>
-                   
-                                    <form onSubmit={handleLogin}>
-                                        <label style={{marginBottom:"2rem"}}>
-                                       
-                                            <input
-                                                style={{width:"300px",
-                                                    background:"transparent",
-                                                    border:"none",
-                                                    borderBottom:"1px solid white"
-                                                }}
-                                                type="email"
-                                                value={email}
-                                                placeholder='email'
-                                                onChange={(e) => setEmail(e.target.value)}
-                                                required
-                                            />
-                                        </label>
-                                        <label style={{marginBottom:"2rem"}}>
-                                            <input
-                                                style={{width:"300px",
-                                                background:"transparent",
-                                                border:"none",
-                                                  borderBottom:"1px solid white"
-                                                }}
-                                                type="password"
-                                                value={password}
-                                                 placeholder='password'
-                                                onChange={(e) => setPassword(e.target.value)}
-                                                required
-                                            />
-                                        </label>
-                                        <p className="forgot-pass">Forgot password?</p>
-
-                                        <button type="submit"  disabled={loading} 
+        <div className="container mx-0 mx-sm-5 mx-lg-5 mt-5">
+            <div className={`mt-5 cont border ${isSigningUp ? 's--signup' : ''}`} style={{ backgroundColor: "#FCEEF2" }}>
+                <div className='container mt-5 d-flex align-items-center'>
+                    <div className="form sign-in" style={{ marginLeft: "100px" }}>
+                        <div className='col-7'>
+                            <h2 className="fs-2 p-3 mb-3">👋 Welcome back!</h2>
+                            <form onSubmit={handleLogin}>
+                                <label style={{ marginBottom: "2rem" }}>
+                                    <input
                                         style={{
-                                            backgroundColor: "pink",
-                                            border: "2px  #000", 
-                                            borderRadius: "10px", 
-                                            boxShadow: "none", 
-                                            padding: "3px", 
-                                            width: "100px",
-                                            textAlign: "center",
-                                            fontSize: "1rem",
-                                            margin:"auto 120px"
-                                        }}>
-                                            {loading ? 'Logging in...' : 'SIGN IN'}
-                                       
-                                        </button>
-                                    </form>
-                                    {error && <div className="alert alert-danger">{error}</div>}
-                                    {loginMessage && <div className="alert alert-success">{loginMessage}</div>}
-                                </div>
+                                            width: "300px",
+                                            background: "transparent",
+                                            border: "none",
+                                            borderBottom: "1px solid white"
+                                        }}
+                                        type="email"
+                                        value={email}
+                                        placeholder='email'
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        required
+                                    />
+                                </label>
+                                <label style={{ marginBottom: "2rem" }}>
+                                    <input
+                                        style={{
+                                            width: "300px",
+                                            background: "transparent",
+                                            border: "none",
+                                            borderBottom: "1px solid white"
+                                        }}
+                                        type="password"
+                                        value={password}
+                                        placeholder='password'
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        required
+                                    />
+                                </label>
+                                <p className="forgot-pass">Forgot password?</p>
+                                <button type="submit" disabled={loading}
+                                    style={{
+                                        backgroundColor: "pink",
+                                        border: "2px #000",
+                                        borderRadius: "10px",
+                                        boxShadow: "none",
+                                        padding: "3px",
+                                        width: "100px",
+                                        textAlign: "center",
+                                        fontSize: "1rem",
+                                        margin: "auto 120px"
+                                    }}>
+                                    {loading ? 'Logging in...' : 'SIGN IN'}
+                                </button>
+                            </form>
+                            {error && <div className="alert alert-danger">{error}</div>}
+                            {loginMessage && <div className="alert alert-success">{loginMessage}</div>}
                         </div>
+                    </div>
                 </div>
 
                 <div className="sub-cont">
