@@ -8,7 +8,7 @@ import LoginRegister from './components/Login';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleLoginSuccess = () => {
     setIsLoggedIn(true); // Update login state

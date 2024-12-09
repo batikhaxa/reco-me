@@ -150,7 +150,7 @@ const Main = () => {
                                             <div className="d-flex gap-2">
                                                 <img
                                                     ref={(el) => (primaryRefs.current[primaryPost.post_id] = el)}
-                                                    src={primaryPost.profileImage || 'https://i.pinimg.com/564x/e8/d7/d0/e8d7d05f392d9c2cf0285ce928fb9f4a.jpg'}
+                                                    src={primaryPost.profile_picture || 'https://i.pinimg.com/564x/e8/d7/d0/e8d7d05f392d9c2cf0285ce928fb9f4a.jpg'}
                                                     alt=""
                                                     width="70"
                                                     height="70"
@@ -189,7 +189,7 @@ const Main = () => {
                                                 <div className="d-flex gap-2">
                                                     <img
                                                         ref={(el) => (secondaryRefs.current[secondaryPost.post_id] = el)}
-                                                        src={secondaryPost.profileImage || 'https://i.pinimg.com/564x/e8/d7/d0/e8d7d05f392d9c2cf0285ce928fb9f4a.jpg'}
+                                                        src={secondaryPost.profile_picture || 'https://i.pinimg.com/564x/e8/d7/d0/e8d7d05f392d9c2cf0285ce928fb9f4a.jpg'}
                                                         alt=""
                                                         width="70"
                                                         height="70"
