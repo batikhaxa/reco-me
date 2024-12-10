@@ -12,41 +12,42 @@ app.use(cors());
 app.use(express.json());
 
 app.post('/api/login', async (req, res) => {
-    const { email, password } = req.body;
+    const crypto = require('crypto');
+    const sessions = {}; // Replace with Redis or database in production
 
-    if (!email || !password) {
-        return res.status(400).json({ error: 'Email and password are required' });
-    }
-
-    try {
-        // Fetch user with matching email
-        const [users] = await pool.query('SELECT * FROM users WHERE email = ?', [email]);
-
-        if (users.length === 0) {
-            return res.status(400).json({ error: 'Invalid email or password' });
+    app.post('/api/login', async (req, res) => {
+        const { email, password } = req.body;
+        if (!email || !password) {
+            return res.status(400).json({ error: 'Email and password are required' });
         }
-
-        const user = users[0];
-
-        // Compare the password with the hashed password in the database
-        const passwordMatch = await bcrypt.compare(password, user.password_hash);
-
-        if (!passwordMatch) {
-            return res.status(400).json({ error: 'Invalid email or password' });
+        try {
+            // Fetch user with matching email
+            const [users] = await pool.query('SELECT * FROM users WHERE email = ?', [email]);
+            if (users.length === 0) {
+                return res.status(400).json({ error: 'Invalid email or password' });
+            }
+            const user = users[0];
+            // Compare the password with the hashed password in the database
+            const passwordMatch = await bcrypt.compare(password, user.password_hash);
+            if (!passwordMatch) {
+                return res.status(400).json({ error: 'Invalid email or password' });
+            }
+            // Generate session ID and save it
+            const sessionId = crypto.randomUUID();
+            sessions[sessionId] = { userId: user.id, email: user.email, createdAt: new Date() };
+            console.log('[Current Sessions]', sessions);
+            // Set session ID as a secure, HttpOnly cookie
+            res.cookie('sessionId', sessionId, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: 'strict',
+            });
+            res.status(200).json({ message: 'Login successful', user: { id: user.id, email: user.email, displayname: user.displayname } });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Internal server error' });
         }
-
-        // !! token !!
-        const token = jwt.sign({ user_id: user.id, email: user.email }, secretKey, { expiresIn: '1h' });
-
-        res.status(200).json({
-            message: 'Login successful',
-            user: { id: user.id, email: user.email, displayname: user.displayname },
-            token, // Optional: use this token for authentication in frontend
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal server error' });
-    }
+    });
 });
 
 app.post('/api/registration', async (req, res) => {
