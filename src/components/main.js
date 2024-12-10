@@ -116,7 +116,7 @@ const Main = () => {
     }, [postsPrimary]);
 
     return (
-        <div className="scrollable-container">
+        <div className="scrollable-container p-4">
             <canvas
                 ref={canvasRef}
                 id="connection-lines"
@@ -215,8 +215,8 @@ const Main = () => {
                                                 </div>
                                                 <div className="d-flex flex-wrap justify-content-end">
                                                     <a href="/comments" className="link-icon">
-                                                        <i className="bi bi-chat-dots"></i>
-                                                    </a>
+                                                    <i className="bi bi-chat-dots"></i>
+                                                   </a>
                                                 </div>
                                             </div>
                                         </div>
