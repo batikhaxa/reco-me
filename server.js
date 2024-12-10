@@ -1,97 +1,118 @@
 // server.js (Backend)
 const express = require('express');
-const cors = require('cors');
+
 const app = express();
 const pool = require('./db');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const secretKey = 'your_jwt_secret';
+const bcrypt = require('bcrypt'); // bcrypt: stronger but slower. good for passwords
+const crypto = require('crypto'); // crypto: weaker but faster. good for quick validation
+const dayjs = require('dayjs');
+const cookieParser = require('cookie-parser'); 
 const saltRounds = 10;
+
 app.use(express.static('public'));
-app.use(cors());
 app.use(express.json());
+app.use(cookieParser()); 
 
-app.post('/api/login', async (req, res) => {
-    const crypto = require('crypto');
-    const sessions = {}; // Replace with Redis or database in production
+const cors = require('cors');
+const corsOptions = {
+    origin: 'http://localhost:3000', 
+    credentials: true, // allows cookies to be sent/received
+};
+app.use(cors(corsOptions));
 
-    app.post('/api/login', async (req, res) => {
-        const { email, password } = req.body;
-        if (!email || !password) {
-            return res.status(400).json({ error: 'Email and password are required' });
+app.use(async (req, res, next) => {
+    const sessionId = req.cookies.sessionId;
+    if (!sessionId) {
+        return next(); // Skip session validation if there's no sessionId cookie
+    }
+    try {
+        const [sessions] = await pool.query(
+            'SELECT * FROM sessions WHERE session_id = ? AND expires_at > NOW()',
+            [sessionId]
+        );
+        if (sessions.length > 0) {
+            req.session = sessions[0];
+        } else {
+            // clear invalid/expired session cookie
+            res.clearCookie('sessionId');
         }
-        try {
-            // Fetch user with matching email
-            const [users] = await pool.query('SELECT * FROM users WHERE email = ?', [email]);
-            if (users.length === 0) {
-                return res.status(400).json({ error: 'Invalid email or password' });
-            }
-            const user = users[0];
-            // Compare the password with the hashed password in the database
-            const passwordMatch = await bcrypt.compare(password, user.password_hash);
-            if (!passwordMatch) {
-                return res.status(400).json({ error: 'Invalid email or password' });
-            }
-            // Generate session ID and save it
-            const sessionId = crypto.randomUUID();
-            sessions[sessionId] = { userId: user.id, email: user.email, createdAt: new Date() };
-            console.log('[Current Sessions]', sessions);
-            // Set session ID as a secure, HttpOnly cookie
-            res.cookie('sessionId', sessionId, {
-                httpOnly: true,
-                secure: process.env.NODE_ENV === 'production',
-                sameSite: 'strict',
-            });
-            res.status(200).json({ message: 'Login successful', user: { id: user.id, email: user.email, displayname: user.displayname } });
-        } catch (error) {
-            console.error(error);
-            res.status(500).json({ error: 'Internal server error' });
-        }
-    });
+    } catch (error) {
+        console.error('Session validation error:', error);
+    }
+    next();
 });
 
+app.post('/api/login', async (req, res) => {
+    console.log('Attempting log in');
+    const { email, password } = req.body;
+    if (!email || !password) {
+        console.log('Input error');
+        return res.status(400).json({ error: 'Email and password are required' });
+    }
+    try {
+        console.log('Attempting user auth');
+        const [users] = await pool.query('SELECT * FROM users WHERE email = ?', [email]);
+
+        if (users.length === 0) {
+            return res.status(400).json({ error: 'Invalid email or password' });
+        }
+        const user = users[0];
+        console.log('User found:', user);
+        const passwordMatch = await bcrypt.compare(password, user.password_hash);
+
+        if (!passwordMatch) {
+            return res.status(400).json({ error: 'Invalid email or password' });
+        }
+        console.log('Attempting session id');
+        const sessionId = crypto.randomUUID();
+        const expiresAt = dayjs().add(1, 'hour').toDate();
+
+        await pool.query(
+            'INSERT INTO sessions (session_id, user_id, expires_at) VALUES (?, ?, ?)',
+            [sessionId, user.user_id, expiresAt]
+        );
+        res.cookie('sessionId', sessionId, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+        });
+        console.log('Session ID: ' + sessionId)
+        res.status(200).json({
+            message: 'Login successful',
+            user: { id: user.id, email: user.email, displayname: user.displayname },
+        });
+        console.log('login successful!');
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
 app.post('/api/registration', async (req, res) => {
     const { displayname, username, email, password } = req.body;
 
     if (!displayname || !username || !email || !password) {
         return res.status(400).json({ error: 'All fields are required' });
     }
-
     try {
-        // Check if the email or username already exists
+        console.log('Checking for existing user...');
         const [existingUser] = await pool.query('SELECT * FROM users WHERE email = ? OR username = ?', [email, username]);
-        
         if (existingUser.length > 0) {
+            console.log('User already exists.');
             return res.status(400).json({ error: 'Email or Username is already registered' });
         }
-
-        // Hash the password
-        bcrypt.hash(password, saltRounds, async (err, hashedPassword) => {
-            if (err) {
-                console.error(err);
-                return res.status(500).json({ error: 'Error hashing password' });
-            }
-
-            // Save the new user to the database
-            try {
-                const [result] = await pool.query(
-                    'INSERT INTO users (displayname, username, email, password_hash) VALUES (?, ?, ?, ?)',
-                    [displayname, username, email, hashedPassword]
-                );
-            
-                res.status(201).json({ success: true, user_id: result.insertId });
-            } catch (error) {
-                console.error(error);
-                res.status(500).json({ error: 'Database error while registering user' });
-            }
-            
-        });
+        console.log('Hashing password...');
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+        const [result] = await pool.query(
+            'INSERT INTO users (displayname, username, email, password_hash) VALUES (?, ?, ?, ?)',
+            [displayname, username, email, hashedPassword]
+        );
+        console.log('User registration successful.');
+        res.status(201).json({ success: true, user_id: result.insertId }); 
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Error checking email or username in database' });
+        console.error('Error occurred during registration:', error);
+        res.status(500).json({ error: 'Internal server error' });
     }
 });
-
 
 // search posts based on tags (from friends only)
 app.get('/api/posts/search', async (req, res) => {

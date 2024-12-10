@@ -4,12 +4,12 @@ USE `recomedb`;
 
 CREATE TABLE users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    displayname VARCHAR(100) NOT NULL DEFAULT 'user',
+    username VARCHAR(100) NOT NULL UNIQUE,
+    displayname VARCHAR(255) NOT NULL DEFAULT 'user',
     email VARCHAR(100) NOT NULL UNIQUE,
     password_hash VARCHAR(255) NOT NULL,
     profile_picture VARCHAR(255) DEFAULT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE friendships (
@@ -41,8 +41,9 @@ CREATE TABLE sessions (
     user_id INT NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     expires_at DATETIME NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
+
 -- Users
 INSERT INTO users (username, displayname, email, password_hash, profile_picture) 
 VALUES
