@@ -113,7 +113,7 @@ const Recommend = () => {
             <div className="container mx-0 mx-sm-5 mx-lg-5 mt-5">
                 <row className="m-0">
                     <div className="col-12 col-md-9 col-lg-12">
-                        <div id="recommend-card" className="card shadow-none p-1" style={{ width:'100%', maxWidth: '500px' }}>
+                        <div id="recommend-card mb-5" className="card shadow-none p-1" style={{ width:'100%', maxWidth: '500px' }}>
                             <div className="card-body">
                                 <form>
                                     {/* Editable title */}
