@@ -95,12 +95,14 @@ const LoginRegister = ({ onLoginSuccess }) => {
     };
 
     return (
+
+        <div className='container justity-content-center'>
         <div className="container mx-0 mx-sm-5 mx-lg-5 mt-5">
             <div className={`mt-5 cont ${isSigningUp ? 's--signup' : ''}`} style={{ backgroundColor: "#FFEEF2" }}>
                 <div className="container mt-5 d-flex align-items-center">
                     {/* Sign-in Form */}
-                    <div className="form sign-in d-flex justify-content-center align-items-center">
-                        <div className="col-8">
+                    <div className="form mx-5 sign-in d-flex justify-content-center align-items-center">
+                        <div className="col-8 ">
                             <h2 className="fs-2 p-3 mb-3 text-lowercase" style={{ fontFamily: "monospace" }}>👋 Welcome back!</h2>
                             <form onSubmit={handleLogin}>
                                 <label>
@@ -161,7 +163,7 @@ const LoginRegister = ({ onLoginSuccess }) => {
 
                     <div className="container mt-3 d-flex align-items-center">
                         <div className="mt-4 form sign-up d-flex justify-content-center align-items-center">
-                            <div className="col-7">
+                            <div className="col-8">
                                 <p className="fs-2 text-lowercase mb-4" style={{ fontFamily: "monospace" }}>new here? 🤗</p>
                                 <form onSubmit={handleRegister}>
                                     <label>
@@ -220,12 +222,14 @@ const LoginRegister = ({ onLoginSuccess }) => {
                 </div>
             </div>
         </div>
+        </div>
+
     );
 };
 
 // Styles
 const inputStyle = {
-    width: "350px",
+    width: "none",
     background: "transparent",
     border: "none",
     borderBottom: "1px solid white",
@@ -236,18 +240,19 @@ const buttonStyle = {
     border: "2px #000",
     borderRadius: "20px",
     boxShadow: "none",
-    padding: "10px",
-    width: "100px",
+    padding: "2%",
+    maxWidth: "100px",
     textAlign: "center",
     fontSize: "1rem",
     fontFamily: "monospace",
-    margin: "auto 120px",
+    margin: "auto 25%",
 };
 
 const forgotPassStyle = {
     marginBottom: "2rem",
     fontFamily: "monospace",
     color: "black",
+    marginLeft:"5rem",
 };
 
 export default LoginRegister;

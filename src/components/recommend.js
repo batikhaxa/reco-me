@@ -109,7 +109,7 @@ const Recommend = () => {
     };
 
     return (
-        <div className="scrollable-container" data-bs-offset="0">
+        <div className="scrollable-container p-4" data-bs-offset="0">
             <div className="container mx-0 mx-sm-5 mx-lg-5 mt-5">
                 <row className="m-0">
                     <div className="col-12 col-md-9 col-lg-12">
