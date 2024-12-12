@@ -52,7 +52,7 @@ const Search = () => {
     const columnTwoPosts = posts.filter((_, index) => index % 2 !== 0);
 
     return (
-        <div className="scrollable-container" data-bs-offset="0">
+        <div className="scrollable-container p-4" data-bs-offset="0">
             <div className="container mx-0 mx-sm-5 mx-lg-5 mt-5">
                 <div className="row justify-content-start m-0">
                     {/* First Column */}
