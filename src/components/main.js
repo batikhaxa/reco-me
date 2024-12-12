@@ -60,7 +60,13 @@ const Main = () => {
     useEffect(() => {
         const fetchPrimaryPosts = async () => {
             try {
-                const response = await fetch('/api/posts/primary');
+                const response = await fetch('http://localhost:5000/api/posts/primary', {
+                    method: 'GET',
+                    credentials: 'include',
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
                 const data = await response.json();
                 setPostsPrimary(data);
             } catch (error) {
@@ -70,7 +76,13 @@ const Main = () => {
 
         const fetchSecondaryPosts = async () => {
             try {
-                const response = await fetch('/api/posts/secondary');
+                const response = await fetch('/api/posts/secondary', {
+                    method: 'GET',
+                    credentials: 'include', // Include credentials (cookies, etc.)
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
                 const data = await response.json();
                 setPostsSecondary(data);
             } catch (error) {
