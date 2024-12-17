@@ -30,15 +30,12 @@ const App = () => {
   useEffect(() => {
     checkLoginStatus();
   }, []);
-
   const handleLoginSuccess = () => {
     setIsLoggedIn(true);
   };
-
   const handleLogout = () => {
     setIsLoggedIn(false); // Immediately update the login state
   };
-
   if (loading) {
     return <div>Loading...</div>;
   }
