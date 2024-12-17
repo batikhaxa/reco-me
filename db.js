@@ -9,5 +9,4 @@ const pool = mysql.createPool({
     password: process.env.DB_PASS,
     database: process.env.DB_NAME,
 });
-console.log("Successfully created pool!");
 module.exports = pool;

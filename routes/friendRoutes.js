@@ -7,9 +7,8 @@ router.use(checkAuth);
 
 router.get('/', async (req, res) => {
     // Get userId from query parameters
-    const { userId } = req.query;
-
-    if (!userId) {
+    const loggedInUserId = req.userSession?.user_id;
+    if (!loggedInUserId) {
         return res.status(400).json({ error: 'userId is required' });
     }
 
@@ -19,7 +18,7 @@ router.get('/', async (req, res) => {
             FROM users u
             JOIN friendships f ON f.friend_id = u.user_id
             WHERE f.user_id = ? AND f.status = 'accepted'
-        `, [userId]);
+        `, [loggedInUserId]);
 
         res.json(rows);
     } catch (error) {

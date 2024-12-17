@@ -37,7 +37,7 @@ const LoginRegister = ({ onLoginSuccess }) => {
 
         setLoading(true);
         axios
-            .post('http://localhost:5000/api/login', { email, password })
+            .post('http://localhost:5000/api/login', { email, password }, { withCredentials: true })
             .then((response) => {
                 setLoading(false);
                 setLoginMessage(`Login successful! Welcome, ${response.data.user.displayname}.`);
