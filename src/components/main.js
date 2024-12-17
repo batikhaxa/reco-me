@@ -76,9 +76,9 @@ const Main = () => {
 
         const fetchSecondaryPosts = async () => {
             try {
-                const response = await fetch('/api/posts/secondary', {
+                const response = await fetch('http://localhost:5000/api/posts/secondary', {
                     method: 'GET',
-                    credentials: 'include', // Include credentials (cookies, etc.)
+                    credentials: 'include',
                 });
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);

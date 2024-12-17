@@ -64,8 +64,8 @@ const UserDropdown = () => (
                 <hr className="dropdown-divider" />
             </li>
             <li>
-                <a className="dropdown-item" href="/signout">
-                    sign out
+                <a className="dropdown-item" href="/logout">
+                    log out
                 </a>
             </li>
         </ul>

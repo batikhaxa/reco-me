@@ -6,7 +6,8 @@ const { checkAuth } = require('../middleware/authMiddleware');
 router.use(checkAuth);
 
 router.post('/', async (req, res) => {
-    const { sender_id, recipient_type, recipient_id, title, content, tags } = req.body;
+    const { recipient_type, recipient_id, title, content, tags } = req.body;
+    const sender_id = req.userSession?.user_id;
 
     try {
         const [result] = await pool.query(
@@ -23,14 +24,13 @@ router.post('/', async (req, res) => {
 });
 
 router.get('/search', async (req, res) => {
-    const { userId, tags } = req.query;
+    const { tags } = req.query;
+    const loggedInUserId = req.userSession?.user_id;
 
-    if (!userId || !tags) {
+    if (!loggedInUserId || !tags) {
         return res.status(400).json({ error: 'userId and tags are required' });
     }
-
-    const tagArray = tags.split(','); // Tags come as a comma-separated string
-
+    const tagArray = tags.split(',');
     // Prepare query with placeholders for tags
     const tagConditions = tagArray.map(() => 'posts.tags LIKE ?').join(' AND ');
 
@@ -47,7 +47,7 @@ router.get('/search', async (req, res) => {
             WHERE (posts.recipient_type != 'specific' OR posts.recipient_id = ?)
             AND ${tagConditions}
             ORDER BY posts.created_at DESC
-        `, [userId, userId, ...tagArray.map(tag => `%${tag.trim()}%`)]);
+        `, [loggedInUserId, loggedInUserId, ...tagArray.map(tag => `%${tag.trim()}%`)]);
 
         res.json(rows);
     } catch (error) {
@@ -58,8 +58,9 @@ router.get('/search', async (req, res) => {
 
 //posts from friends
 router.get('/primary', async (req, res) => {
-    console.log('Cookies received:', req.cookies);
-    const loggedInUserId = req.session?.user_id; // Safely access session data
+    console.log('Cookies received in primary:', req.cookies);
+    console.log('Session received in primary:', req.session);
+    const loggedInUserId = req.userSession?.user_id;
     if (!loggedInUserId) {
         return res.status(401).json({ error: 'Unauthorized. Please log in.' });
     }
@@ -84,7 +85,8 @@ router.get('/primary', async (req, res) => {
 });
 // posts from friends of friends (excluding direct friends)
 router.get('/secondary', async (req, res) => {
-    const loggedInUserId = req.session.user_id; 
+    console.log('Cookies received in secondary:', req.cookies);
+    const loggedInUserId = req.userSession?.user_id;
     try {
         const [rows] = await pool.query(`
             SELECT posts.*, 
