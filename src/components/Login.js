@@ -18,6 +18,7 @@ const LoginRegister = ({ onLoginSuccess }) => {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
+    // Reset messages when switching between sign-in and sign-up
     useEffect(() => {
         setLoginMessage('');
         setError('');
@@ -36,7 +37,7 @@ const LoginRegister = ({ onLoginSuccess }) => {
 
         setLoading(true);
         axios
-            .post('http://localhost:5000/api/login', { email, password }, { withCredentials: true })
+            .post('http://localhost:5000/api/login', { email, password })
             .then((response) => {
                 setLoading(false);
                 setLoginMessage(`Login successful! Welcome, ${response.data.user.displayname}.`);
@@ -96,13 +97,16 @@ const LoginRegister = ({ onLoginSuccess }) => {
 
     return (
 
-        <div className='container justity-content-center'>
-        <div className="container mx-0 mx-sm-5 mx-lg-5 mt-5">
+ <div className="scrollable-container" data-bs-offset="0">
+    <div className='container d-flex mx-auto' >
+        {/* adjust the img position */}
+        <div className="container mx-0 mx-sm-3 mx-lg-3 mt-3">
             <div className={`mt-5 cont ${isSigningUp ? 's--signup' : ''}`} style={{ backgroundColor: "#FFEEF2" }}>
-                <div className="container mt-5 d-flex align-items-center">
+                <div className=" mt-5 d-flex align-items-center">
                     {/* Sign-in Form */}
                     <div className="form mx-5 sign-in d-flex justify-content-center align-items-center">
-                        <div className="col-8 ">
+                        {/* for the card's content */}
+                        <div className="col-10 col-lg-10 col-md-6"> 
                             <h2 className="fs-2 p-3 mb-3 text-lowercase" style={{ fontFamily: "monospace" }}>👋 Welcome back!</h2>
                             <form onSubmit={handleLogin}>
                                 <label>
@@ -162,8 +166,9 @@ const LoginRegister = ({ onLoginSuccess }) => {
                     </div>
 
                     <div className="container mt-3 d-flex align-items-center">
-                        <div className="mt-4 form sign-up d-flex justify-content-center align-items-center">
-                            <div className="col-8">
+                        <div className="mt-4 mx-5 form sign-up d-flex justify-content-center align-items-center">
+                          <div className='row mx-5'>
+                            <div className="col-10">
                                 <p className="fs-2 text-lowercase mb-4" style={{ fontFamily: "monospace" }}>new here? 🤗</p>
                                 <form onSubmit={handleRegister}>
                                     <label>
@@ -218,18 +223,20 @@ const LoginRegister = ({ onLoginSuccess }) => {
                                 </form>
                             </div>
                         </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        </div>
+    </div>
+</div>
 
     );
 };
 
 // Styles
 const inputStyle = {
-    width: "none",
+  
     background: "transparent",
     border: "none",
     borderBottom: "1px solid white",
@@ -245,7 +252,7 @@ const buttonStyle = {
     textAlign: "center",
     fontSize: "1rem",
     fontFamily: "monospace",
-    margin: "auto 25%",
+    margin: "auto 30% ",
 };
 
 const forgotPassStyle = {
