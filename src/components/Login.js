@@ -96,140 +96,142 @@ const LoginRegister = ({ onLoginSuccess }) => {
     };
 
     return (
+  
+           
+            <div className="container" style={{loginWrapper}}>
+                    <div className="container mx-0 mx-sm-3 mx-lg-3 mt-3">
+                        <div className={`mt-5 cont ${isSigningUp ? 's--signup' : ''}`} style={{ backgroundColor: "#FFEEF2" }}>
+                            
+                            
+                            <div className=" mt-5 d-flex align-items-center">
+                                {/* Sign-in Form */}
+                                <div className="form mx-5 sign-in d-flex justify-content-center align-items-center">
+                                    {/* for the card's content */}
+                                    <div className="col-10 col-lg-10 col-md-6"> 
+                                        <h2 className="fs-2 p-3 mb-3 text-lowercase" style={{ fontFamily: "monospace" }}>👋 Welcome back!</h2>
+                                        <form onSubmit={handleLogin} style={{marginLeft:"2rem"}}>
+                                            <label>
+                                                <input
+                                                    type="email"
+                                                    className="mb-4"
+                                                    value={email}
+                                                    placeholder="email"
+                                                    onChange={(e) => setEmail(e.target.value)}
+                                                    style={inputStyle}
+                                                    required
+                                                />
+                                            </label>
+                                            <label>
+                                                <input
+                                                    type="password"
+                                                    className="mb-4"
+                                                    value={password}
+                                                    placeholder="password"
+                                                    onChange={(e) => setPassword(e.target.value)}
+                                                    style={inputStyle}
+                                                    required
+                                                />
+                                                <p className="forgot-pass text-lowercase" style={forgotPassStyle}>Forgot password?</p>
+                                            </label>
+                                            <button type="submit" disabled={loading} style={buttonStyle}>
+                                                {loading ? 'Logging in...' : 'SIGN IN'}
+                                            </button>
+                                        </form>
+                                        {error && <div className="alert alert-danger">{error}</div>}
+                                        {loginMessage && <div className="alert alert-success">{loginMessage}</div>}
+                                    </div>
+                                </div>
+                            </div>
 
- <div className="scrollable-container" data-bs-offset="0">
-    <div className='container d-flex mx-auto' >
-        {/* adjust the img position */}
-        <div className="container mx-0 mx-sm-3 mx-lg-3 mt-3">
-            <div className={`mt-5 cont ${isSigningUp ? 's--signup' : ''}`} style={{ backgroundColor: "#FFEEF2" }}>
-                <div className=" mt-5 d-flex align-items-center">
-                    {/* Sign-in Form */}
-                    <div className="form mx-5 sign-in d-flex justify-content-center align-items-center">
-                        {/* for the card's content */}
-                        <div className="col-10 col-lg-10 col-md-6"> 
-                            <h2 className="fs-2 p-3 mb-3 text-lowercase" style={{ fontFamily: "monospace" }}>👋 Welcome back!</h2>
-                            <form onSubmit={handleLogin}>
-                                <label>
-                                    <input
-                                        type="email"
-                                        className="mb-4"
-                                        value={email}
-                                        placeholder="email"
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        style={inputStyle}
-                                        required
-                                    />
-                                </label>
-                                <label>
-                                    <input
-                                        type="password"
-                                        className="mb-4"
-                                        value={password}
-                                        placeholder="password"
-                                        onChange={(e) => setPassword(e.target.value)}
-                                        style={inputStyle}
-                                        required
-                                    />
-                                    <p className="forgot-pass text-lowercase" style={forgotPassStyle}>Forgot password?</p>
-                                </label>
-                                <button type="submit" disabled={loading} style={buttonStyle}>
-                                    {loading ? 'Logging in...' : 'SIGN IN'}
-                                </button>
-                            </form>
-                            {error && <div className="alert alert-danger">{error}</div>}
-                            {loginMessage && <div className="alert alert-success">{loginMessage}</div>}
-                        </div>
-                    </div>
-                </div>
+                            {/* Sign-up Form */}
+                            <div className="sub-cont" style={{ backgroundColor: "#FFEEF2" }}>
+                                <div className="img bg-gradient">
+                                    <div className="img__text m--up">
+                                        <a href="/" className="d-flex align-items-center link-body-emphasis text-decoration-none">
+                                            <img src="/img/icon.png" alt="icon" width="60" height="60" className="ms-2"/>
+                                            <span id="sidebar-title" className="fs-2">reco.me</span>
+                                        </a>
+                                        <p className="mt-4 text-justify text-lowercase">Don't have an account? Become one of us by signing up below!</p>
+                                    </div>
+                                    <div className="img__text m--in">
+                                        <a href="/" className="d-flex align-items-center link-body-emphasis text-decoration-none">
+                                            <img src="/img/icon.png" alt="icon" width="60" height="60" className="ms-2" />
+                                            <span id="sidebar-title" className="fs-2">reco.me</span>
+                                        </a>
+                                        <p className="mt-4 text-justify text-lowercase">Already have an account? Sign in with the button below.</p>
+                                    </div>
+                                    <div className="img__btn" onClick={() => setIsSigningUp(!isSigningUp)}>
+                                        <span className="m--up">Sign Up</span>
+                                        <span className="m--in">Sign In</span>
+                                    </div>
+                                </div>
 
-                {/* Sign-up Form */}
-                <div className="sub-cont" style={{ backgroundColor: "#FFEEF2" }}>
-                    <div className="img bg-gradient">
-                        <div className="img__text m--up">
-                            <a href="/" className="d-flex align-items-center link-body-emphasis text-decoration-none">
-                                <img src="/img/icon.png" alt="icon" width="60" height="60" className="ms-2"/>
-                                <span id="sidebar-title" className="fs-2">reco.me</span>
-                            </a>
-                            <p className="mt-4 text-justify text-lowercase">Don't have an account? Become one of us by signing up below!</p>
-                        </div>
-                        <div className="img__text m--in">
-                            <a href="/" className="d-flex align-items-center link-body-emphasis text-decoration-none">
-                                <img src="/img/icon.png" alt="icon" width="60" height="60" className="ms-2" />
-                                <span id="sidebar-title" className="fs-2">reco.me</span>
-                            </a>
-                            <p className="mt-4 text-justify text-lowercase">Already have an account? Sign in with the button below.</p>
-                        </div>
-                        <div className="img__btn" onClick={() => setIsSigningUp(!isSigningUp)}>
-                            <span className="m--up">Sign Up</span>
-                            <span className="m--in">Sign In</span>
-                        </div>
-                    </div>
-
-                    <div className="container mt-3 d-flex align-items-center">
-                        <div className="mt-4 mx-5 form sign-up d-flex justify-content-center align-items-center">
-                          <div className='row mx-5'>
-                            <div className="col-10">
-                                <p className="fs-2 text-lowercase mb-4" style={{ fontFamily: "monospace" }}>new here? 🤗</p>
-                                <form onSubmit={handleRegister}>
-                                    <label>
-                                        <input
-                                            type="text"
-                                            className="mb-4"
-                                            value={username}
-                                            placeholder="username"
-                                            onChange={(e) => setUsername(e.target.value)}
-                                            style={inputStyle}
-                                            required
-                                        />
-                                    </label>
-                                    <label>
-                                        <input
-                                            type="text"
-                                            className="mb-4"
-                                            value={displayname}
-                                            placeholder="display name"
-                                            onChange={(e) => setDisplayname(e.target.value)}
-                                            style={inputStyle}
-                                            required
-                                        />
-                                    </label>
-                                    <label>
-                                        <input
-                                            type="email"
-                                            className="mb-4"
-                                            value={regEmail}
-                                            placeholder="email"
-                                            onChange={(e) => setRegEmail(e.target.value)}
-                                            style={inputStyle}
-                                            required
-                                        />
-                                    </label>
-                                    <label>
-                                        <input
-                                            type="password"
-                                            className="mb-2"
-                                            value={regPassword}
-                                            placeholder="password"
-                                            onChange={(e) => setRegPassword(e.target.value)}
-                                            style={inputStyle}
-                                            required
-                                        />
-                                    </label>
-                                    {error && <div className="alert alert-danger">{error}</div>}
-                                    {success && <div className="alert alert-success">{success}</div>}
-                                    <button type="submit" disabled={loading} style={buttonStyle}>
-                                        {loading ? 'Registering...' : 'SIGN UP'}
-                                    </button>
-                                </form>
+                                <div className="container mt-3 d-flex align-items-center">
+                                    <div className="mt-4 mx-5 form sign-up d-flex justify-content-center align-items-center">
+                                    <div className='row mx-5'>
+                                        <div className="col-12">
+                                            <p className="fs-2 text-lowercase mx-3 mb-4" style={{ fontFamily: "monospace" }}>new here? 🤗</p>
+                                            <form onSubmit={handleRegister}>
+                                                <label>
+                                                    <input
+                                                        type="text"
+                                                        className="mb-4"
+                                                        value={username}
+                                                        placeholder="username"
+                                                        onChange={(e) => setUsername(e.target.value)}
+                                                        style={inputStyle}
+                                                        required
+                                                    />
+                                                </label>
+                                                <label>
+                                                    <input
+                                                        type="text"
+                                                        className="mb-4"
+                                                        value={displayname}
+                                                        placeholder="display name"
+                                                        onChange={(e) => setDisplayname(e.target.value)}
+                                                        style={inputStyle}
+                                                        required
+                                                    />
+                                                </label>
+                                                <label>
+                                                    <input
+                                                        type="email"
+                                                        className="mb-4"
+                                                        value={regEmail}
+                                                        placeholder="email"
+                                                        onChange={(e) => setRegEmail(e.target.value)}
+                                                        style={inputStyle}
+                                                        required
+                                                    />
+                                                </label>
+                                                <label>
+                                                    <input
+                                                        type="password"
+                                                        className="mb-2"
+                                                        value={regPassword}
+                                                        placeholder="password"
+                                                        onChange={(e) => setRegPassword(e.target.value)}
+                                                        style={inputStyle}
+                                                        required
+                                                    />
+                                                </label>
+                                                {error && <div className="alert alert-danger">{error}</div>}
+                                                {success && <div className="alert alert-success">{success}</div>}
+                                                <button type="submit" disabled={loading} style={buttonStyle} className="btn btn-primary mt-3 mx-5">
+                                                    {loading ? 'Registering...' : 'SIGN UP'}
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        </div>
                     </div>
-                </div>
             </div>
-        </div>
-    </div>
-</div>
+        
+ 
 
     );
 };
@@ -240,6 +242,8 @@ const inputStyle = {
     background: "transparent",
     border: "none",
     borderBottom: "1px solid white",
+    minWidth:"300px",
+    marginBottom:"20%"
 };
 
 const buttonStyle = {
@@ -252,14 +256,21 @@ const buttonStyle = {
     textAlign: "center",
     fontSize: "1rem",
     fontFamily: "monospace",
-    margin: "auto 30% ",
-};
+    margin: "0 20%",
+}
 
 const forgotPassStyle = {
     marginBottom: "2rem",
     fontFamily: "monospace",
     color: "black",
-    marginLeft:"5rem",
+  
 };
 
+const loginWrapper ={
+    display: "flex",
+    flexDirection: "column",
+    justifycontent:"center",
+    alignItems: "center",
+    minHeight: "100vh",
+}
 export default LoginRegister;

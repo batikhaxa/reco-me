@@ -23999,25 +23999,4 @@ textarea.form-control-lg {
   .d-print-none {
     display: none !important;
   }
-}
-.tag-label {
-  color: black;
-  border-radius: 0.5rem;
-}
-
-.bi {
-  margin-right: 10px;
-  margin-left: 10px;
-}
-
-.scrollable-container {
-  position: relative;
-  flex-grow: 1;
-  padding: 0;
-  box-sizing: border-box;
-  scrollbar-width: thin;
-}
-
-.scrollable-container::-webkit-scrollbar {
-  width: 1px;
 }/*# sourceMappingURL=main.css.map */
