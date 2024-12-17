@@ -42,7 +42,7 @@ CREATE TABLE sessions (
 );
 INSERT INTO users (username, displayname, email, password_hash, profile_picture) 
 VALUES
-('niko', 'niko', 'niko@gmail.com', '$2a$12$lyeIPdawvydXSlm.71DA8.lLSOC0pgunyZcL2pdNPccMdlXDOQtaG', 'https://i.pinimg.com/736x/50/96/83/509683e22875527fb367ad2627b2bfe1.jpg'),
+('niko', 'niko', 'niko@gmail.com', '$2a$12$lyeIPdawvydXSlm.71DA8.lLSOC0pgunyZcL2pdNPccMdlXDOQtaG', 'https://i.pinimg.com/736x/5f/00/4e/5f004e20713f5b167805c85502087f60.jpg'),
 ('olivia', 'olivia', 'olivia@gmail.com', '$2a$10$Q1s3sJ62jPVaZu8n4frb8uHHwawUQPxvM6VB2mqDe.FCBpFGd/j3S', 'https://i.pinimg.com/736x/13/98/7e/13987ec20a1905d8b4dabd43326fdc7d.jpg'),
 ('ong', 'ong', 'ong@gmail.com', '$2a$10$GjfAX2Z6wgeFpFb/jJq.9OoWjULiNacnqekxMxpleEqkVt.8cXW8K', 'https://i.pinimg.com/736x/45/5f/0e/455f0ebb609724aa8dedb3b6a78c9267.jpg');
 
@@ -58,7 +58,9 @@ VALUES
 INSERT INTO posts (sender_id, recipient_type, recipient_id, title, content, tags, created_at)
 VALUES
 -- Posts by Niko
-(1, 'everyone', NULL, 'Inception', 'Great movie! Highly recommend.', 'movie', '2024-11-13 10:00:00'),
+(1, 'everyone', NULL, 'Disco Elysium', '"...This is the greatest and kindest arrangement the atoms had in them..."', 'game, mystery', '2024-11-13 10:00:00'),
+(1, 'everyone', NULL, 'Inception2', 'Great movie! Highly recommend.', 'movie', '2024-11-13 10:00:00'),
+(1, 'everyone', NULL, 'Inception3', 'Great movie! Highly recommend.', 'movie', '2024-11-13 10:00:00'),
 -- Posts by Olivia (Friend of Niko)
 (2, 'friends', NULL, 'The Witcher 3', 'Check out this cool game I found!', 'game, rpg', '2024-11-12 09:00:00'),
 (2, 'everyone', NULL, 'Coldplay Live', 'Just saw the best concert ever! Go see them!', 'concert, live', '2024-11-11 20:00:00'),

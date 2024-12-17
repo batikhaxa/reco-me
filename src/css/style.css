@@ -53,10 +53,6 @@ textarea {
 .card {
   width: 100%;
   max-width: 500px;
-  overflow: hidden;
-  /* Handle overflowing content */
-  display: block;
-  /* Ensure proper block-level behavior */
 }
 canvas {
   position: fixed;

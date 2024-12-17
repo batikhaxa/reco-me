@@ -128,7 +128,7 @@ const Main = () => {
     }, [postsPrimary]);
 
     return (
-        <div className="scrollable-container p-sm-5 p-lg-5">
+        <div className="scrollable-container pt-4 pt-md-3 pt-lg-3">
             <canvas
                 ref={canvasRef}
                 id="connection-lines"
