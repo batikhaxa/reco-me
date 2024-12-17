@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import UserDropdown from "./UserDropdown";
 
 const NavPills = () => (
     <ul className="nav nav-pills flex-column mb-auto fw-semiboldf fs-5 fs-sm-6">
@@ -34,42 +35,6 @@ const NavPills = () => (
             </NavLink>
         </li>
     </ul>
-);
-
-
-const UserDropdown = () => (
-    <div className="dropdown mt-auto">
-        <a
-            href="#"
-            className="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-        >
-            <img
-                src="https://i.pinimg.com/736x/d1/51/47/d151474e2d22d12412425632275f6cff.jpg"
-                alt=""
-                width="50"
-                height="50"
-                className="rounded-circle me-2 ms-2"
-            />
-            <strong className="text-white fw-light fs-4">niko</strong>
-        </a>
-        <ul className="dropdown-menu ms-5 text-small shadow">
-            <li>
-                <a className="dropdown-item" href="/settings">
-                    settings
-                </a>
-            </li>
-            <li>
-                <hr className="dropdown-divider" />
-            </li>
-            <li>
-                <a className="dropdown-item" href="/logout">
-                    log out
-                </a>
-            </li>
-        </ul>
-    </div>
 );
 
 const Sidebar = () => {
