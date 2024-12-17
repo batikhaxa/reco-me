@@ -47,7 +47,7 @@ CREATE TABLE sessions (
 -- Users
 INSERT INTO users (username, displayname, email, password_hash, profile_picture) 
 VALUES
-('niko', 'niko', 'mx.niqo@gmail.com', '1234', 'https://example.com/profiles/niko.jpg'),
+('niko', 'niko', 'mx.niqo@gmail.com', '$2a$12$lyeIPdawvydXSlm.71DA8.lLSOC0pgunyZcL2pdNPccMdlXDOQtaG', 'https://example.com/profiles/niko.jpg'),
 ('alice', 'Alice', 'alice@example.com', '5678', 'https://i.pinimg.com/736x/13/98/7e/13987ec20a1905d8b4dabd43326fdc7d.jpg'),
 ('bob', 'Bob', 'bob@example.com', '91011', 'https://i.pinimg.com/736x/45/5f/0e/455f0ebb609724aa8dedb3b6a78c9267.jpg'),
 ('charlie', 'Charlie', 'charlie@example.com', '121314', 'https://i.pinimg.com/736x/93/a2/74/93a274192c7a885412804d411f411753.jpg'),

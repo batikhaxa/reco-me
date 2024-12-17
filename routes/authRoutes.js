@@ -70,11 +70,9 @@ router.post('/login', async (req, res) => {
 
 router.post('/logout', async (req, res) => {
     const sessionId = req.cookies.sessionId;
-
     if (!sessionId) {
         return res.status(400).json({ error: 'No session ID provided' });
     }
-
     try {
         await pool.query('DELETE FROM sessions WHERE session_id = ?', [sessionId]);
         res.clearCookie('sessionId', {
