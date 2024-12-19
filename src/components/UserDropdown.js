@@ -18,9 +18,8 @@ const UserDropdown = () => {
     }, []);
     return (
         <div className="dropdown mt-auto">
-            <a
-                href="javascript:void(0);"
-                className="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle"
+            <button
+                className="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle btn btn-link p-0 text-decoration-none"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
             >
@@ -32,7 +31,7 @@ const UserDropdown = () => {
                     className="rounded-circle me-2 ms-2"
                 />
                 <strong className="text-white fw-light fs-4">{userData.displayname || 'Guest'}</strong>
-            </a>
+            </button>
             <ul className="dropdown-menu ms-5 text-small shadow">
                 <li>
                     <a className="dropdown-item" href="/settings">
