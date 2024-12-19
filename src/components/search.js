@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 
 const Search = () => {
@@ -18,35 +18,35 @@ const Search = () => {
             setInputValue("");
         }
     };
-
-
+ 
+ 
     const removeTag = (tagToRemove) => {
         setTags(tags.filter(tag => tag !== tagToRemove));
     };
 
-    const fetchPosts = async () => {
-        if (tags.length === 0) return; // Don't search if there are no tags
+    const fetchPosts = useCallback(async () => {
+        if (tags.length === 0) return; 
 
         setLoading(true);
-        if (tags.length > 0) {
-            try {
-                const response = await axios.get('/api/posts/search', {
-                    params: {
-                        userId: loggedInUserId,
-                        tags: tags.join(',') // Join tags as a comma-separated string
-                    }
-                });
-                setPosts(response.data);
-            } catch (error) {
-                console.error("Error fetching posts", error);
-            }
+        try {
+            const response = await axios.get('/api/posts/search', {
+                params: {
+                    userId: loggedInUserId,
+                    tags: tags.join(',') // Join tags as a comma-separated string
+                }
+            });
+            setPosts(response.data);
+        } catch (error) {
+            console.error("Error fetching posts", error);
+        } finally {
+            setLoading(false); // Ensure loading is stopped even if an error occurs
         }
-        setLoading(false);
-    };
+    }, [tags, loggedInUserId]); // Add dependencies like 'tags' and 'loggedInUserId'
+
 
     useEffect(() => {
-        fetchPosts(); // Fetch posts whenever tags change
-    }, [tags]);
+        fetchPosts();
+    }, [fetchPosts]); // 'fetchPosts' already includes dependencies like 'tags' and 'loggedInUserId'
 
     const columnOnePosts = posts.filter((_, index) => index % 2 === 0);
     const columnTwoPosts = posts.filter((_, index) => index % 2 !== 0);

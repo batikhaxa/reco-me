@@ -77,7 +77,7 @@ const Sidebar = () => {
             >
                 <div className="offcanvas-header">
                     <a
-                        href="/"
+                        href="/home"
                         className="d-flex align-items-center link-body-emphasis text-decoration-none"
                     >
                         <img
@@ -111,7 +111,7 @@ const Sidebar = () => {
                 style={{ width: "300px", height: "100vh" }}
             >
                 <a
-                    href="/"
+                    href="/home"
                     className="d-flex align-items-center mb-3 mb-md-3 me-md-auto link-body-emphasis text-decoration-none"
                 >
                     <img

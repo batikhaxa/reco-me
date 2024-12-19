@@ -19,7 +19,7 @@ const UserDropdown = () => {
     return (
         <div className="dropdown mt-auto">
             <a
-                href="#"
+                href="javascript:void(0);"
                 className="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"

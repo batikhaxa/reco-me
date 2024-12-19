@@ -1,11 +1,11 @@
-import React, { useEffect, useLayoutEffect, useState, useRef } from 'react';
+import React, { useEffect, useLayoutEffect, useState, useCallback, useRef } from 'react';
 
 const Main = () => {
     const [postsPrimary, setPostsPrimary] = useState([]);
     const [postsSecondary, setPostsSecondary] = useState([]);
     const loggedInUserId = 1;
 
-    const drawLines = () => {
+    const drawLines = useCallback(() => {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
         const container = document.querySelector('.scrollable-container');
@@ -55,7 +55,7 @@ const Main = () => {
             ctx.stroke();
             // console.log(`Line from (${startX}, ${startY}) to (${endX}, ${endY})`);
         });
-    };
+    }, [postsPrimary, postsSecondary]); 
 
     useEffect(() => {
         const fetchPrimaryPosts = async () => {
@@ -116,7 +116,7 @@ const Main = () => {
         return () => {
             window.removeEventListener('resize', handleResize);
         };
-    }, [postsPrimary, postsSecondary]); 
+    }, [postsPrimary, postsSecondary, drawLines]); 
 
     const latestPostByUser = React.useMemo(() => {
         return postsPrimary.reduce((acc, post) => {
