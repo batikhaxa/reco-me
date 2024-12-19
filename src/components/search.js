@@ -94,7 +94,7 @@ const Search = () => {
                                             <div className="card-body d-flex flex-column">
                                                 <div className="d-flex gap-2">
                                                     <img
-                                                        src={post.profile_picture || 'https://i.pinimg.com/564x/e8/d7/d0/e8d7d05f392d9c2cf0285ce928fb9f4a.jpg'}
+                                                        src={post.profileImage || 'https://i.pinimg.com/564x/e8/d7/d0/e8d7d05f392d9c2cf0285ce928fb9f4a.jpg'}
                                                         alt=""
                                                         width="70"
                                                         height="70"
@@ -143,7 +143,7 @@ const Search = () => {
                                             <div className="card-body d-flex flex-column">
                                                 <div className="d-flex gap-2">
                                                     <img
-                                                        src={post.profile_picture || 'https://i.pinimg.com/564x/e8/d7/d0/e8d7d05f392d9c2cf0285ce928fb9f4a.jpg'}
+                                                        src={post.profileImage || 'https://i.pinimg.com/564x/e8/d7/d0/e8d7d05f392d9c2cf0285ce928fb9f4a.jpg'}
                                                         alt=""
                                                         width="70"
                                                         height="70"
