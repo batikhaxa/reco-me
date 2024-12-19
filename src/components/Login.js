@@ -4,15 +4,12 @@ import axios from 'axios';
 
 const LoginRegister = ({ onLoginSuccess }) => {
     const [isSigningUp, setIsSigningUp] = useState(false);
-
-    // Login state
     const navigate = useNavigate();
+
+    // State variables
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loginMessage, setLoginMessage] = useState('');
-
-    // Registration state
-    
     const [username, setUsername] = useState('');
     const [displayname, setDisplayname] = useState('');
     const [regEmail, setRegEmail] = useState('');
@@ -30,7 +27,6 @@ const LoginRegister = ({ onLoginSuccess }) => {
 
     const handleLogin = (e) => {
         e.preventDefault();
-
         setLoginMessage('');
         setError('');
 
@@ -58,6 +54,8 @@ const LoginRegister = ({ onLoginSuccess }) => {
 
     const handleRegister = (e) => {
         e.preventDefault();
+        setError('');
+        setSuccess('');
 
         if (!username || !displayname || !regEmail || !regPassword) {
             setError('Please fill out all fields');
@@ -76,15 +74,13 @@ const LoginRegister = ({ onLoginSuccess }) => {
         }
 
         setLoading(true);
-        setError('');
-        setSuccess('');
-
-        axios.post('http://localhost:5000/api/registration', {
-            username,
-            displayname,
-            email: regEmail,
-            password: regPassword,
-        })
+        axios
+            .post('http://localhost:5000/api/registration', {
+                username,
+                displayname,
+                email: regEmail,
+                password: regPassword,
+            })
             .then(() => {
                 setLoading(false);
                 setSuccess('Registration successful!');
