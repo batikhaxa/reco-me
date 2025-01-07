@@ -5,9 +5,6 @@
   "homepage": "/",
   "proxy": "http://localhost:5000",
   "private": true,
-  "engines": {
-    "node": "22.3.0"
-  },
   "dependencies": {
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.1.0",
@@ -26,7 +23,9 @@
     "grep": "^0.1.0",
     "jest-dom": "^4.0.0",
     "jsonwebtoken": "^9.0.2",
+    "mysql": "^2.18.1",
     "mysql2": "^3.11.4",
+    "mysqldump": "^3.2.0",
     "postcss-calc": "^10.0.2",
     "postcss-custom-properties": "^14.0.4",
     "react": "^19.0.0",
@@ -41,7 +40,7 @@
     "webpack": "^5.95.0"
   },
   "scripts": {
-    "start": "node server.js",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
