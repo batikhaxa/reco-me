@@ -24,7 +24,7 @@ const UserDropdown = () => {
                 aria-expanded="false"
             >
                 <img
-                    src={userData.profile_picture || 'default-profile-pic.jpg'} // Fallback to default image if none
+                    src={userData.profile_picture || 'default-profile-pic.jpg'} 
                     alt=""
                     width="50"
                     height="50"
