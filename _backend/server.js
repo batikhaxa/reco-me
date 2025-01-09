@@ -29,7 +29,7 @@ app.use('/api/user', userRoutes);  // user-related routes
 
 module.exports = app;
 
-const PORT = process.env.PORT || 3001; 
+const PORT = 5000; 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
