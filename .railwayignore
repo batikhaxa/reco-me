@@ -1,16 +1,16 @@
 # Exclude frontend and other unnecessary files
+.vscode/
+backup/
 build/
 css/
+customsass/
+icon/
+mysql/
 node_modules/
+pictures/
 src/
 public/
 bootstrap-5.3.3-examples/
 pictures/
 mysql_data/
 customsass/
-.vscode/
-backup/
-customsass/
-icon/
-mysql/
-pictures/
