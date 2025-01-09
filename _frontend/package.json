@@ -1,0 +1,75 @@
+{
+  "name": "reco-me",
+  "version": "0.1.0",
+  "main": "src/index.js",
+  "homepage": "/",
+  "proxy": "http://localhost:5000",
+  "private": true,
+  "engines": {
+    "node": "22.3.0"
+  },
+  "dependencies": {
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.1.0",
+    "@testing-library/user-event": "^14.5.2",
+    "axios": "^1.7.7",
+    "bcrypt": "^5.1.1",
+    "bootstrap": "^5.3.3",
+    "bootstrap-icons": "^1.11.3",
+    "choices.js": "^11.0.2",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dayjs": "^1.11.13",
+    "express": "^4.21.1",
+    "express-session": "^1.18.1",
+    "graceful-fs": "^4.2.11",
+    "grep": "^0.1.0",
+    "jest-dom": "^4.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.11.4",
+    "postcss-custom-properties": "^14.0.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^7.0.2",
+    "react-script": "^2.0.5",
+    "react-scripts": "5.0.1",
+    "react-select": "^5.8.3",
+    "react-transition-group": "^4.4.5",
+    "url": "^0.11.4",
+    "web-vitals": "^4.2.4",
+    "webpack": "^5.95.0"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "description": "a website to share your recommendations to others",
+  "author": "niko, ong, olivia",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "css-minimizer-webpack-plugin": "^7.0.0",
+    "postcss": "^8.4.49",
+    "postcss-calc": "^10.1.0"
+  }
+}
