@@ -11,6 +11,8 @@ const app = express();
 const corsOptions = {
     credentials: true, // allows cookies
     origin: process.env.CLIENT_ORIGIN || 'http://localhost:3000',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], 
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
 };
 app.use(cors(corsOptions));
 
@@ -26,3 +28,8 @@ app.use('/api/friends', friendRoutes);  // friend-related routes
 app.use('/api/user', userRoutes);  // user-related routes
 
 module.exports = app;
+
+const PORT = process.env.PORT || 3001; 
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
