@@ -1,0 +1,10 @@
+# Exclude frontend and other unnecessary files
+build/
+css/
+node_modules/
+src/
+public/
+bootstrap-5.3.3-examples/
+pictures/
+mysql_data/
+customsass/
