@@ -1,0 +1,22 @@
+# Ignore everything except backend-related files
+*
+!backend/
+!server.js
+!.env
+!package.json
+!package-lock.json
+!routes/
+
+# Ignore specific folders
+node_modules/
+build/
+public/
+mysql_data/
+bootstrap-5.3.3-examples/
+src/
+css/
+pictures/
+customsass/
+
+# Ignore editor config files
+.vscode/
