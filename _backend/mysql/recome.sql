@@ -16,8 +16,8 @@ CREATE TABLE friendships (
     friend_id INT NOT NULL,
     status ENUM('pending', 'accepted', 'rejected') DEFAULT 'pending',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE,
-    FOREIGN KEY (friend_id) REFERENCES Users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (friend_id) REFERENCES users(user_id) ON DELETE CASCADE,
     UNIQUE (user_id, friend_id) -- Prevents duplicate friendships
 );
 CREATE TABLE posts (
@@ -30,8 +30,8 @@ CREATE TABLE posts (
     tags TEXT NOT NULL, 
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (sender_id) REFERENCES Users(user_id) ON DELETE CASCADE,
-    FOREIGN KEY (recipient_id) REFERENCES Users(user_id) ON DELETE SET NULL
+    FOREIGN KEY (sender_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (recipient_id) REFERENCES users(user_id) ON DELETE SET NULL
 );
 CREATE TABLE sessions (
     session_id VARCHAR(255) PRIMARY KEY,
