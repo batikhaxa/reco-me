@@ -39,7 +39,3 @@ app.use('/api', authRoutes);  // login/registration
 app.use('/api/posts', postRoutes);  // post-related routes
 app.use('/api/friends', friendRoutes);  // friend-related routes
 app.use('/api/user', userRoutes); 
-
-app.listen(5000, () => {
-    console.log('Server is running on http://localhost:5000');
-});
