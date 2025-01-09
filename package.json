@@ -27,7 +27,6 @@
     "jest-dom": "^4.0.0",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.11.4",
-    "postcss-calc": "^10.0.2",
     "postcss-custom-properties": "^14.0.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -68,6 +67,9 @@
   "author": "niko, ong, olivia",
   "license": "ISC",
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "css-minimizer-webpack-plugin": "^7.0.0",
+    "postcss": "^8.4.49",
+    "postcss-calc": "^10.1.0"
   }
 }

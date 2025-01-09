@@ -6,6 +6,7 @@ import Recommend from './components/recommend';
 import Search from './components/search';
 import LoginRegister from './components/Login';
 import Logout from './components/Logout';
+import Setting from './components/setting';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 
@@ -62,6 +63,7 @@ const App = () => {
                     <Route path="/home" element={<Main />} />
                     <Route path="/recommend" element={<Recommend />} />
                     <Route path="/search" element={<Search />} />
+                    <Route path="/settings" element={<Setting />} />
                     <Route path="/logout" element={<Logout onLogout={handleLogout} />} />
                     <Route path="*" element={<Navigate to="/home" replace />} />
                   </Routes>
