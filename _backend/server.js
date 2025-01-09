@@ -5,7 +5,6 @@ const cookieParser = require('cookie-parser');
 
 const cors = require('cors');
 const corsOptions = {
-    origin: 'http://localhost:3000',
     credentials: true, // allows cookies to be sent/received
 };
 
