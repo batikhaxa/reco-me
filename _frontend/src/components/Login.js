@@ -37,7 +37,7 @@ const LoginRegister = ({ onLoginSuccess }) => {
 
         setLoading(true);
         axios
-            .post('http://localhost:5000/api/login', { email, password }, { withCredentials: true })
+            .post(`${process.env.REACT_APP_BACKEND_URL}/api/login`, { email, password }, { withCredentials: true })
             .then((response) => {
                 setLoading(false);
                 setLoginMessage(`Login successful! Welcome, ${response.data.user.displayname}.`);
@@ -75,7 +75,7 @@ const LoginRegister = ({ onLoginSuccess }) => {
 
         setLoading(true);
         axios
-            .post('http://localhost:5000/api/registration', {
+            .post(`${process.env.REACT_APP_BACKEND_URL}/api/registration`, {
                 username,
                 displayname,
                 email: regEmail,

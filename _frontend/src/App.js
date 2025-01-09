@@ -15,7 +15,7 @@ const App = () => {
 
   const checkLoginStatus = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/auth/status', {
+      const response = await axios.get(`${ process.env.REACT_APP_BACKEND_URL }/api/auth/status`, {
         withCredentials: true,
       });
       setIsLoggedIn(response.data.loggedIn);

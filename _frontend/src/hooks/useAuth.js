@@ -6,7 +6,7 @@ const useAuth = () => {
     useEffect(() => {
         const validateSession = async () => {
             try {
-                const response = await fetch('http://localhost:5000/api/auth/validate', {
+                const response = await fetch(`${ process.env.REACT_APP_BACKEND_URL }/api/auth/validate`, {
                     method: 'GET',
                     credentials: 'include', // Include cookies
                 });

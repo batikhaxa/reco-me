@@ -35,7 +35,7 @@ const Registration = () => {
         setSuccess('');
 
         // Send the registration data to the backend
-        axios.post('http://localhost:5000/api/registration', { username, displayname, email, password })
+        axios.post(`${ process.env.REACT_APP_BACKEND_URL }/api/registration`, { username, displayname, email, password })
             .then((response) => {
                 setLoading(false);
                 setSuccess('Registration successful!');

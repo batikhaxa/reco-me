@@ -8,7 +8,7 @@ const Logout = ({ onLogout }) => {
     useEffect(() => {
         const handleLogout = async () => {
             try {
-                await axios.post('http://localhost:5000/api/logout', {}, {
+                await axios.post(`${ process.env.REACT_APP_BACKEND_URL }/api/logout`, {}, {
                     withCredentials: true,
                 });
                 console.log('Logged out successfully');
