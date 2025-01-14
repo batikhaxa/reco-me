@@ -33,14 +33,18 @@ router.post('/', async (req, res) => {
 
 router.get('/search', async (req, res) => {
     const { tags } = req.query;
-    const loggedInUserId = req.userSession?.user_id;
+    const loggedInUserId = req.userSession?.user_id; // Extracted from session
 
-    if (!loggedInUserId || !tags) {
-        return res.status(400).json({ error: 'userId and tags are required' });
+    if (!loggedInUserId) {
+        return res.status(401).json({ error: 'Unauthorized. Please log in.' });
     }
-    const tagArray = tags.split(',');
-    // Prepare query with placeholders for tags
-    const tagConditions = tagArray.map(() => 'posts.tags LIKE ?').join(' AND ');
+
+    if (!tags) {
+        return res.status(400).json({ error: 'Tags are required for search.' });
+    }
+
+    const tagArray = tags.split(',').map(tag => `%${tag.trim()}%`); // Sanitize and format tags
+    const tagConditions = tagArray.map(() => 'posts.tags LIKE ?').join(' AND '); // Create SQL conditions
 
     try {
         const [rows] = await pool.query(`
@@ -49,18 +53,18 @@ router.get('/search', async (req, res) => {
                    users.profile_picture
             FROM posts
             JOIN users ON posts.sender_id = users.user_id
-            JOIN friendships ON friendships.user_id = ? 
+            LEFT JOIN friendships ON friendships.user_id = ? 
                 AND friendships.friend_id = posts.sender_id 
                 AND friendships.status = 'accepted'
             WHERE (posts.recipient_type != 'specific' OR posts.recipient_id = ?)
             AND ${tagConditions}
             ORDER BY posts.created_at DESC
-        `, [loggedInUserId, loggedInUserId, ...tagArray.map(tag => `%${tag.trim()}%`)]);
+        `, [loggedInUserId, loggedInUserId, ...tagArray]);
 
         res.json(rows);
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Database error in searching posts' });
+        console.error('Error searching posts:', error);
+        res.status(500).json({ error: 'Database error in searching posts.' });
     }
 });
 

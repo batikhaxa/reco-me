@@ -25,23 +25,27 @@ const Search = () => {
     };
 
     const fetchPosts = useCallback(async () => {
-        if (tags.length === 0) return; 
+        if (tags.length === 0) return;
 
         setLoading(true);
         try {
-            const response = await axios.get('/api/posts/search', {
-                params: {
-                    userId: loggedInUserId,
-                    tags: tags.join(',') // Join tags as a comma-separated string
-                }
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/posts/search?tags=${tags.join(',')}`, {
+                method: 'GET',
+                credentials: 'include', // Include cookies for session validation
             });
-            setPosts(response.data);
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            setPosts(data);
         } catch (error) {
-            console.error("Error fetching posts", error);
+            console.error('Error fetching posts:', error);
         } finally {
             setLoading(false); // Ensure loading is stopped even if an error occurs
         }
-    }, [tags, loggedInUserId]); // Add dependencies like 'tags' and 'loggedInUserId'
+    }, [tags]);
 
 
     useEffect(() => {
