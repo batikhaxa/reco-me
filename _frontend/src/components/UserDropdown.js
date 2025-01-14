@@ -7,14 +7,17 @@ const UserDropdown = () => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/user/sidebar`, {
-                    withCredentials: true, 
+                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user/sidebar`, {
+                    method: 'GET',
+                    credentials: 'include', // Ensures cookies are sent with the request
                 });
-                if (response.status === 200) {
-                    setUserData(response.data);
-                } else {
-                    throw new Error(`Unexpected response status: ${response.status}`);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
                 }
+
+                const data = await response.json();
+                setUserData(data);
             } catch (error) {
                 console.error('Error fetching user data:', error);
             }
