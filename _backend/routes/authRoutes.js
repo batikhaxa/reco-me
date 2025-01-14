@@ -26,7 +26,7 @@ router.post('/login', async (req, res) => {
         const [users] = await pool.query('SELECT * FROM users WHERE email = ?', [email]);
 
         if (users.length === 0) {
-            return res.status(400).json({ error: 'Invalid email or password' });
+            return res.status(400).json({ error: 'No user with that email.' });
         }
 
         const user = users[0];
