@@ -27,18 +27,6 @@ app.use('/api/posts', postRoutes);  // post-related routes
 app.use('/api/friends', friendRoutes);  // friend-related routes
 app.use('/api/user', userRoutes);  // user-related routes
 
-const pool = require('./db');
-
-(async () => {
-    try {
-        const [rows] = await pool.query('SELECT 1 + 1 AS solution');
-        console.log('Test query result:', rows);
-    } catch (error) {
-        console.error('Database connection test failed:', error.message);
-    }
-})();
-
-
 module.exports = app;
 
 const PORT = 5000; 

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 
 const UserDropdown = () => {
     const [userData, setUserData] = useState({ displayname: '', profile_picture: '' });
@@ -8,7 +7,7 @@ const UserDropdown = () => {
         const fetchUserData = async () => {
             try {
                 const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user/sidebar`, {
-                    method: 'GET',
+                    method: 'POST',
                     credentials: 'include', // Ensures cookies are sent with the request
                 });
 
