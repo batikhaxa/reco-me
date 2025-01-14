@@ -23,47 +23,23 @@ router.post('/login', async (req, res) => {
 
     try {
         console.log('Attempting user auth');
+        console.log('Email received:', email);
+
         const [users] = await pool.query('SELECT * FROM users WHERE email = ?', [email]);
 
-        if (users.length === 0) {
-            return res.status(400).json({ error: 'No user with that email.' });
+        console.log('Query result:', users);
+
+        if (!users || users.length === 0) {
+            console.log('No users found');
+            return res.status(400).json({ error: 'Invalid email or password' });
         }
 
         const user = users[0];
         console.log('User found:', user);
 
-        const passwordMatch = await bcrypt.compare(password, user.password_hash);
-        if (!passwordMatch) {
-            return res.status(400).json({ error: 'Invalid email or password' });
-        }
-
-        console.log('Attempting session id');
-        const sessionId = crypto.randomUUID();
-        const expiresAt = dayjs().add(1, 'hour').toDate();
-
-        await pool.query(
-            'INSERT INTO sessions (session_id, user_id, expires_at) VALUES (?, ?, ?)',
-            [sessionId, user.user_id, expiresAt]
-        );
-
-        res.cookie('sessionId', sessionId, {
-            httpOnly: true,
-            secure: true, 
-            sameSite: 'lax',
-            path: '/',
-            maxAge: 3600000, // 1 hour in milliseconds
-        });
-
-        console.log('Session ID:', sessionId);
-
-        res.status(200).json({
-            message: 'Login successful',
-            user: { id: user.id, email: user.email, displayname: user.displayname },
-        });
-
-        console.log('Login successful!');
+        // Password comparison and session handling code here...
     } catch (error) {
-        console.error(error);
+        console.error('Database query error:', error.message);
         res.status(500).json({ error: 'Internal server error' });
     }
 });
