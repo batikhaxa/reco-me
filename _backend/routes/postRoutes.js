@@ -58,8 +58,9 @@ router.get('/search', async (req, res) => {
                 AND friendships.status = 'accepted'
             WHERE (posts.recipient_type != 'specific' OR posts.recipient_id = ?)
             AND ${tagConditions}
+            AND posts.sender_id != ? 
             ORDER BY posts.created_at DESC
-        `, [loggedInUserId, loggedInUserId, ...tagArray]);
+        `, [loggedInUserId, loggedInUserId, ...tagArray, loggedInUserId]);
 
         res.json(rows);
     } catch (error) {
