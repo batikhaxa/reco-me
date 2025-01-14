@@ -7,10 +7,7 @@ const UserDropdown = () => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user/sidebar`, {
-                    method: 'POST',
-                    credentials: 'include',
-                });
+                const response = await axios.post('/api/user/sidebar'); 
                 setUserData(response.data);
             } catch (error) {
                 console.error('Error fetching user data:', error);
