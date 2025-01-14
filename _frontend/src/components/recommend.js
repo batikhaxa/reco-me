@@ -26,14 +26,20 @@ const Recommend = () => {
                 searchEnabled: true
             });
         }
-        const fetchFriends = async (userId) => {
+        const fetchFriends = async () => {
             try {
-                const response = await fetch(`/api/friends?userId=${userId}`);
+                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/friends`, {
+                    method: 'GET',
+                    credentials: 'include', // Send cookies with the request
+                });
+
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    throw new Error(`HTTP error! Status: ${response.status}`);
                 }
+
                 const data = await response.json();
                 console.log("API Response:", data);
+
                 setAudienceOptions((prevOptions) => {
                     const newOptions = data.filter((newOption) =>
                         !prevOptions.some((existingOption) => existingOption.value === newOption.value)
@@ -45,7 +51,7 @@ const Recommend = () => {
             }
         };
 
-        fetchFriends(loggedInUserId);
+        fetchFriends();
     }, []);
 
     const handlePost = async () => {

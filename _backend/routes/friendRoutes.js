@@ -6,12 +6,10 @@ const { checkAuth } = require('../middleware/authMiddleware');
 router.use(checkAuth);
 
 router.get('/', async (req, res) => {
-    // Get userId from query parameters
-    const loggedInUserId = req.userSession?.user_id;
+    const loggedInUserId = req.userSession?.user_id; // Extracted by checkAuth
     if (!loggedInUserId) {
-        return res.status(400).json({ error: 'userId is required' });
+        return res.status(401).json({ error: 'Unauthorized. Please log in.' });
     }
-
     try {
         const [rows] = await pool.query(`
             SELECT u.user_id AS value, u.displayname AS label
@@ -19,12 +17,12 @@ router.get('/', async (req, res) => {
             JOIN friendships f ON f.friend_id = u.user_id
             WHERE f.user_id = ? AND f.status = 'accepted'
         `, [loggedInUserId]);
-
         res.json(rows);
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Database error in fetching friends' });
+        console.error('Error fetching friends:', error);
+        res.status(500).json({ error: 'Database error in fetching friends.' });
     }
 });
+
 
 module.exports = router;
