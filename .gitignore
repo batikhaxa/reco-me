@@ -2,7 +2,9 @@
  
 # dependencies
 /_backend/node_modules
+/_backend/mysql
 /_frontend/node_modules
+/mysql_data
 /node_modules
 /.pnp
 .pnp.js
@@ -28,6 +30,4 @@ src/css/main.min.css
 src/css/main.min.css.map
 bootstrap-5.3.3-examples/sidebars/index.html
 .vscode/settings.json
-.vscode/settings.json
-.env
 .env
