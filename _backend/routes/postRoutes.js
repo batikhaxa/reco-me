@@ -7,7 +7,15 @@ router.use(checkAuth);
 
 router.post('/', async (req, res) => {
     const { recipient_type, recipient_id, title, content, tags } = req.body;
-    const sender_id = req.userSession?.user_id;
+    const sender_id = req.userSession?.user_id; // Extracted from session
+
+    if (!sender_id) {
+        return res.status(401).json({ error: 'Unauthorized. Please log in.' });
+    }
+
+    if (!title || !content || !recipient_type) {
+        return res.status(400).json({ error: 'Missing required fields.' });
+    }
 
     try {
         const [result] = await pool.query(
@@ -18,8 +26,8 @@ router.post('/', async (req, res) => {
 
         res.status(201).json({ success: true, post_id: result.insertId });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Database error while creating post' });
+        console.error('Error creating post:', error);
+        res.status(500).json({ error: 'Database error while creating post.' });
     }
 });
 

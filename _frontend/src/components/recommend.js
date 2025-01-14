@@ -63,7 +63,6 @@ const Recommend = () => {
         const recipient_id = recipient_type === "specific" ? audience.value : null;
 
         const newPost = {
-            sender_id: loggedInUserId,
             recipient_type,
             recipient_id,
             title,
@@ -72,11 +71,22 @@ const Recommend = () => {
         };
 
         try {
-            const response = await axios.post('/api/posts', newPost);
-            if (response.data.success) {
-                // Set the success message
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/posts`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include', // Include cookies for session validation
+                body: JSON.stringify(newPost),
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            if (data.success) {
                 setPostResult('Post created successfully!');
-                // Clear fields after successful post
                 setTitle('');
                 setPostContent('');
                 setTags([]);
@@ -84,7 +94,6 @@ const Recommend = () => {
             }
         } catch (error) {
             console.error('Error creating post:', error);
-            // Set the error message
             setPostResult('Failed to create post.');
         }
     };
