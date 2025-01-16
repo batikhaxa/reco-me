@@ -53,7 +53,7 @@ router.get('/search', async (req, res) => {
                    users.profile_picture
             FROM posts
             JOIN users ON posts.sender_id = users.user_id
-            LEFT JOIN friendships ON friendships.user_id = ? 
+            JOIN friendships ON friendships.user_id = ? 
                 AND friendships.friend_id = posts.sender_id 
                 AND friendships.status = 'accepted'
             WHERE (posts.recipient_type != 'specific' OR posts.recipient_id = ?)
@@ -68,6 +68,7 @@ router.get('/search', async (req, res) => {
         res.status(500).json({ error: 'Database error in searching posts.' });
     }
 });
+
 
 //posts from friends
 router.get('/primary', async (req, res) => {
