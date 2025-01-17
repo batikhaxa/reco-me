@@ -103,20 +103,20 @@ const LoginRegister = ({ onLoginSuccess }) => {
     <>
     
 
-            <div className="container" style={{loginWrapper}}>
-                    <div className="row justify-content-center mx-auto mt-3">
+    <div className="container " style={{loginWrapper}}>
+                    <div className="row justify-content-center  mx-auto mt-3" >
                         <div className={`mt-5 cont ${isSigningUp ? 's--signup' : ''}`} style={{ backgroundColor: "#FFEEF2" }}>
                          
                             
-                                <div className=" col-10 col-md-8 mt-5">
+                                <div className=" col-12 col-md-8 mt-5">
                                         {/* Sign-in Form */}
 
                                 
                                         <div className="form-floating sign-in d-flex justify-content-center align-items-center">
                                             {/* for the card's content */}
-                                            <div className="col-12 col-lg-10 col-md-8"> 
+                                            <div className="col-10 col-lg-10 col-md-8 col-sm-8"> 
                                             
-                                                <h2 className="fs-2 p-3 mb-3 text-lowercase w-100" style={{ fontFamily: "monospace" }}>👋 Welcome back!</h2>
+                                                <h2 className="fs-2 p-2 mb-3 text-lowercase" style={{ fontFamily: "monospace"}}>👋 Welcome back!</h2>
                                                 <form onSubmit={handleLogin} style={{marginLeft:"2rem"}}>
                                                     <label>
                                                         <input
@@ -144,7 +144,7 @@ const LoginRegister = ({ onLoginSuccess }) => {
                                                         />
                                                     
                                                         <label for="floatingPassword"></label>
-                                                        <p className="forgot-pass text-lowercase mb-3" style={forgotPassStyle}>Forgot password?</p>
+                                                        <p className="forgot-pass text-lowercase  mb-3" style={forgotPassStyle}>Forgot password?</p>
                                                     
 
                                                 
@@ -154,7 +154,7 @@ const LoginRegister = ({ onLoginSuccess }) => {
                                                     </button>
                                                 {error && <div className="alert alert-danger">{error}</div>}
                                                 {loginMessage && <div className="alert alert-success">{loginMessage}</div>}
-                                                <button className="mt-2  d-block d-sm-none" type="submit" onClick={() => setIsSigningUp(!isSigningUp)} style={buttonStyle} >SIGN UP</button>
+                                                <button className="mt-2  d-block d-md-none" type="submit" onClick={() => setIsSigningUp(!isSigningUp)} style={buttonStyle} >SIGN UP</button>
                                                 
                                                 </form>
                                                
@@ -172,7 +172,7 @@ const LoginRegister = ({ onLoginSuccess }) => {
                             {/* Sign-up Form */}
                             <div className="sub-cont img-fluid" style={{ backgroundColor: "#FFEEF2" }}>
                             <div className="row">
-                            <div className="col-md-7 offset-md-1">
+                            <div className="col-md-8 offset-md-1">
                                 <div className="img bg-gradient img-fluid  d-none d-md-block">
                                     <div className="img__text m--up">
                                         <a href="/" className="d-flex align-items-center link-body-emphasis text-decoration-none">
@@ -200,7 +200,7 @@ const LoginRegister = ({ onLoginSuccess }) => {
                                 <div className="container w-100 mt-3 d-flex justify-content-center align-items-center " style={signUpStyle}>
                                     <div className="mt-4 form sign-up">
                                         <div className="row justify-content-center">
-                                            <div className="col-12 col-md-10 ">
+                                            <div className="col-12  ">
                                                 <p className="fs-2 text-lowercase text-center mb-4" style={forgotPassStyle}>
                                                     new here? 🤗
                                                 </p>
@@ -253,7 +253,7 @@ const LoginRegister = ({ onLoginSuccess }) => {
                                                     <button type="submit" disabled={loading} style={buttonStyle} className="btn btn-primary mt-3">
                                                         {loading ? 'Registering...' : 'SIGN UP'}
                                                     </button>
-                                                    <button className="mt-2  d-block d-sm-none" type="submit" onClick={() => setIsSigningUp(!isSigningUp)} style={buttonStyle} >SIGN IN</button>
+                                                    <button className="mt-2  d-block d-md-none" type="submit" onClick={() => setIsSigningUp(!isSigningUp)} style={buttonStyle} >SIGN IN</button>
                                                     {error && <div className="alert alert-danger mt-3">{error}</div>}
                                                     {success && <div className="alert alert-success mt-3">{success}</div>}
                                                     </div>
@@ -288,7 +288,7 @@ const inputStyle = {
     background: "transparent",
     border: "none",
     borderBottom: "1px solid white",
-    minWidth:"300px",
+    minWidth:"250px",
     marginBottom:"5%",
     hover:"none"
 };
@@ -328,8 +328,13 @@ const loginWrapper ={
    
 }
 const signUpStyle = {
-    marginLeft: window.innerWidth <= 991.98 ? '-120px' : '0px',
+    marginLeft: window.innerWidth < 768.00 ? '-120px' : '20px',
+    
+    
+    
 };
+
+
 
 
 export default LoginRegister;
