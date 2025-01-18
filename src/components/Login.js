@@ -103,16 +103,16 @@ const LoginRegister = ({ onLoginSuccess }) => {
     <>
     
 
-    <div className="container " style={{loginWrapper}}>
+    <div className="container d-none d-lg-block" style={{loginWrapper}}>
                     <div className="row justify-content-center  mx-auto mt-3" >
                         <div className={`mt-5 cont ${isSigningUp ? 's--signup' : ''}`} style={{ backgroundColor: "#FFEEF2" }}>
                          
                             
-                                <div className=" col-12 col-md-8 mt-5">
+                                <div className=" col-12 col-md-8 offset-md-1 mt-5">
                                         {/* Sign-in Form */}
 
                                 
-                                        <div className="form-floating sign-in d-flex justify-content-center align-items-center">
+                                        <div className="form-floating sign-in d-flex justify-content-center align-items-center mx-auto">
                                             {/* for the card's content */}
                                             <div className="col-10 col-lg-10 col-md-8 col-sm-8"> 
                                             
@@ -171,10 +171,10 @@ const LoginRegister = ({ onLoginSuccess }) => {
 
                             {/* Sign-up Form */}
                             <div className="sub-cont img-fluid" style={{ backgroundColor: "#FFEEF2" }}>
-                            <div className="row">
-                            <div className="col-md-8 offset-md-1">
-                                <div className="img bg-gradient img-fluid  d-none d-md-block">
-                                    <div className="img__text m--up">
+                                <div className="row">
+                                    <div className="col-md-8 offset-md-1">
+                                         <div className="img bg-gradient img-fluid  d-none d-lg-block">
+                                          <div className="img__text m--up">
                                         <a href="/" className="d-flex align-items-center link-body-emphasis text-decoration-none">
                                             <img src="/img/icon.png" alt="icon" width="60" height="60" className="ms-2 img-fluid"/>
                                             <span id="sidebar-title" className="fs-2">reco.me</span>
@@ -197,10 +197,10 @@ const LoginRegister = ({ onLoginSuccess }) => {
                                 </div>
                                 </div>
 
-                                <div className="container w-100 mt-3 d-flex justify-content-center align-items-center " style={signUpStyle}>
+                                <div className="container mx-auto mt-3 d-flex justify-content-center align-items-center " style={signUpStyle}>
                                     <div className="mt-4 form sign-up">
                                         <div className="row justify-content-center">
-                                            <div className="col-12  ">
+                                            <div className="col-12">
                                                 <p className="fs-2 text-lowercase text-center mb-4" style={forgotPassStyle}>
                                                     new here? 🤗
                                                 </p>
@@ -266,13 +266,165 @@ const LoginRegister = ({ onLoginSuccess }) => {
                             </div>
                         </div>
                     </div>
-                    </div>
+             </div>
       
-        
-             
-        
+        {/* small container */}
+                    <div className="container mx-sm-auto mx-md-auto d-block d-lg-none" style={{loginWrapper}}>
+                            <div className="row justify-content-center mx-sm-3 mx-md-3 mt-3" >
+                                <div className={`mt-5 cont ${isSigningUp ? 's--signup' : ''}`} style={{ backgroundColor: "#FFEEF2" }}>
+                                
+                                
+                                <div className=" col-12 mx-3 mt-5">
+                                                {/* Sign-in Form */}
 
-                    </>
+                                         <div className='row justify-content-center offset-md-1'>
+                                                <div className="form-floating sign-in d-flex justify-content-center align-items-center">
+                                                    {/* for the card's content */}
+                                                    <div className="col-12 col-md-10 col-sm-8"> 
+                                                  
+                                                        <h2 className="fs-2 p-1 mb-3 w-100 text-lowercase" style={{ fontFamily: "monospace"}}>👋 Welcome back!</h2>
+                                                        <form onSubmit={handleLogin} style={{marginLeft:"2rem"}}>
+                                                            <label>
+                                                                <input
+                                                                    type="email"
+                                                                    className=" form-control mb-3"
+                                                                    id="floatingInput" 
+                                                                    value={email}
+                                                                    placeholder="email"
+                                                                    onChange={(e) => setEmail(e.target.value)}
+                                                                    style={inputStyle}
+                                                                    required
+                                                                />
+                                                                <label for="floatingInput"></label>
+                                                            </label>
+                                                            <label>
+                                                                <input
+                                                                    type="password"
+                                                                    className="form-control mb-1"
+                                                                    id="floatingPassword" 
+                                                                    value={password}
+                                                                    placeholder="password"
+                                                                    onChange={(e) => setPassword(e.target.value)}
+                                                                    style={inputStyle}
+                                                                    required
+                                                                />
+                                                                
+                                                     
+                                                                        <label for="floatingPassword"></label>
+                                                                        <p className="forgot-pass text-lowercase mb-3" style={forgotPassStyle}>Forgot password?</p>
+                                                                    
+                                                                </label>
+                                                                
+                                                                   
+                                                                    <button type="submit" disabled={loading} style={buttonStyle}>
+                                                                        {loading ? 'Logging in...' : 'SIGN IN'}
+                                                                    </button>
+                                                                        {error && <div className="alert alert-danger">{error}</div>}
+                                                                {loginMessage && <div className="alert alert-success">{loginMessage}</div>}
+                                                               
+                                                                <button className="mt-2  d-block d-lg-none" type="submit" onClick={() => setIsSigningUp(!isSigningUp)} style={buttonStyle} >SIGN UP</button>
+                                                           
+                                                        </form>
+                                                     </div>
+                                                    </div>
+                                                    
+
+                                                    
+                                                </div>
+                                    
+                                    
+                                            </div>
+                                            <div className="sub-cont img-fluid " style={{ backgroundColor: "#FFEEF2" }}>
+                                
+                                    
+
+                                  <div className="container  mt-3 d-flex justify-content-center align-items-center " style={signUpStyle}>
+                                    <div className="mt-4 form sign-up">
+                                        <div className="row justify-content-center">
+                                            <div className="col-12 col-md-12 offset-md-3  ">
+                                                <p className="fs-2 text-lowercase text-center mb-4" style={forgotPassStyle}>
+                                                    new here? 🤗
+                                                </p>
+                                                <form onSubmit={handleRegister} className="text-center">
+                                                    <div className="mb-3">
+                                                        <input
+                                                            type="text"
+                                                            className="form-control"
+                                                            value={username}
+                                                            placeholder="username"
+                                                            onChange={(e) => setUsername(e.target.value)}
+                                                            style={inputStyle}
+                                                            required
+                                                        />
+                                                    </div>
+                                                    <div className="mb-3">
+                                                        <input
+                                                            type="text"
+                                                            className="form-control"
+                                                            value={displayname}
+                                                            placeholder="display name"
+                                                            onChange={(e) => setDisplayname(e.target.value)}
+                                                            style={inputStyle}
+                                                            required
+                                                        />
+                                                    </div>
+                                                    <div className="mb-3">
+                                                        <input
+                                                            type="email"
+                                                            className="form-control"
+                                                            value={regEmail}
+                                                            placeholder="email"
+                                                            onChange={(e) => setRegEmail(e.target.value)}
+                                                            style={inputStyle}
+                                                            required
+                                                        />
+                                                    </div>
+                                                    <div className="mb-3">
+                                                        <input
+                                                            type="password"
+                                                            className="form-control"
+                                                            value={regPassword}
+                                                            placeholder="password"
+                                                            onChange={(e) => setRegPassword(e.target.value)}
+                                                            style={inputStyle}
+                                                            required
+                                                        />
+                                                    </div>
+                                                    <div className='row'>
+                                                    <button type="submit" disabled={loading} style={buttonStyle} className="btn btn-primary mt-3">
+                                                        {loading ? 'Registering...' : 'SIGN UP'}
+                                                    </button>
+                                                    <button className="mt-2  d-block d-lg-none" type="submit" onClick={() => setIsSigningUp(!isSigningUp)} style={buttonStyle} >SIGN IN</button>
+                                                    {error && <div className="alert alert-danger mt-3">{error}</div>}
+                                                    {success && <div className="alert alert-success mt-3">{success}</div>}
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                          </div>
+
+                            </div>
+                            
+                            </div> 
+                           
+                  
+       
+           
+                     
+                      
+              
+
+                            
+                
+                    
+                      
+
+
+        </>
 
     );
 };
@@ -303,15 +455,16 @@ const buttonStyle = {
     textAlign: "center",
     fontSize: "1rem",
     fontFamily: "monospace",
-    margin:"0 26%"
+    margin:"0 23%"
   
    
 }
 
 const forgotPassStyle = {
-    marginBottom: "1rem",
+ 
     fontFamily: "monospace",
     color: "black",
+    
   
 };
 
@@ -328,7 +481,7 @@ const loginWrapper ={
    
 }
 const signUpStyle = {
-    marginLeft: window.innerWidth < 768.00 ? '-120px' : '20px',
+    marginLeft: window.innerWidth < 992.00 ? '-120px' : '50px',
     
     
     
