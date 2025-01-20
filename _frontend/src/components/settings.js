@@ -178,7 +178,7 @@ const Settings = () => {
                                         <label htmlFor="displayname">Display Name</label>
                                     </div>
 
-                                    <button type="submit" className="btn" disabled={loading}>
+                                    <button type="submit" className="set-btn" disabled={loading}>
                                         {loading ? 'Updating...' : 'Update Profile'}
                                     </button>
                                 </form>
@@ -228,7 +228,7 @@ const Settings = () => {
                                         <label htmlFor="confirmPassword">Confirm New Password</label>
                                     </div>
 
-                                    <button type="submit" className="btn" disabled={loading}>
+                                    <button type="submit" className="set-btn" disabled={loading}>
                                         {loading ? 'Updating...' : 'Update Password'}
                                     </button>
                                 </form>
