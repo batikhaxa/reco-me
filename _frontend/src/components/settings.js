@@ -53,7 +53,6 @@ const Settings = () => {
             body: formData,
             credentials: 'include',
         })
-
             .then(async (response) => {
                 if (!response.ok) {
                     const errorData = await response.json();
@@ -140,7 +139,7 @@ const Settings = () => {
                                 {error && <div className="alert alert-danger">{error}</div>}
                                 {success && <div className="alert alert-success">{success}</div>}
                                 <b><label className="d-inline-flex mb-1">
-                                    <i class="bi bi-person-circle"></i>
+                                    <i className="bi bi-person-circle"></i>
                                     <p className="text-lowercase">change profile</p>
                                 </label></b>
                                 <form onSubmit={handleUpdateProfile}>
@@ -179,16 +178,16 @@ const Settings = () => {
                                         <label htmlFor="displayname">Display Name</label>
                                     </div>
 
-                                    <button type="submit" className="post-btn" disabled={loading}>
+                                    <button type="submit" className="btn" disabled={loading}>
                                         {loading ? 'Updating...' : 'Update Profile'}
                                     </button>
                                 </form>
                                 <form onSubmit={handleUpdatePassword}>
                                     <b>
-                                    <label className="d-inline-flex mb-1">
-                                        <i className="bi bi-shield-lock"></i>
-                                        <p className="text-lowercase">Change Password</p>
-                                    </label>
+                                        <label className="d-inline-flex mb-1">
+                                            <i className="bi bi-shield-lock"></i>
+                                            <p className="text-lowercase">Change Password</p>
+                                        </label>
                                     </b>
                                     {/* Old Password */}
                                     <div className="form-floating mb-3">
@@ -228,8 +227,8 @@ const Settings = () => {
                                         />
                                         <label htmlFor="confirmPassword">Confirm New Password</label>
                                     </div>
-                            
-                                    <button type="submit" className="post-btn" disabled={loading}>
+
+                                    <button type="submit" className="btn" disabled={loading}>
                                         {loading ? 'Updating...' : 'Update Password'}
                                     </button>
                                 </form>
