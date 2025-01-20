@@ -36,7 +36,7 @@ const Settings = () => {
 
     const handleUpdateProfile = (e) => {
         e.preventDefault();
-        if (!displayname && !onlineProfileImageLink) {
+        if (displayname === '' && onlineProfileImageLink === '') {
             setError('No changes detected for profile update');
             return;
         }
@@ -50,10 +50,10 @@ const Settings = () => {
 
         fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user/profile`, {
             method: 'PUT',
-            headers: { 'Content-Type': 'multipart/form-data' },
             body: formData,
             credentials: 'include',
         })
+
             .then(async (response) => {
                 if (!response.ok) {
                     const errorData = await response.json();
@@ -199,7 +199,6 @@ const Settings = () => {
                                             placeholder="Current Password"
                                             value={oldPassword}
                                             onChange={(e) => setOldPassword(e.target.value)}
-                                            required={password || confirmPassword} // Conditionally required
                                         />
                                         <label htmlFor="oldPassword">Current Password</label>
                                     </div>
@@ -226,11 +225,10 @@ const Settings = () => {
                                             placeholder="Confirm New Password"
                                             value={confirmPassword}
                                             onChange={(e) => setConfirmPassword(e.target.value)}
-                                            required={password || confirmPassword} // Conditionally required
                                         />
                                         <label htmlFor="confirmPassword">Confirm New Password</label>
                                     </div>
-
+                            
                                     <button type="submit" className="post-btn" disabled={loading}>
                                         {loading ? 'Updating...' : 'Update Password'}
                                     </button>
