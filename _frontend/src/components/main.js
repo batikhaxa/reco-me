@@ -156,7 +156,7 @@ const Main = () => {
                         return (
                             <div key={index} className="row m-0">
                                 {/* Primary Post */}
-                                <div className="col-12 col-sm-12 col-md-9 col-lg-5">
+                                <div className="col-11 col-sm-11 col-md-9 col-lg-5">
                                     <div className="card mb-4 card-main">
                                         <div className="card-body d-flex flex-column">
                                             <div className="d-flex gap-2">
