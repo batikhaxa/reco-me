@@ -15,8 +15,8 @@ const Settings = () => {
     useEffect(() => {
         // Fetch current user data from the backend
         setLoading(true);
-        fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user`, {
-            method: 'GET',
+        fetch(`${process.env.REACT_APP_BACKEND_URL}/api/sidebar`, {
+            method: 'POST',
             credentials: 'include', // Send cookies with the request
         })
             .then(async (response) => {
@@ -135,8 +135,8 @@ const Settings = () => {
                         >
                             <div className="card-body">
                                 <label className="d-inline-flex mb-1">
-                                    <i className="bi bi-gear fs-3"></i>
-                                    <p className="text-lowercase fs-3">settings</p>
+                                    <i className="bi bi-gear fs-5"></i>
+                                    <p className="text-lowercase fs-4">settings</p>
                                 </label>
                                 {error && <div className="alert alert-danger">{error}</div>}
                                 {success && <div className="alert alert-success">{success}</div>}
@@ -151,6 +151,7 @@ const Settings = () => {
                                             style={{ width: '100px', height: '100px', objectFit: 'cover' }}
                                         />
                                     </div>
+                                    <p class="text-center font-weight-bold">{displayname}</p> 
                                     {/* <div className="form-group mb-3">
                                     <label>Upload Profile Image</label>
                                     <input
@@ -184,7 +185,7 @@ const Settings = () => {
                                         />
                                         <label htmlFor="displayname">Display Name</label>
                                     </div>
-                                    <p class="text-center text-lowercase">Change Password</p>
+                                    <p class="text-center text-lowercase fs-5">Change Password</p>
 
                                     {/* Old Password */}
                                     <div className="form-floating mb-3">
@@ -206,7 +207,7 @@ const Settings = () => {
                                             type="password"
                                             className="form-control"
                                             id="password"
-                                            placeholder="New Password (optional)"
+                                            placeholder="New Password"
                                             value={password}
                                             onChange={(e) => setPassword(e.target.value)}
                                         />
