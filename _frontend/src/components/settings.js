@@ -99,7 +99,6 @@ const Settings = () => {
     const handleOnlineImageLinkChange = (e) => {
         const link = e.target.value;
         setOnlineProfileImageLink(link); // Set online link
-        setProfileImage(null); // Clear uploaded file
         setProfileImageUrl(link); // Preview online image
     };
 
