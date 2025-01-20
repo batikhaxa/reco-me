@@ -46,7 +46,7 @@ const Setting = () => {
         }
 
         if (!oldPassword) {
-            setError('Old password is required');
+            setError('Current password is required');
             return;
         }
 
@@ -106,14 +106,14 @@ const Setting = () => {
             });
     };
 
-    const handleProfileImageChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            setProfileImage(file); // For uploading
-            setProfileImageUrl(URL.createObjectURL(file)); // Preview image
-            setOnlineProfileImageLink(''); // Clear online link field
-        }
-    };
+    // const handleProfileImageChange = (e) => {
+    //     const file = e.target.files[0];
+    //     if (file) {
+    //         setProfileImage(file); // For uploading
+    //         setProfileImageUrl(URL.createObjectURL(file)); // Preview image
+    //         setOnlineProfileImageLink(''); // Clear online link field
+    //     }
+    // };
 
     const handleOnlineImageLinkChange = (e) => {
         const link = e.target.value;
@@ -123,105 +123,118 @@ const Setting = () => {
     };
 
     return (
-        <div className="container" style={{ paddingTop: '3em' }}>
-            <div id="settings-card" className="card shadow-none p-1" style={{ marginLeft: '100px', width: '500px' }}>
-                <div className="card-body">
-                    <h2>Settings</h2>
-                    {error && <div className="alert alert-danger">{error}</div>}
-                    {success && <div className="alert alert-success">{success}</div>}
+        <div className="scrollable-container pt-4 pt-md-3 pt-lg-3" data-bs-offset="0">
+            <div className="container mx-0 mx-sm-5 mx-lg-5 mt-5">
+                <row className="m-0">
+                    <div className="col-12 col-md-9 col-lg-12">
+                        <div
+                            id="recommend-card"
+                            className="card shadow-none p-1 mb-5"
+                            style={{
+                                width: '100%',
+                            }}
+                        >
+                            <div className="card-body">
+                                <i className="bi bi-gear"></i>
+                                <h2>Settings</h2>
+                                {error && <div className="alert alert-danger">{error}</div>}
+                                {success && <div className="alert alert-success">{success}</div>}
 
-                    <form onSubmit={handleUpdate}>
-                        {/* Profile Image */}
-                        <div className="text-center mb-3">
-                            <img
-                                src={profileImageUrl || '/default-profile.png'}
-                                alt="Profile"
-                                className="rounded-circle"
-                                style={{ width: '100px', height: '100px', objectFit: 'cover' }}
-                            />
-                        </div>
-                        <div className="form-group mb-3">
-                            <label>Upload Profile Image</label>
-                            <input
-                                type="file"
-                                className="form-control"
-                                accept="image/*"
-                                onChange={handleProfileImageChange}
-                            />
-                        </div>
-                        <div className="form-group mb-3">
-                            <label>Or use an online image link</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Enter image URL"
-                                value={onlineProfileImageLink}
-                                onChange={handleOnlineImageLinkChange}
-                            />
-                        </div>
+                                <form onSubmit={handleUpdate}>
+                                    {/* Profile Image */}
+                                    <div className="text-center mb-3">
+                                        <img
+                                            src={profileImageUrl || '/default-profile.png'}
+                                            alt="Profile Picture"
+                                            className="rounded-circle"
+                                            style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                                        />
+                                    </div>
+                                    {/* <div className="form-group mb-3">
+                                    <label>Upload Profile Image</label>
+                                    <input
+                                        type="file"
+                                        className="form-control"
+                                        accept="image/*"
+                                        onChange={handleProfileImageChange}
+                                    />
+                                </div> */}
+                                    <div className="form-floating mb-3">
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            placeholder="Image URL"
+                                            value={onlineProfileImageLink}
+                                            onChange={handleOnlineImageLinkChange}
+                                            required
+                                        />
+                                        <label htmlFor="displayname">Image URL</label>
+                                    </div>
+                                    {/* Display Name */}
+                                    <div className="form-floating mb-3">
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            id="displayname"
+                                            placeholder="Display Name"
+                                            value={displayname}
+                                            onChange={(e) => setDisplayname(e.target.value)}
+                                            required
+                                        />
+                                        <label htmlFor="displayname">Display Name</label>
+                                    </div>
 
-                        {/* Display Name */}
-                        <div className="form-floating mb-3">
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="displayname"
-                                placeholder="Display Name"
-                                value={displayname}
-                                onChange={(e) => setDisplayname(e.target.value)}
-                                required
-                            />
-                            <label htmlFor="displayname">Display Name</label>
-                        </div>
+                                    {/* Old Password */}
+                                    <div className="form-floating mb-3">
+                                        <input
+                                            type="password"
+                                            className="form-control"
+                                            id="oldPassword"
+                                            placeholder="Current Password"
+                                            value={oldPassword}
+                                            onChange={(e) => setOldPassword(e.target.value)}
+                                            required
+                                        />
+                                        <label htmlFor="oldPassword">Current Password</label>
+                                    </div>
 
-                        {/* Old Password */}
-                        <div className="form-floating mb-3">
-                            <input
-                                type="password"
-                                className="form-control"
-                                id="oldPassword"
-                                placeholder="Old Password"
-                                value={oldPassword}
-                                onChange={(e) => setOldPassword(e.target.value)}
-                                required
-                            />
-                            <label htmlFor="oldPassword">Old Password</label>
-                        </div>
+                                    {/* New Password */}
+                                    <div className="form-floating mb-3">
+                                        <input
+                                            type="password"
+                                            className="form-control"
+                                            id="password"
+                                            placeholder="New Password (optional)"
+                                            value={password}
+                                            onChange={(e) => setPassword(e.target.value)}
+                                        />
+                                        <label htmlFor="password">New Password (optional)</label>
+                                    </div>
 
-                        {/* New Password */}
-                        <div className="form-floating mb-3">
-                            <input
-                                type="password"
-                                className="form-control"
-                                id="password"
-                                placeholder="New Password (optional)"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                            />
-                            <label htmlFor="password">New Password (optional)</label>
-                        </div>
+                                    {/* Confirm New Password */}
+                                    <div className="form-floating mb-3">
+                                        <input
+                                            type="password"
+                                            className="form-control"
+                                            id="confirmPassword"
+                                            placeholder="Confirm New Password"
+                                            value={confirmPassword}
+                                            onChange={(e) => setConfirmPassword(e.target.value)}
+                                        />
+                                        <label htmlFor="confirmPassword">Confirm New Password</label>
+                                    </div>
 
-                        {/* Confirm New Password */}
-                        <div className="form-floating mb-3">
-                            <input
-                                type="password"
-                                className="form-control"
-                                id="confirmPassword"
-                                placeholder="Confirm New Password"
-                                value={confirmPassword}
-                                onChange={(e) => setConfirmPassword(e.target.value)}
-                            />
-                            <label htmlFor="confirmPassword">Confirm New Password</label>
+                                    <button type="submit" className="btn btn-primary w-100" disabled={loading}>
+                                        {loading ? 'Updating...' : 'Update Profile'}
+                                    </button>
+                                </form>
+                            </div>
                         </div>
-
-                        <button type="submit" className="btn btn-primary w-100" disabled={loading}>
-                            {loading ? 'Updating...' : 'Update Profile'}
-                        </button>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
     );
 };
 
-export default Setting;
+export default Settings;
