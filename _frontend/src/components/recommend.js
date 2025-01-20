@@ -127,8 +127,8 @@ const Recommend = () => {
                 <row className="m-0">
                     <div className="col-12 col-md-9 col-lg-12">
                         <div 
-                        id="recommend-card mb-5" 
-                        className="card shadow-none p-1" 
+                        id="recommend-card" 
+                        className="card shadow-none p-1 mb-5" 
                         style={{ 
                             width:'100%', 
                         }}
