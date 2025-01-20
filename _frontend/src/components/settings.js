@@ -185,7 +185,10 @@ const Settings = () => {
                                         />
                                         <label htmlFor="displayname">Display Name</label>
                                     </div>
-                                    <p class="text-center text-lowercase fs-5">Change Password</p>
+                                    <label className="d-inline-flex mb-1">
+                                        <i className="bi bi-shield-lock"></i>
+                                        <p className="text-lowercase">Change Password</p>
+                                    </label>
 
                                     {/* Old Password */}
                                     <div className="form-floating mb-3">
