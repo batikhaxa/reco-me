@@ -34,33 +34,21 @@ const Settings = () => {
             });
     }, []);
 
-    const handleUpdate = (e) => {
-        e.preventDefault()
+    const handleUpdateProfile = (e) => {
+        e.preventDefault();
+        if (!displayname && !onlineProfileImageLink) {
+            setError('No changes detected for profile update');
+            return;
+        }
 
-        if (!oldPassword) {
-            setError('Current password is required');
-            return;
-        }
-        if (password && password !== confirmPassword) {
-            setError('Passwords do not match');
-            return;
-        }
-        if (password && password.length < 6) {
-            setError('Password must be at least 6 characters long');
-            return;
-        }
         setLoading(true);
         setError('');
         setSuccess('');
-
         const formData = new FormData();
-        formData.append('displayname', displayname);
-        formData.append('oldPassword', oldPassword);
-        if (password) formData.append('password', password);
-        if (onlineProfileImageLink) {
-            formData.append('onlineProfileImageLink', onlineProfileImageLink);
-        } 
-        fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user`, {
+        if (displayname) formData.append('displayname', displayname);
+        if (onlineProfileImageLink) formData.append('onlineProfileImageLink', onlineProfileImageLink);
+
+        fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user/profile`, {
             method: 'PUT',
             headers: { 'Content-Type': 'multipart/form-data' },
             body: formData,
@@ -73,13 +61,7 @@ const Settings = () => {
                 }
                 setLoading(false);
                 setSuccess('Profile updated successfully!');
-                setOldPassword(''); // Clear old password field after success
-                setPassword('');
-                setConfirmPassword('');
-                if (onlineProfileImageLink) {
-                    setProfileImageUrl(onlineProfileImageLink); 
-                } 
-                setOnlineProfileImageLink(''); // Clear online link field
+                setOnlineProfileImageLink('');
             })
             .catch((error) => {
                 setLoading(false);
@@ -87,14 +69,49 @@ const Settings = () => {
             });
     };
 
-    // const handleProfileImageChange = (e) => {
-    //     const file = e.target.files[0];
-    //     if (file) {
-    //         setProfileImage(file); // For uploading
-    //         setProfileImageUrl(URL.createObjectURL(file)); // Preview image
-    //         setOnlineProfileImageLink(''); // Clear online link field
-    //     }
-    // };
+    const handleUpdatePassword = (e) => {
+        e.preventDefault();
+        if (!oldPassword || !password || !confirmPassword) {
+            setError('All password fields are required');
+            return;
+        }
+        if (password !== confirmPassword) {
+            setError('Passwords do not match');
+            return;
+        }
+        if (password.length < 6) {
+            setError('Password must be at least 6 characters long');
+            return;
+        }
+
+        setLoading(true);
+        setError('');
+        setSuccess('');
+
+        fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user/password`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ oldPassword, password }),
+            credentials: 'include',
+        })
+            .then(async (response) => {
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'An error occurred');
+                }
+                setLoading(false);
+                setSuccess('Password updated successfully!');
+                setOldPassword('');
+                setPassword('');
+                setConfirmPassword('');
+            })
+            .catch((error) => {
+                setLoading(false);
+                setError(error.message || 'An error occurred');
+            });
+    };
 
     const handleOnlineImageLinkChange = (e) => {
         const link = e.target.value;
@@ -126,7 +143,7 @@ const Settings = () => {
                                     <i class="bi bi-person-circle"></i>
                                     <p className="text-lowercase">change profile</p>
                                 </label></b>
-                                <form onSubmit={handleUpdate}>
+                                <form onSubmit={handleUpdateProfile}>
                                     {/* Profile Image */}
                                     <div className="text-center mb-3">
                                         <img
@@ -136,7 +153,7 @@ const Settings = () => {
                                             style={{ width: '100px', height: '100px', objectFit: 'cover' }}
                                         />
                                     </div>
-                                    <b><p className="text-center fw-light">{displayname}</p></b>
+                                    <b><p className="text-center fw-light fs-4">{displayname}</p></b>
 
                                     <div className="form-floating mb-3">
                                         <input
@@ -161,6 +178,12 @@ const Settings = () => {
                                         />
                                         <label htmlFor="displayname">Display Name</label>
                                     </div>
+                                    
+                                    <button type="submit" className="post-btn" disabled={loading}>
+                                        {loading ? 'Updating...' : 'Update Profile'}
+                                    </button>
+                                </form>
+                                <form onSubmit={handleUpdatePassword}>
                                     <b>
                                     <label className="d-inline-flex mb-1">
                                         <i className="bi bi-shield-lock"></i>
