@@ -15,7 +15,7 @@ const Settings = () => {
     useEffect(() => {
         // Fetch current user data from the backend
         setLoading(true);
-        fetch(`${process.env.REACT_APP_BACKEND_URL}/api/sidebar`, {
+        fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user/sidebar`, {
             method: 'POST',
             credentials: 'include', // Send cookies with the request
         })
