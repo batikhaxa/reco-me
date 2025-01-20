@@ -180,7 +180,7 @@ const Settings = () => {
 
                                     <div class="d-flex justify-content-end">
                                         <button type="submit" className="set-btn" disabled={loading}>
-                                            {loading ? 'Updating...' : 'Update Password'}
+                                            {loading ? 'Updating...' : 'Update Profile'}
                                         </button>
                                     </div>
                                 </form>

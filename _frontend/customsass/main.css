@@ -12015,14 +12015,6 @@ textarea.form-control-lg {
 .post-btn:hover {
   background: linear-gradient(135deg, #ffcad1, #ffcfba);
 }
-.set-btn {
-  background: #FFDCE6;
-  border-radius: 10px;
-  border-width: 0;
-  padding: 7px 17px;
-  font-size: 0.9rem;
-  margin-left: 35px;
-}
 
 .row-with-btn {
   display: flex;

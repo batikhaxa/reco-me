@@ -85,3 +85,12 @@ canvas {
 .scrollable-container::-webkit-scrollbar {
   width: 1px;
 }
+
+.set-btn {
+  background: #FFDCE6;
+  border-radius: 10px;
+  border-width: 0;
+  padding: 7px 17px;
+  font-size: 0.9rem;
+  margin-left: 35px;
+}
