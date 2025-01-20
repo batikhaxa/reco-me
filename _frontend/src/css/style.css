@@ -94,3 +94,6 @@ canvas {
   font-size: 0.9rem;
   margin-left: 35px;
 }
+.set-btn:hover {
+  background: #f6c4d2;
+}
