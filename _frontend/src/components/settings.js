@@ -5,7 +5,6 @@ const Settings = () => {
     const [oldPassword, setOldPassword] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [profileImage, setProfileImage] = useState(null); // For file upload
     const [profileImageUrl, setProfileImageUrl] = useState(''); // For displaying current or uploaded profile image
     const [onlineProfileImageLink, setOnlineProfileImageLink] = useState(''); // For online link
     const [loading, setLoading] = useState(false);
@@ -36,45 +35,31 @@ const Settings = () => {
     }, []);
 
     const handleUpdate = (e) => {
-        e.preventDefault();
-
-        // Basic validation
-        if (!displayname) {
-            setError('Display name is required');
-            return;
-        }
+        e.preventDefault()
 
         if (!oldPassword) {
             setError('Current password is required');
             return;
         }
-
         if (password && password !== confirmPassword) {
             setError('Passwords do not match');
             return;
         }
-
         if (password && password.length < 6) {
             setError('Password must be at least 6 characters long');
             return;
         }
-
         setLoading(true);
         setError('');
         setSuccess('');
 
-        // Prepare data for update
         const formData = new FormData();
         formData.append('displayname', displayname);
         formData.append('oldPassword', oldPassword);
         if (password) formData.append('password', password);
-        if (profileImage) {
-            formData.append('profileImage', profileImage);
-        } else if (onlineProfileImageLink) {
+        if (onlineProfileImageLink) {
             formData.append('onlineProfileImageLink', onlineProfileImageLink);
-        }
-
-        // Send updated data to the backend
+        } 
         fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user`, {
             method: 'PUT',
             headers: { 'Content-Type': 'multipart/form-data' },
@@ -91,12 +76,9 @@ const Settings = () => {
                 setOldPassword(''); // Clear old password field after success
                 setPassword('');
                 setConfirmPassword('');
-                if (profileImage) {
-                    setProfileImageUrl(URL.createObjectURL(profileImage));
-                } else if (onlineProfileImageLink) {
-                    setProfileImageUrl(onlineProfileImageLink); // Update with online link
-                }
-                setProfileImage(null); // Clear the file input
+                if (onlineProfileImageLink) {
+                    setProfileImageUrl(onlineProfileImageLink); 
+                } 
                 setOnlineProfileImageLink(''); // Clear online link field
             })
             .catch((error) => {
@@ -135,12 +117,15 @@ const Settings = () => {
                         >
                             <div className="card-body">
                                 <label className="d-inline-flex mb-1">
-                                    <i className="bi bi-gear fs-5"></i>
+                                    <i className="bi bi-gear fs-5 mt-1"></i>
                                     <p className="text-lowercase fs-4">settings</p>
                                 </label>
                                 {error && <div className="alert alert-danger">{error}</div>}
                                 {success && <div className="alert alert-success">{success}</div>}
-
+                                <label className="d-inline-flex mb-1">
+                                    <i class="bi bi-person-circle"></i>
+                                    <p className="text-lowercase">change profile</p>
+                                </label>
                                 <form onSubmit={handleUpdate}>
                                     {/* Profile Image */}
                                     <div className="text-center mb-3">
@@ -172,7 +157,6 @@ const Settings = () => {
                                             id="displayname"
                                             placeholder="Display Name"
                                             value={displayname}
-                                            onChange={(e) => setDisplayname(e.target.value)}
                                         />
                                         <label htmlFor="displayname">Display Name</label>
                                     </div>
