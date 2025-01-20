@@ -115,10 +115,10 @@ const Settings = () => {
                             }}
                         >
                             <div className="card-body">
-                                <b><label className="d-inline-flex mb-1">
+                                <label className="d-inline-flex mb-1">
                                     <i className="bi bi-gear fs-5 mt-1"></i>
                                     <p className="text-lowercase fs-4">settings</p>
-                                </label></b>
+                                </label>
                                 <br></br>
                                 {error && <div className="alert alert-danger">{error}</div>}
                                 {success && <div className="alert alert-success">{success}</div>}
@@ -136,7 +136,7 @@ const Settings = () => {
                                             style={{ width: '100px', height: '100px', objectFit: 'cover' }}
                                         />
                                     </div>
-                                    <b><p className="text-center">{displayname}</p></b>
+                                    <b><p className="text-center fw-light">{displayname}</p></b>
 
                                     <div className="form-floating mb-3">
                                         <input
@@ -157,15 +157,16 @@ const Settings = () => {
                                             id="displayname"
                                             placeholder="Display Name"
                                             value={displayname}
+                                            onChange={(e) => setDisplayname(e.target.value)}
                                         />
                                         <label htmlFor="displayname">Display Name</label>
                                     </div>
-
+                                    <b>
                                     <label className="d-inline-flex mb-1">
                                         <i className="bi bi-shield-lock"></i>
                                         <p className="text-lowercase">Change Password</p>
                                     </label>
-
+                                    </b>
                                     {/* Old Password */}
                                     <div className="form-floating mb-3">
                                         <input
@@ -190,7 +191,7 @@ const Settings = () => {
                                             value={password}
                                             onChange={(e) => setPassword(e.target.value)}
                                         />
-                                        <label htmlFor="password">New Password (optional)</label>
+                                        <label htmlFor="password">New Password</label>
                                     </div>
 
                                     {/* Confirm New Password */}
