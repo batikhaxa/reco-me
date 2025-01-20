@@ -17,8 +17,6 @@ const Recommend = () => {
         { value: "friends", label: "Friends Only" },
     ]);
 
-    const loggedInUserId = 1; // temp!!
-
     useEffect(() => {
         const element = document.querySelector('#tag_select');
         if (element) {
@@ -30,7 +28,7 @@ const Recommend = () => {
             try {
                 const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/friends`, {
                     method: 'GET',
-                    credentials: 'include', // Send cookies with the request
+                    credentials: 'include', // send cookies with the request
                 });
 
                 if (!response.ok) {
