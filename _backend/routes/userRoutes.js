@@ -31,57 +31,6 @@ router.post('/sidebar', async (req, res) => {
     }
 });
 
-// Update Profile Route
-router.put('/profile', async (req, res) => {
-    const loggedInUserId = req.userSession?.user_id;
-    if (!loggedInUserId) {
-        return res.status(401).json({ error: 'Unauthorized. Please log in.' });
-    }
-
-    const { displayname, onlineProfileImageLink } = req.body;
-
-    // Validate if either displayname or profile picture is provided
-    if (!displayname && !onlineProfileImageLink) {
-        return res.status(400).json({ error: 'No changes detected for profile update' });
-    }
-
-    try {
-        const updates = [];
-        const params = [];
-
-        // Update displayname if provided
-        if (displayname) {
-            updates.push('displayname = ?');
-            params.push(displayname);
-        }
-
-        // Update profile picture if provided
-        if (onlineProfileImageLink) {
-            updates.push('profile_picture = ?');
-            params.push(onlineProfileImageLink);
-        }
-
-        // Execute the update query
-        const query = `
-            UPDATE users
-            SET ${updates.join(', ')}
-            WHERE user_id = ?
-        `;
-        params.push(loggedInUserId);
-
-        const [result] = await pool.query(query, params);
-
-        if (result.affectedRows === 0) {
-            return res.status(404).json({ error: 'User not found' });
-        }
-
-        res.json({ message: 'Profile updated successfully' });
-    } catch (error) {
-        console.error('Error updating profile:', error);
-        res.status(500).json({ error: 'Internal server error' });
-    }
-});
-
 router.put('/profile', async (req, res) => {
     const loggedInUserId = req.userSession?.user_id;
     if (!loggedInUserId) {
