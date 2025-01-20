@@ -122,7 +122,7 @@ const Settings = () => {
     return (
         <div className="scrollable-container pt-4 pt-md-3 pt-lg-3" data-bs-offset="0">
             <div className="container mx-0 mx-sm-5 mx-lg-5 mt-5">
-                <div className="row m-0">
+                <div className="m-0">
                     <div className="col-12 col-md-9 col-lg-12">
                         <div
                             id="recommend-card"
@@ -178,7 +178,7 @@ const Settings = () => {
                                         />
                                         <label htmlFor="displayname">Display Name</label>
                                     </div>
-                                    
+
                                     <button type="submit" className="post-btn" disabled={loading}>
                                         {loading ? 'Updating...' : 'Update Profile'}
                                     </button>
@@ -232,7 +232,7 @@ const Settings = () => {
                                     </div>
 
                                     <button type="submit" className="post-btn" disabled={loading}>
-                                        {loading ? 'Updating...' : 'Update Profile'}
+                                        {loading ? 'Updating...' : 'Update Password'}
                                     </button>
                                 </form>
                             </div>
