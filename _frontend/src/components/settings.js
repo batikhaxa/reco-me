@@ -24,9 +24,9 @@ const Settings = () => {
                     throw new Error('Failed to fetch user data');
                 }
                 const data = await response.json();
-                const { displayname, profileImageUrl } = data;
+                const { displayname, profile_picture } = data;
                 setDisplayname(displayname);
-                setProfileImageUrl(profileImageUrl);
+                setProfileImageUrl(profile_picture);
                 setLoading(false);
             })
             .catch(() => {
