@@ -115,16 +115,17 @@ const Settings = () => {
                             }}
                         >
                             <div className="card-body">
-                                <label className="d-inline-flex mb-1">
+                                <b><label className="d-inline-flex mb-1">
                                     <i className="bi bi-gear fs-5 mt-1"></i>
                                     <p className="text-lowercase fs-4">settings</p>
-                                </label>
+                                </label></b>
+                                <br></br>
                                 {error && <div className="alert alert-danger">{error}</div>}
                                 {success && <div className="alert alert-success">{success}</div>}
-                                <label className="d-inline-flex mb-1">
+                                <b><label className="d-inline-flex mb-1">
                                     <i class="bi bi-person-circle"></i>
                                     <p className="text-lowercase">change profile</p>
-                                </label>
+                                </label></b>
                                 <form onSubmit={handleUpdate}>
                                     {/* Profile Image */}
                                     <div className="text-center mb-3">
