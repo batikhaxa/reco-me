@@ -150,7 +150,7 @@ const LoginRegister = ({ onLoginSuccess }) => {
                                         </button>
                                         {error && <div className="alert alert-danger">{error}</div>}
                                         {loginMessage && <div className="alert alert-success">{loginMessage}</div>}
-                                        <button className="mt-2  d-block d-md-none" type="submit" onClick={() => setIsSigningUp(!isSigningUp)} style={buttonStyle} >SIGN UP</button>
+                                        <button className="mt-2  d-block d-md-none set-btn" type="submit" onClick={() => setIsSigningUp(!isSigningUp)} >SIGN UP</button>
 
                                     </form>
 
@@ -246,7 +246,7 @@ const LoginRegister = ({ onLoginSuccess }) => {
                                                     />
                                                 </div>
                                                 <div className='row'>
-                                                    <button type="submit" disabled={loading} style={buttonStyle} className="btn btn-primary mt-3">
+                                                    <button type="submit" disabled={loading} style={buttonStyle} className="set-btn mt-3">
                                                         {loading ? 'Registering...' : 'SIGN UP'}
                                                     </button>
                                                     <button className="mt-2  d-block d-md-none" type="submit" onClick={() => setIsSigningUp(!isSigningUp)} style={buttonStyle} >SIGN IN</button>
@@ -387,7 +387,7 @@ const LoginRegister = ({ onLoginSuccess }) => {
                                                     />
                                                 </div>
                                                 <div className='row'>
-                                                    <button type="submit" disabled={loading} style={buttonStyle} className="btn btn-primary mt-3">
+                                                    <button type="submit" disabled={loading} style={buttonStyle} className="set-btn mt-3">
                                                         {loading ? 'Registering...' : 'SIGN UP'}
                                                     </button>
                                                     <button className="mt-2  d-block d-lg-none" type="submit" onClick={() => setIsSigningUp(!isSigningUp)} style={buttonStyle} >SIGN IN</button>

@@ -136,8 +136,6 @@ const Settings = () => {
                                     <p className="text-lowercase fs-4">settings</p>
                                 </label>
                                 <br></br>
-                                {error && <div className="alert alert-danger">{error}</div>}
-                                {success && <div className="alert alert-success">{success}</div>}
                                 <b><label className="d-inline-flex mb-1">
                                     <i className="bi bi-person-circle"></i>
                                     <p className="text-lowercase">change profile</p>
@@ -180,7 +178,7 @@ const Settings = () => {
 
                                     <div class="d-flex justify-content-end">
                                         <button type="submit" className="set-btn" disabled={loading}>
-                                            {loading ? 'Updating...' : 'Update Profile'}
+                                            {loading ? 'updating...' : 'update'}
                                         </button>
                                     </div>
                                 </form>
@@ -231,9 +229,11 @@ const Settings = () => {
                                     </div>
                                     <div class="d-flex justify-content-end">
                                         <button type="submit" className="set-btn" disabled={loading}>
-                                            {loading ? 'Updating...' : 'Update Password'}
+                                            {loading ? 'update...' : 'update'}
                                         </button>
                                     </div>
+                                    {error && <div className="alert alert-danger">{error}</div>}
+                                    {success && <div className="alert alert-success">{success}</div>}
                                 </form>
                             </div>
                         </div>
