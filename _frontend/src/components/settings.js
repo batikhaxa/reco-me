@@ -151,7 +151,7 @@ const Settings = () => {
                                             style={{ width: '100px', height: '100px', objectFit: 'cover' }}
                                         />
                                     </div>
-                                    <p class="text-center font-weight-bold">{displayname}</p> 
+                                    <b><p class="text-center">{displayname}</p></b>
                                     {/* <div className="form-group mb-3">
                                     <label>Upload Profile Image</label>
                                     <input
