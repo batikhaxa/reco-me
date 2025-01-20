@@ -12016,63 +12016,12 @@ textarea.form-control-lg {
   background: linear-gradient(135deg, #ffcad1, #ffcfba);
 }
 .set-btn {
-  padding: 0.5rem;
+  background: #FFDCE6;
   border-radius: 10px;
-  display: flex;
-  flex-wrap: wrap;
-  font-weight: bold;
-  float: right;
-  background-color: #FFDCE6;
-}
-.set-btn:hover {
-  background: linear-gradient(269deg, #ffdce6, #ffbdd5);
-  background-size: 400% 400%;
-
-  -webkit-animation: tagAnimation 5s ease infinite;
-  -moz-animation: tagAnimation 5s ease infinite;
-  animation: tagAnimation 5s ease infinite;
-}
-
-@-webkit-keyframes tagAnimation {
-  0% {
-    background-position: 0% 50%
-  }
-
-  50% {
-    background-position: 100% 50%
-  }
-
-  100% {
-    background-position: 0% 50%
-  }
-}
-
-@-moz-keyframes tagAnimation {
-  0% {
-    background-position: 0% 50%
-  }
-
-  50% {
-    background-position: 100% 50%
-  }
-
-  100% {
-    background-position: 0% 50%
-  }
-}
-
-@keyframes tagAnimation {
-  0% {
-    background-position: 0% 50%
-  }
-
-  50% {
-    background-position: 100% 50%
-  }
-
-  100% {
-    background-position: 0% 50%
-  }
+  border-width: 0;
+  padding: 7px 17px;
+  font-size: 0.9rem;
+  margin-left: 35px;
 }
 
 .row-with-btn {

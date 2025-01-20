@@ -178,9 +178,11 @@ const Settings = () => {
                                         <label htmlFor="displayname">Display Name</label>
                                     </div>
 
-                                    <button type="submit" className="set-btn" disabled={loading}>
-                                        {loading ? 'Updating...' : 'Update Profile'}
-                                    </button>
+                                    <div class="d-flex justify-content-end">
+                                        <button type="submit" className="set-btn" disabled={loading}>
+                                            {loading ? 'Updating...' : 'Update Password'}
+                                        </button>
+                                    </div>
                                 </form>
                                 <form onSubmit={handleUpdatePassword}>
                                     <b>
@@ -227,10 +229,11 @@ const Settings = () => {
                                         />
                                         <label htmlFor="confirmPassword">Confirm New Password</label>
                                     </div>
-
-                                    <button type="submit" className="set-btn" disabled={loading}>
-                                        {loading ? 'Updating...' : 'Update Password'}
-                                    </button>
+                                    <div class="d-flex justify-content-end">
+                                        <button type="submit" className="set-btn" disabled={loading}>
+                                            {loading ? 'Updating...' : 'Update Password'}
+                                        </button>
+                                    </div>
                                 </form>
                             </div>
                         </div>
