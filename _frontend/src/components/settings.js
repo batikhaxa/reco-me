@@ -151,16 +151,8 @@ const Settings = () => {
                                             style={{ width: '100px', height: '100px', objectFit: 'cover' }}
                                         />
                                     </div>
-                                    <b><p class="text-center">{displayname}</p></b>
-                                    {/* <div className="form-group mb-3">
-                                    <label>Upload Profile Image</label>
-                                    <input
-                                        type="file"
-                                        className="form-control"
-                                        accept="image/*"
-                                        onChange={handleProfileImageChange}
-                                    />
-                                </div> */}
+                                    <b><p className="text-center">{displayname}</p></b>
+
                                     <div className="form-floating mb-3">
                                         <input
                                             type="text"
@@ -168,10 +160,10 @@ const Settings = () => {
                                             placeholder="Image URL"
                                             value={onlineProfileImageLink}
                                             onChange={handleOnlineImageLinkChange}
-                                            required
                                         />
                                         <label htmlFor="displayname">Image URL</label>
                                     </div>
+
                                     {/* Display Name */}
                                     <div className="form-floating mb-3">
                                         <input
@@ -181,10 +173,10 @@ const Settings = () => {
                                             placeholder="Display Name"
                                             value={displayname}
                                             onChange={(e) => setDisplayname(e.target.value)}
-                                            required
                                         />
                                         <label htmlFor="displayname">Display Name</label>
                                     </div>
+
                                     <label className="d-inline-flex mb-1">
                                         <i className="bi bi-shield-lock"></i>
                                         <p className="text-lowercase">Change Password</p>
@@ -199,7 +191,7 @@ const Settings = () => {
                                             placeholder="Current Password"
                                             value={oldPassword}
                                             onChange={(e) => setOldPassword(e.target.value)}
-                                            required
+                                            required={password || confirmPassword} // Conditionally required
                                         />
                                         <label htmlFor="oldPassword">Current Password</label>
                                     </div>
@@ -226,11 +218,12 @@ const Settings = () => {
                                             placeholder="Confirm New Password"
                                             value={confirmPassword}
                                             onChange={(e) => setConfirmPassword(e.target.value)}
+                                            required={password || confirmPassword} // Conditionally required
                                         />
                                         <label htmlFor="confirmPassword">Confirm New Password</label>
                                     </div>
 
-                                    <button type="submit" className="btn btn-primary w-100" disabled={loading}>
+                                    <button type="submit" className="post-btn" disabled={loading}>
                                         {loading ? 'Updating...' : 'Update Profile'}
                                     </button>
                                 </form>
