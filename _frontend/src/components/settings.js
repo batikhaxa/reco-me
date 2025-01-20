@@ -135,8 +135,8 @@ const Settings = () => {
                         >
                             <div className="card-body">
                                 <label className="d-inline-flex mb-1">
-                                    <i className="bi bi-gear"></i>
-                                    <p className="text-lowercase">settings</p>
+                                    <i className="bi bi-gear fs-3"></i>
+                                    <p className="text-lowercase fs-3">settings</p>
                                 </label>
                                 {error && <div className="alert alert-danger">{error}</div>}
                                 {success && <div className="alert alert-success">{success}</div>}
