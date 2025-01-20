@@ -134,8 +134,10 @@ const Settings = () => {
                             }}
                         >
                             <div className="card-body">
-                                <i className="bi bi-gear"></i>
-                                <h2>Settings</h2>
+                                <label className="d-inline-flex mb-1">
+                                    <i className="bi bi-gear"></i>
+                                    <p className="text-lowercase">settings</p>
+                                </label>
                                 {error && <div className="alert alert-danger">{error}</div>}
                                 {success && <div className="alert alert-success">{success}</div>}
 
@@ -143,7 +145,7 @@ const Settings = () => {
                                     {/* Profile Image */}
                                     <div className="text-center mb-3">
                                         <img
-                                            src={profileImageUrl || '/default-profile.png'}
+                                            src={profileImageUrl || 'https://i.pinimg.com/564x/e8/d7/d0/e8d7d05f392d9c2cf0285ce928fb9f4a.jpg'}
                                             alt="Profile Picture"
                                             className="rounded-circle"
                                             style={{ width: '100px', height: '100px', objectFit: 'cover' }}
@@ -182,6 +184,7 @@ const Settings = () => {
                                         />
                                         <label htmlFor="displayname">Display Name</label>
                                     </div>
+                                    <p class="text-center text-lowercase">Change Password</p>
 
                                     {/* Old Password */}
                                     <div className="form-floating mb-3">
