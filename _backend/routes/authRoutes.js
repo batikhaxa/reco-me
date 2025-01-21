@@ -54,7 +54,7 @@ router.post('/login', async (req, res) => {
         res.cookie('sessionId', sessionId, {
             httpOnly: true,
             secure: true,
-            sameSite: 'none',
+            sameSite: 'Secure',
             path: '/',
             maxAge: 3600000, // 1 hour in milliseconds
         });
@@ -83,7 +83,7 @@ router.post('/logout', async (req, res) => {
         res.clearCookie('sessionId', {
             httpOnly: true,
             secure: false, // Change to true in production with HTTPS
-            sameSite: 'lax',
+            sameSite: 'Secure',
             path: '/', // Ensure the cookie is cleared globally
         });
         res.status(200).json({ message: 'Logged out successfully' });
