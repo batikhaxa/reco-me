@@ -53,8 +53,8 @@ router.post('/login', async (req, res) => {
 
         res.cookie('sessionId', sessionId, {
             httpOnly: true,
-            secure: true,
-            sameSite: 'None',
+            secure: process.env.NODE_ENV === 'production', // true for production, false for development
+            sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax', // 'None' for cross-site in production
             path: '/',
             maxAge: 3600000, // 1 hour in milliseconds
         });
@@ -82,8 +82,8 @@ router.post('/logout', async (req, res) => {
         await pool.query('DELETE FROM sessions WHERE session_id = ?', [sessionId]);
         res.clearCookie('sessionId', {
             httpOnly: true,
-            secure: true, // Change to true in production with HTTPS
-            sameSite: 'Secure',
+            secure: process.env.NODE_ENV === 'production', // true for production, false for development
+            sameSite: process.env.NODE_ENV === 'production' ? 'Secure' : 'Lax', // 'None' for cross-site in production
             path: '/', // Ensure the cookie is cleared globally
         });
         res.status(200).json({ message: 'Logged out successfully' });

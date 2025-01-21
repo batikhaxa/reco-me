@@ -1,3 +1,8 @@
+// dev switch
+const dotenv = require('dotenv');
+const env = process.env.NODE_ENV || 'development';
+dotenv.config({ path: `.env.${env}` });
+
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
@@ -14,6 +19,7 @@ const corsOptions = {
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], 
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
 };
+console.log("Client Origin:" + process.env.CLIENT_ORIGIN)
 app.use(cors(corsOptions));
 
 // Middleware 
