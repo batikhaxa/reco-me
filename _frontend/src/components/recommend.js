@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import Choices from 'choices.js';
 import 'choices.js/public/assets/styles/choices.min.css';
 import Select from 'react-select';
-import axios from 'axios';
 
 const Recommend = () => {
     const [title, setTitle] = useState('');

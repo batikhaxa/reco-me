@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
 
 const Search = () => {
     const [tags, setTags] = useState([]);

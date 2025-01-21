@@ -145,7 +145,6 @@ const Settings = () => {
                                     <div className="text-center mb-3">
                                         <img
                                             src={profileImageUrl || 'https://i.pinimg.com/564x/e8/d7/d0/e8d7d05f392d9c2cf0285ce928fb9f4a.jpg'}
-                                            alt="Profile Picture"
                                             className="rounded-circle"
                                             style={{ width: '100px', height: '100px', objectFit: 'cover' }}
                                         />
