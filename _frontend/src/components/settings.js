@@ -147,6 +147,7 @@ const Settings = () => {
                                             src={profileImageUrl || 'https://i.pinimg.com/564x/e8/d7/d0/e8d7d05f392d9c2cf0285ce928fb9f4a.jpg'}
                                             className="rounded-circle"
                                             style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                                            alt="Profile Picture"
                                         />
                                     </div>
                                     <b><p className="text-center fw-light fs-4">{displayname}</p></b>
