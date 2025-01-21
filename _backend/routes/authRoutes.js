@@ -82,7 +82,7 @@ router.post('/logout', async (req, res) => {
         await pool.query('DELETE FROM sessions WHERE session_id = ?', [sessionId]);
         res.clearCookie('sessionId', {
             httpOnly: true,
-            secure: false, // Change to true in production with HTTPS
+            secure: true, // Change to true in production with HTTPS
             sameSite: 'Secure',
             path: '/', // Ensure the cookie is cleared globally
         });
