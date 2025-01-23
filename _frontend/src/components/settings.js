@@ -10,6 +10,7 @@ const Settings = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    const [isImageValid, setIsImageValid] = useState(true);
 
     useEffect(() => {
         // Fetch current user data from the backend
@@ -44,13 +45,16 @@ const Settings = () => {
         setLoading(true);
         setError('');
         setSuccess('');
-        const formData = new FormData();
-        if (displayname) formData.append('displayname', displayname);
-        if (onlineProfileImageLink) formData.append('onlineProfileImageLink', onlineProfileImageLink);
+
+        const payload = {
+            displayname: displayname || undefined,
+            onlineProfileImageLink: onlineProfileImageLink || undefined,
+        };
 
         fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user/profile`, {
             method: 'PUT',
-            body: formData,
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
             credentials: 'include',
         })
             .then(async (response) => {
@@ -70,6 +74,7 @@ const Settings = () => {
 
     const handleUpdatePassword = (e) => {
         e.preventDefault();
+
         if (!oldPassword || !password || !confirmPassword) {
             setError('All password fields are required');
             return;
@@ -92,7 +97,7 @@ const Settings = () => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ oldPassword, password }),
+            body: JSON.stringify({ oldPassword, password, confirmPassword }), // Include confirmPassword
             credentials: 'include',
         })
             .then(async (response) => {
@@ -143,12 +148,17 @@ const Settings = () => {
                                 <form onSubmit={handleUpdateProfile}>
                                     {/* Profile Image */}
                                     <div className="text-center mb-3">
-                                        <img
-                                            src={profileImageUrl || 'https://i.pinimg.com/564x/e8/d7/d0/e8d7d05f392d9c2cf0285ce928fb9f4a.jpg'}
-                                            className="rounded-circle"
-                                            style={{ width: '100px', height: '100px', objectFit: 'cover' }}
-                                            alt="Profile Picture"
-                                        />
+                                        {isImageValid ? (
+                                            <img
+                                                src={profileImageUrl || 'default-profile-pic.jpg'}
+                                                className="rounded-circle"
+                                                style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                                                alt="Profile-Picture"
+                                                onError={() => setIsImageValid(false)} // if image fails to load
+                                            />
+                                        ) : (
+                                            <b>Invalid Image URL</b> 
+                                        )}
                                     </div>
                                     <b><p className="text-center fw-light fs-4">{displayname}</p></b>
 
@@ -176,9 +186,9 @@ const Settings = () => {
                                         <label htmlFor="displayname">Display Name</label>
                                     </div>
 
-                                    <div class="d-flex justify-content-end">
+                                    <div className="d-flex justify-content-end">
                                         <button type="submit" className="set-btn" disabled={loading}>
-                                            {loading ? 'updating...' : 'update'}
+                                            {loading ? 'Updating...' : 'Save'}
                                         </button>
                                     </div>
                                 </form>
@@ -229,11 +239,13 @@ const Settings = () => {
                                     </div>
                                     <div class="d-flex justify-content-end">
                                         <button type="submit" className="set-btn" disabled={loading}>
-                                            {loading ? 'update...' : 'update'}
+                                            {loading ? 'Updating...' : 'Save'}
                                         </button>
                                     </div>
-                                    {error && <div className="alert alert-danger">{error}</div>}
-                                    {success && <div className="alert alert-success">{success}</div>}
+                                    <div className="mt-3">
+                                        {error && <div className="alert alert-danger">{error}</div>}
+                                        {success && <div className="alert alert-success">{success}</div>}
+                                    </div>
                                 </form>
                             </div>
                         </div>

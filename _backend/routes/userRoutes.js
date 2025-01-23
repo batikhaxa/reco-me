@@ -1,4 +1,7 @@
 const express = require('express');
+const app = express();
+app.use(express.json()); 
+
 const pool = require('../db');
 const router = express.Router();
 const { checkAuth } = require('../middleware/authMiddleware');
@@ -78,6 +81,7 @@ router.put('/profile', async (req, res) => {
 });
 
 router.put('/password', async (req, res) => {
+    console.log('Request body:', req.body); 
     const loggedInUserId = req.userSession?.user_id;
     if (!loggedInUserId) {
         return res.status(401).json({ error: 'Unauthorized. Please log in.' });
@@ -98,25 +102,20 @@ router.put('/password', async (req, res) => {
     }
 
     try {
-        // Get the user from the database
         const [users] = await pool.query('SELECT * FROM users WHERE user_id = ?', [loggedInUserId]);
 
         if (users.length === 0) {
             return res.status(404).json({ error: 'User not found' });
         }
-
         const user = users[0];
 
-        // Check if the old password is correct
         const passwordMatch = await bcrypt.compare(oldPassword, user.password_hash);
         if (!passwordMatch) {
             return res.status(400).json({ error: 'Incorrect current password' });
         }
 
-        // Hash the new password
         const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-        // Update the password in the database
         const [result] = await pool.query(
             'UPDATE users SET password_hash = ? WHERE user_id = ?',
             [hashedPassword, loggedInUserId]
