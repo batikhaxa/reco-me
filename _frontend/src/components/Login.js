@@ -34,7 +34,7 @@ const LoginRegister = ({ onLoginSuccess }) => {
             });
     };
     return (
-        <main className="d-flex flex-nowrap full-height min-vh-100 bg-gradient">
+        <main className="d-flex flex-nowrap full-height min-vh-100 bg-gradient-anim">
             <div className="scrollable-container p-1">
                 <div className="row d-flex justify-content-center align-items-center h-100">
                     <div className="col-11 col-sm-9 col-md-7 col-lg-5 col-xl-5">
