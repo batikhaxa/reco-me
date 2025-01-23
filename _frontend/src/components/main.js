@@ -163,10 +163,10 @@ const Main = () => {
                                                 <img
                                                     ref={(el) => (primaryRefs.current[primaryPost.post_id] = el)}
                                                     src={primaryPost.profile_picture || 'default-profile-pic.jpg'}
-                                                    alt=""
+                                                    alt="Profile-Picture"
                                                     width="70"
                                                     height="70"
-                                                    className="object-fit-cover rounded-circle me-2"
+                                                    className="object-fit-fill rounded-circle me-2"
                                                 />
                                                 <h5 className="card-title">
                                                     <b>{primaryPost.displayname}</b> recommends <b>{primaryPost.title}</b>
