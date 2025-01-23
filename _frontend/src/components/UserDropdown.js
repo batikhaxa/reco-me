@@ -36,7 +36,7 @@ const UserDropdown = () => {
                     alt=""
                     width="50"
                     height="50"
-                    className="rounded-circle me-2 ms-2"
+                    className="rounded-circle me-2 ms-2 object-fit-cover"
                 />
                 <strong className="text-white fw-light fs-4">{userData.displayname || 'Guest'}</strong>
             </button>

@@ -75,6 +75,7 @@ canvas {
 }
 
 .scrollable-container {
+  overflow-x: hidden;
   position: relative;
   flex-grow: 1;
   padding: 0;
@@ -96,4 +97,50 @@ canvas {
 }
 .set-btn:hover {
   background: #f6c4d2;
+}
+
+
+.talk-bubble {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  height: auto;
+  background-color: #FFEEF2;
+}
+.talktext {
+  padding: 1em;
+  text-align: left;
+  line-height: 1.5em;
+}
+.round {
+  border-radius: 30px;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+
+}
+
+
+.tri-right.border.left-top:before {
+  content: ' ';
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: -40px;
+  right: auto;
+  top: -8px;
+  bottom: auto;
+  border: 32px solid;
+  border-color: #666 transparent transparent transparent;
+}
+.tri-right.left-top:after {
+  content: ' ';
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: -20px;
+  right: auto;
+  top: 0px;
+  bottom: auto;
+  border: 22px solid;
+  border-color: #FFEEF2 transparent transparent transparent;
 }

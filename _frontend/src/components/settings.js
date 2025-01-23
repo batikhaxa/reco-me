@@ -126,8 +126,8 @@ const Settings = () => {
     return (
         <div className="scrollable-container pt-4 pt-md-3 pt-lg-3" data-bs-offset="0">
             <div className="container mx-0 mx-sm-5 mx-lg-5 mt-5">
-                <div className="m-0">
-                    <div className="col-12 col-md-9 col-lg-12">
+                <div className="row justify-content-start m-0">
+                    <div className="col-12 col-sm-12 col-md-9 col-lg-5">
                         <div
                             id="recommend-card"
                             className="card shadow-none p-1 mb-5"
@@ -187,7 +187,7 @@ const Settings = () => {
                                     </div>
 
                                     <div className="d-flex justify-content-end">
-                                        <button type="submit" className="set-btn" disabled={loading}>
+                                        <button type="submit" className="set-btn mb-2" disabled={loading}>
                                             {loading ? 'Updating...' : 'Save'}
                                         </button>
                                     </div>
@@ -238,7 +238,7 @@ const Settings = () => {
                                         <label htmlFor="confirmPassword">Confirm New Password</label>
                                     </div>
                                     <div class="d-flex justify-content-end">
-                                        <button type="submit" className="set-btn" disabled={loading}>
+                                        <button type="submit" className="set-btn mb-2" disabled={loading}>
                                             {loading ? 'Updating...' : 'Save'}
                                         </button>
                                     </div>
@@ -247,6 +247,25 @@ const Settings = () => {
                                         {success && <div className="alert alert-success">{success}</div>}
                                     </div>
                                 </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-12 col-sm-12 col-md-9 col-lg-5 d-none d-md-none d-lg-block">
+                        <div 
+                            className="talk-bubble tri-right left-top round ms-3"
+                            style={{
+                                marginTop: '309px',
+                            }}
+                        >
+                            <div class="talktext">
+                                <p><b>reco.me</b> currently doesn't support image uploads to save bandwidth; please use a third-party site like Imgur.</p>
+                            </div>
+                        </div>
+                        <div
+                            className="talk-bubble tri-right left-top round mt-3 ms-3"
+                        >
+                            <div class="talktext">
+                                <p>To retrieve an image URL, right-click on the image and select "Copy image address" or "Copy image URL". The URL should end with an image file extension, such as <b>.jpg, .png, or .gif.</b></p>
                             </div>
                         </div>
                     </div>

@@ -162,11 +162,11 @@ const Main = () => {
                                             <div className="d-flex gap-2">
                                                 <img
                                                     ref={(el) => (primaryRefs.current[primaryPost.post_id] = el)}
-                                                    src={primaryPost.profile_picture || 'https://i.pinimg.com/564x/e8/d7/d0/e8d7d05f392d9c2cf0285ce928fb9f4a.jpg'}
+                                                    src={primaryPost.profile_picture || 'default-profile-pic.jpg'}
                                                     alt=""
                                                     width="70"
                                                     height="70"
-                                                    className="rounded-circle me-2"
+                                                    className="object-fit-cover rounded-circle me-2"
                                                 />
                                                 <h5 className="card-title">
                                                     <b>{primaryPost.displayname}</b> recommends <b>{primaryPost.title}</b>
@@ -201,11 +201,11 @@ const Main = () => {
                                                 <div className="d-flex gap-2">
                                                     <img
                                                         ref={(el) => (secondaryRefs.current[secondaryPost.post_id] = el)}
-                                                        src={secondaryPost.profile_picture || 'https://i.pinimg.com/564x/e8/d7/d0/e8d7d05f392d9c2cf0285ce928fb9f4a.jpg'}
+                                                        src={secondaryPost.profile_picture || 'default-profile-pic.jpg'}
                                                         alt=""
                                                         width="70"
                                                         height="70"
-                                                        className="rounded-circle me-2"
+                                                        className="object-fit-cover rounded-circle me-2"
                                                     />
                                                     <h5 className="card-title">
                                                         <b>{secondaryPost.displayname}</b>, friend of{' '}
