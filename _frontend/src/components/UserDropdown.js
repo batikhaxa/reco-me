@@ -27,7 +27,7 @@ const UserDropdown = () => {
     return (
         <div className="dropdown mt-auto">
             <button
-                className="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle btn btn-link p-0 text-decoration-none"
+                className="d-flex align-items-center link-body-emphasis text-decoration-none btn btn-link p-0 text-decoration-none"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
             >
@@ -36,9 +36,13 @@ const UserDropdown = () => {
                     alt=""
                     width="50"
                     height="50"
-                    className="rounded-circle me-2 ms-2 object-fit-cover"
+                    className="rounded-circle me-2 ms-2"
                 />
                 <strong className="text-white fw-light fs-4">{userData.displayname || 'Guest'}</strong>
+                <i 
+                    class="bi bi-caret-down-fill"
+                    style={{color:'white'}}
+                ></i>
             </button>
             <ul className="dropdown-menu ms-5 text-small shadow">
                 <li>

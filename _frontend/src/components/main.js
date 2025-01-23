@@ -177,18 +177,18 @@ const Main = () => {
                                                 </h5>
                                             </div>
                                             <p className="card-text">{primaryPost.content}</p>
-                                            <div className="d-flex flex-wrap">
+                                            <div className="d-flex flex-wrap pb-2">
                                                 {(primaryPost.tags?.split(', ') || ['Unknown']).map((tag, tagIndex) => (
                                                     <label key={tagIndex} className="card-category d-inline-flex mb-1">
-                                                        <i className="bi bi-film"></i> {tag}
+                                                        <i class="bi bi-hash"></i> {tag}
                                                     </label>
                                                 ))}
                                             </div>
-                                            <div className="d-flex flex-wrap justify-content-end">
+                                            {/* <div className="d-flex flex-wrap justify-content-end">
                                                 <a href="/comments" className="link-icon">
                                                     <i className="bi bi-chat-dots"></i>
                                                 </a>
-                                            </div>
+                                            </div> */}
                                         </div>
                                     </div>
                                 </div>
@@ -218,18 +218,18 @@ const Main = () => {
                                                     </h5>
                                                 </div>
                                                 <p className="card-text">{secondaryPost.content}</p>
-                                                <div className="d-flex flex-wrap">
+                                                <div className="d-flex flex-wrap pb-2">
                                                     {(secondaryPost.tags?.split(', ') || ['Unknown']).map((tag, tagIndex) => (
                                                         <label key={tagIndex} className="card-category d-inline-flex mb-1">
-                                                            <i className="bi bi-film"></i> {tag}
+                                                            <i class="bi bi-hash"></i> {tag}
                                                         </label>
                                                     ))}
                                                 </div>
-                                                <div className="d-flex flex-wrap justify-content-end">
+                                                {/* <div className="d-flex flex-wrap justify-content-end">
                                                     <a href="/comments" className="link-icon">
                                                     <i className="bi bi-chat-dots"></i>
                                                    </a>
-                                                </div>
+                                                </div> */}
                                             </div>
                                         </div>
                                     ))}
