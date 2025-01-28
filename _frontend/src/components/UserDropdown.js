@@ -58,6 +58,14 @@ const UserDropdown = () => {
                         log out
                     </a>
                 </li>
+                <li>
+                    <hr className="dropdown-divider" />
+                </li>
+                <li>
+                    <a className="dropdown-item" href="/profile">
+                        profile
+                    </a>
+                </li>
             </ul>
         </div>
     );

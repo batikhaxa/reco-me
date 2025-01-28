@@ -5,6 +5,7 @@ import Main from './components/main';
 import Recommend from './components/recommend';
 import Settings from './components/settings';
 import Search from './components/search';
+import Profile from './components/profile'
 import LoginRegister from './components/Login';
 import Logout from './components/Logout';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -65,6 +66,7 @@ const App = () => {
                     <Route path="/search" element={<Search />} />
                     <Route path="/settings" element={<Settings />} />
                     <Route path="/logout" element={<Logout onLogout={handleLogout} />} />
+                    <Route path="/profile" element={<Profile />} />
                     <Route path="*" element={<Navigate to="/home" replace />} />
                   </Routes>
                 </div>

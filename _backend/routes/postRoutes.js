@@ -33,7 +33,7 @@ router.post('/', async (req, res) => {
 
 router.get('/search', async (req, res) => {
     const { tags } = req.query;
-    const loggedInUserId = req.userSession?.user_id; // Extracted from session
+    const loggedInUserId = req.userSession?.user_id; 
 
     if (!loggedInUserId) {
         return res.status(401).json({ error: 'Unauthorized. Please log in.' });
@@ -43,8 +43,8 @@ router.get('/search', async (req, res) => {
         return res.status(400).json({ error: 'Tags are required for search.' });
     }
 
-    const tagArray = tags.split(',').map(tag => `%${tag.trim()}%`); // Sanitize and format tags
-    const tagConditions = tagArray.map(() => 'posts.tags LIKE ?').join(' AND '); // Create SQL conditions
+    const tagArray = tags.split(',').map(tag => `%${tag.trim()}%`); 
+    const tagConditions = tagArray.map(() => 'posts.tags LIKE ?').join(' AND '); 
 
     try {
         const [rows] = await pool.query(`
@@ -61,6 +61,34 @@ router.get('/search', async (req, res) => {
             AND posts.sender_id != ? 
             ORDER BY posts.created_at DESC
         `, [loggedInUserId, loggedInUserId, ...tagArray, loggedInUserId]);
+
+        res.json(rows);
+    } catch (error) {
+        console.error('Error searching posts:', error);
+        res.status(500).json({ error: 'Database error in searching posts.' });
+    }
+});
+
+router.get('/profile', async (req, res) => {
+    console.log("accessed");
+    const loggedInUserId = req.userSession?.user_id; 
+    console.log('Logged-in User ID:', loggedInUserId);
+
+
+    if (!loggedInUserId) {
+        return res.status(401).json({ error: 'Unauthorized. Please log in.' });
+    }
+    try {
+        const [rows] = await pool.query(`
+           SELECT posts.*, 
+                users.username AS displayname, 
+                users.profile_picture
+            FROM posts
+            JOIN users ON posts.sender_id = users.user_id
+            WHERE posts.sender_id = ? 
+            ORDER BY posts.created_at DESC
+
+        `, [loggedInUserId]);
 
         res.json(rows);
     } catch (error) {
