@@ -7,6 +7,7 @@ import Settings from './components/settings';
 import Search from './components/search';
 import LoginRegister from './components/Login';
 import Logout from './components/Logout';
+import Explore from './components/explore';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 
@@ -64,6 +65,7 @@ const App = () => {
                     <Route path="/recommend" element={<Recommend />} />
                     <Route path="/search" element={<Search />} />
                     <Route path="/settings" element={<Settings />} />
+                    <Route path="/explore" element={<Explore />} />
                     <Route path="/logout" element={<Logout onLogout={handleLogout} />} />
                     <Route path="*" element={<Navigate to="/home" replace />} />
                   </Routes>
