@@ -2,5 +2,8 @@
   "dependencies": {
     "express-mysql-session": "^3.0.3",
     "multer": "^1.4.5-lts.1"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
   }
 }

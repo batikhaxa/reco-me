@@ -1,16 +1,80 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const LoginRegister = ({ onLoginSuccess }) => {
     const navigate = useNavigate();
 
-    // State variables
+    const [isFlipped, setIsFlipped] = useState(false);
+
+    // login & registration
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const [username, setUsername] = useState('');
+    const [regEmail, setRegEmail] = useState('');
+    const [regPassword, setRegPassword] = useState('');
+
     const [loginMessage, setLoginMessage] = useState('');
     const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
+
+    const handleFlip = () => {
+        setIsFlipped(!isFlipped);
+        setError(''); 
+        setSuccess(''); 
+        setLoginMessage(''); 
+    };
+
+    const handleRegister = (e) => {
+        e.preventDefault();
+
+        if (!username || !regEmail || !regPassword) {
+            setError('Please fill out all fields');
+            return;
+        }
+        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        if (!emailRegex.test(regEmail)) {
+            setError('Please enter a valid email address');
+            return;
+        }
+        if (regPassword.length < 6) {
+            setError('Password must be at least 6 characters');
+            return;
+        }
+        const displayname = username;
+
+        axios
+            .post(`${process.env.REACT_APP_BACKEND_URL}/api/registration`, {
+                username,
+                displayname,
+                email: regEmail,
+                password: regPassword,
+            })
+            .then(() => {
+                setSuccess('Registration successful! Logging in...');
+                setError('');
+                axios
+                    .post(
+                        `${process.env.REACT_APP_BACKEND_URL}/api/login`,
+                        { email: regEmail, password: regPassword },
+                        { withCredentials: true }
+                    )
+                    .then((response) => {
+                        setUsername('');
+                        setRegEmail('');
+                        setRegPassword('');
+                        onLoginSuccess();
+                        navigate('/home');
+                    })
+                    .catch((error) => {
+                        setError(error.response?.data?.error || 'An error occurred during auto-login.');
+                    });
+            })
+            .catch((error) => {
+                setError(error.response?.data?.error || 'An error occurred');
+            });
+    };
 
     const handleLogin = (e) => {
         e.preventDefault();
@@ -38,59 +102,128 @@ const LoginRegister = ({ onLoginSuccess }) => {
             <div className="scrollable-container p-1">
                 <div className="row d-flex justify-content-center align-items-center h-100">
                     <div className="col-11 col-sm-9 col-md-7 col-lg-5 col-xl-5">
-                        <div className="card pt-5 pb-5 p-3 bg-light m-lg-">
-                            <div className="card-body text-center">
-                                <h2 className="fw-bold mb-2 text-lowercase">welcome! 👋</h2>
-                                <p className="mb-5">we're happy to have you</p>
-                                <form onSubmit={handleLogin}>
-                                    <div className="form-floating mb-3">
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            id="email"
-                                            onChange={(e) => setEmail(e.target.value)}
-                                            placeholder="example@gmail.com"
-                                            value={email}
-                                        />
-                                        <label htmlFor="email">Email</label>
+                        <div className={`full-height flip ${isFlipped ? "flipped" : ""}`}>
+                            <div className="flip-front">
+                                <div className="card pt-5 pb-5 p-3 bg-light">
+                                    <div className="card-body text-center">
+                                        <h2 className="fw-bold mb-2 text-lowercase">welcome back! 👋</h2>
+                                        <p className="mb-5">we're happy to have you</p>
+                                        <form
+                                            onKeyDown={(e) => {
+                                                if (e.key === 'Enter') {
+                                                    handleLogin(e);
+                                                }
+                                            }}
+                                        >
+                                            <div className="form-floating mb-3">
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    placeholder="example@gmail.com"
+                                                    id="email"
+                                                    onChange={(e) => setEmail(e.target.value)}
+                                                    value={email}
+                                                />
+                                                <label>Email</label>
+                                            </div>
+                                            <div className="form-floating mb-3">
+                                                <input
+                                                    type="password"
+                                                    className="form-control"
+                                                    placeholder="12345"
+                                                    onChange={(e) => setPassword(e.target.value)}
+                                                    value={password}
+                                                />
+                                                <label>Password</label>
+                                            </div>
+                                        </form>
+                                        {error && <div className="alert alert-danger">{error}</div>}
+                                        {loginMessage && <div className="alert alert-success">{loginMessage}</div>}
+                                        <button
+                                            type="submit"
+                                            className="btn btn-dark btn-block mb-2"
+                                            style={{ width: "100%" }}
+                                            onClick={handleLogin}
+                                        >
+                                            LOG IN
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className="btn btn-outline-dark btn-block"
+                                            style={{ width: "100%" }}
+                                            onClick={handleFlip}
+                                        >
+                                            SIGN UP
+                                        </button>
                                     </div>
-
-                                    <div className="form-floating mb-3">
-                                        <input
-                                            type="password"
-                                            className="form-control"
-                                            id="password"
-                                            onChange={(e) => setPassword(e.target.value)}
-                                            placeholder="12345"
-                                            value={password}
-                                        />
-                                        <label htmlFor="password">Password</label>
+                                </div>
+                            </div>
+                            <div className="flip-back">
+                                <div className="card pt-5 pb-5 p-3 bg-light">
+                                    <div className="card-body text-center">
+                                        <h2 className="fw-bold mb-2 text-lowercase">new here? 💗</h2>
+                                        <p className="mb-5">sign up below!</p>
+                                        <form
+                                            onKeyDown={(e) => {
+                                                if (e.key === 'Enter') {
+                                                    handleRegister(e);
+                                                }
+                                            }}
+                                        >
+                                            <div className="form-floating mb-3">
+                                                <input
+                                                    type="text"
+                                                    value={username}
+                                                    onChange={(e) => setUsername(e.target.value)}
+                                                    className="form-control"
+                                                    placeholder="MovieLover"
+                                                />
+                                                <label>Username</label>
+                                            </div>
+                                            <div className="form-floating mb-3">
+                                                <input
+                                                    type="email"
+                                                    value={regEmail}
+                                                    onChange={(e) => setRegEmail(e.target.value)}
+                                                    className="form-control"
+                                                    placeholder="example@gmail.com"
+                                                />
+                                                <label>Email</label>
+                                            </div>
+                                            <div className="form-floating mb-3">
+                                                <input
+                                                    type="password"
+                                                    className="form-control"
+                                                    placeholder="Create Password"
+                                                    value={regPassword}
+                                                    onChange={(e) => setRegPassword(e.target.value)}
+                                                />
+                                                <label>Password</label>
+                                            </div>
+                                        </form>
+                                        {error && <div className="alert alert-danger mt-3">{error}</div>}
+                                        {success && <div className="alert alert-success mt-3">{success}</div>}
+                                        <button
+                                            type="submit"
+                                            className="btn btn-dark btn-block mb-2"
+                                            style={{ width: "100%" }}
+                                            onClick={handleRegister}
+                                        >
+                                            SIGN UP
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className="btn btn-outline-dark btn-block"
+                                            style={{ width: "100%" }}
+                                            onClick={handleFlip}
+                                        >
+                                            LOG IN
+                                        </button>
                                     </div>
-                                </form>
-                                <p className="small text-lowercase mb-4 pb-lg-1">
-                                    <a href="#!">Forgot password?</a>
-                                </p>
-                                <button
-                                    type="submit"
-                                    className="btn btn-dark btn-block mb-2"
-                                    style={{ width: '100%' }}
-                                    onClick={handleLogin}
-                                >
-                                    LOG IN
-                                </button>
-                                <button
-                                    type="button"
-                                    className="btn btn-outline-dark btn-block"
-                                    style={{ width: '100%' }}
-                                >
-                                    SIGN UP
-                                </button>
-                                {error && <div className="mt-3 alert alert-danger">{error}</div>}
-                                {loginMessage && <div className="mt-3 alert alert-success">{loginMessage}</div>}
+                                </div>
                             </div>
                         </div>
                     </div>
-
 
                     <div className="ms-3 col-3 col-md-7 col-lg-4 col-xl-4 d-none d-md-none d-lg-block">
                         <div className="d-flex justify-content-center pt-3">

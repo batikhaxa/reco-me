@@ -34,6 +34,16 @@ const NavPills = () => (
                 search
             </NavLink>
         </li>
+        <li className="nav-item">
+            <NavLink
+                to="/explore"
+                className="nav-link link-body-emphasis"
+                activeClassName="active"
+            >
+                <i className="bi bi-search-heart"></i>
+                explore
+            </NavLink>
+        </li>
     </ul>
 );
 
