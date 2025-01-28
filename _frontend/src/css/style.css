@@ -175,3 +175,35 @@ a {
     background-position: 0% 50%;
   }
 }
+
+/* login & register flip */
+.flip {
+  height: 650px;
+  perspective: 1000px;
+}
+
+.flip-front,
+.flip-back {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  backface-visibility: hidden;
+  transition: transform 0.6s ease-in-out;
+}
+
+.flip-back {
+  transform: rotateY(180deg);
+  /* Ensure back starts flipped */
+}
+
+.flipped .flip-front {
+  transform: rotateY(180deg);
+}
+
+.flipped .flip-back {
+  transform: rotateY(0deg);
+}
+
+/* * {
+    border: 1px solid red !important;
+} */
