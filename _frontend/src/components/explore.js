@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
-const explore = () => {
+const Explore = () => {
     const [tags, setTags] = useState([]);
     const [inputValue, setInputValue] = useState("");
     const [posts, setPosts] = useState([]);
@@ -126,4 +126,4 @@ const explore = () => {
     );
 };
 
-export default explore;
+export default Explore;

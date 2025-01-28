@@ -7,10 +7,6 @@ const LoginRegister = ({ onLoginSuccess }) => {
 
     const [isFlipped, setIsFlipped] = useState(false);
 
-    const handleFlip = () => {
-        setIsFlipped(!isFlipped);
-    };
-
     // login & registration
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -21,6 +17,14 @@ const LoginRegister = ({ onLoginSuccess }) => {
 
     const [loginMessage, setLoginMessage] = useState('');
     const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
+
+    const handleFlip = () => {
+        setIsFlipped(!isFlipped);
+        setError(''); 
+        setSuccess(''); 
+        setLoginMessage(''); 
+    };
 
     const handleRegister = (e) => {
         e.preventDefault();
@@ -29,24 +33,43 @@ const LoginRegister = ({ onLoginSuccess }) => {
             setError('Please fill out all fields');
             return;
         }
-
         const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
         if (!emailRegex.test(regEmail)) {
             setError('Please enter a valid email address');
             return;
         }
-
         if (regPassword.length < 6) {
             setError('Password must be at least 6 characters');
             return;
         }
         const displayname = username;
+
         axios
             .post(`${process.env.REACT_APP_BACKEND_URL}/api/registration`, {
                 username,
                 displayname,
                 email: regEmail,
                 password: regPassword,
+            })
+            .then(() => {
+                setSuccess('Registration successful! Logging in...');
+                setError('');
+                axios
+                    .post(
+                        `${process.env.REACT_APP_BACKEND_URL}/api/login`,
+                        { email: regEmail, password: regPassword },
+                        { withCredentials: true }
+                    )
+                    .then((response) => {
+                        setUsername('');
+                        setRegEmail('');
+                        setRegPassword('');
+                        onLoginSuccess();
+                        navigate('/home');
+                    })
+                    .catch((error) => {
+                        setError(error.response?.data?.error || 'An error occurred during auto-login.');
+                    });
             })
             .catch((error) => {
                 setError(error.response?.data?.error || 'An error occurred');
@@ -85,7 +108,13 @@ const LoginRegister = ({ onLoginSuccess }) => {
                                     <div className="card-body text-center">
                                         <h2 className="fw-bold mb-2 text-lowercase">welcome back! 👋</h2>
                                         <p className="mb-5">we're happy to have you</p>
-                                        <form>
+                                        <form
+                                            onKeyDown={(e) => {
+                                                if (e.key === 'Enter') {
+                                                    handleLogin(e);
+                                                }
+                                            }}
+                                        >
                                             <div className="form-floating mb-3">
                                                 <input
                                                     type="text"
@@ -108,6 +137,8 @@ const LoginRegister = ({ onLoginSuccess }) => {
                                                 <label>Password</label>
                                             </div>
                                         </form>
+                                        {error && <div className="alert alert-danger">{error}</div>}
+                                        {loginMessage && <div className="alert alert-success">{loginMessage}</div>}
                                         <button
                                             type="submit"
                                             className="btn btn-dark btn-block mb-2"
@@ -132,14 +163,20 @@ const LoginRegister = ({ onLoginSuccess }) => {
                                     <div className="card-body text-center">
                                         <h2 className="fw-bold mb-2 text-lowercase">new here? 💗</h2>
                                         <p className="mb-5">sign up below!</p>
-                                        <form>
+                                        <form
+                                            onKeyDown={(e) => {
+                                                if (e.key === 'Enter') {
+                                                    handleRegister(e);
+                                                }
+                                            }}
+                                        >
                                             <div className="form-floating mb-3">
                                                 <input
                                                     type="text"
                                                     value={username}
                                                     onChange={(e) => setUsername(e.target.value)}
                                                     className="form-control"
-                                                    placeholder="bob"
+                                                    placeholder="MovieLover"
                                                 />
                                                 <label>Username</label>
                                             </div>
@@ -164,6 +201,8 @@ const LoginRegister = ({ onLoginSuccess }) => {
                                                 <label>Password</label>
                                             </div>
                                         </form>
+                                        {error && <div className="alert alert-danger mt-3">{error}</div>}
+                                        {success && <div className="alert alert-success mt-3">{success}</div>}
                                         <button
                                             type="submit"
                                             className="btn btn-dark btn-block mb-2"

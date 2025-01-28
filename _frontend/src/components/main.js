@@ -33,8 +33,6 @@ const Main = () => {
             ctx.moveTo(startX, startY);
             ctx.lineTo(endX, endY);
             ctx.stroke();
-
-            // console.log(`Line from (${startX}, ${startY}) to (${endX}, ${endY})`);
         });
 
         postsSecondary.forEach((secondaryPost) => {
@@ -53,7 +51,6 @@ const Main = () => {
             ctx.moveTo(startX, startY);
             ctx.lineTo(endX, endY);
             ctx.stroke();
-            // console.log(`Line from (${startX}, ${startY}) to (${endX}, ${endY})`);
         });
     }, [postsPrimary, postsSecondary]); 
 
@@ -129,6 +126,13 @@ const Main = () => {
 
     return (
         <div className="scrollable-container pt-4 pt-md-3 pt-lg-3">
+            {postsPrimary.length === 0 ? (
+                <div className="container mx-0 mx-sm-5 mx-lg-5 mt-5 text-center w-50">
+                    <p>No posts available! To find new friends, go to the <a href="/explore">Explore</a> page or add existing friends via the <a href="/friends">Friends</a> page.</p>
+                </div>
+            ) : (
+                <div className="d-none"> </div>
+            )}
             <canvas
                 ref={canvasRef}
                 id="connection-lines"
