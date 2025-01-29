@@ -4,6 +4,7 @@ const PostCard = ({ post, loggedInUserId }) => (
     <div className="d-flex justify-content-left">
         <div className="card card-primary mb-3">
             <div className="card-body d-flex flex-column">
+                <div className="d-flex gap-2">
                     <img
                         src={post.profile_picture || 'default-profile-pic.jpg'}
                         alt=""
