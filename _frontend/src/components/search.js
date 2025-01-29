@@ -1,5 +1,39 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
+const PostCard = ({ post, loggedInUserId }) => (
+    <div className="d-flex justify-content-left">
+        <div className="card card-primary mb-3">
+            <div className="card-body d-flex flex-column">
+                <div className="d-flex gap-2">
+                    <img
+                        src={post.profile_picture || 'default-profile-pic.jpg'}
+                        alt=""
+                        width="70"
+                        height="70"
+                        className="rounded-circle me-2"
+                    />
+                    <h5 className="card-title">
+                        <b>{post.displayname}</b> is recommending <b>{post.title}</b>
+                        {post.recipient_type === 'specific' && post.recipient_id === loggedInUserId && (
+                            <span> to <b>you</b></span>
+                        )}
+                    </h5>
+                </div>
+                <div className="position-relative d-flex: column">
+                    <p className="card-text">{post.content}</p>
+                    <div className="d-flex flex-wrap">
+                        {(post.tags?.includes(', ') ? post.tags.split(', ') : [post.tags || 'Unknown']).map((tag, index) => (
+                            <label key={index} className="card-category d-inline-flex mb-1">
+                                <i className="bi bi-hash"></i> {tag}
+                            </label>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+);
+
 const Search = () => {
     const [tags, setTags] = useState([]);
     const [inputValue, setInputValue] = useState("");
@@ -17,8 +51,7 @@ const Search = () => {
             setInputValue("");
         }
     };
- 
- 
+
     const removeTag = (tagToRemove) => {
         setTags(tags.filter(tag => tag !== tagToRemove));
     };
@@ -30,7 +63,7 @@ const Search = () => {
         try {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/posts/search?tags=${tags.join(',')}`, {
                 method: 'GET',
-                credentials: 'include', // Include cookies for session validation
+                credentials: 'include',
             });
 
             if (!response.ok) {
@@ -42,14 +75,13 @@ const Search = () => {
         } catch (error) {
             console.error('Error fetching posts:', error);
         } finally {
-            setLoading(false); // Ensure loading is stopped even if an error occurs
+            setLoading(false);
         }
     }, [tags]);
 
-
     useEffect(() => {
         fetchPosts();
-    }, [fetchPosts]); // 'fetchPosts' already includes dependencies like 'tags' and 'loggedInUserId'
+    }, [fetchPosts]);
 
     const columnOnePosts = posts.filter((_, index) => index % 2 === 0);
     const columnTwoPosts = posts.filter((_, index) => index % 2 !== 0);
@@ -58,7 +90,7 @@ const Search = () => {
         <div className="scrollable-container pt-4 pt-md-3 pt-lg-3" data-bs-offset="0">
             <div className="container mx-0 mx-sm-5 mx-lg-5 mt-5">
                 <div className="row justify-content-start m-0">
-                    {/* First Column */}
+                    {/* Search Bar */}
                     <div className="col-12 col-sm-12 col-md-9 col-lg-5">
                         <div className="card mb-3">
                             <div className="card-body">
@@ -86,102 +118,29 @@ const Search = () => {
                                 </div>
                             </div>
                         </div>
-                        {/* Show posts if any */}
+                        {/* Column 1 */}
                         {loading ? (
                             <p>Loading...</p>
+                        ) : columnOnePosts.length > 0 ? (
+                            columnOnePosts.map((post, index) => (
+                                <PostCard key={index} post={post} loggedInUserId={loggedInUserId} />
+                            ))
                         ) : (
-                            columnOnePosts.length > 0 ? (
-                                columnOnePosts.map((post, index) => (
-                                    <div key={index} className="d-flex justify-content-left">
-                                        <div className="card card-primary mb-3">
-                                            <div className="card-body d-flex flex-column">
-                                                <div className="d-flex gap-2">
-                                                    <img
-                                                        src={post.profile_picture || 'https://i.pinimg.com/564x/e8/d7/d0/e8d7d05f392d9c2cf0285ce928fb9f4a.jpg'}
-                                                        alt=""
-                                                        width="70"
-                                                        height="70"
-                                                        className="rounded-circle me-2"
-                                                    />
-                                                    <h5 className="card-title">
-                                                        <b>{post.displayname}</b> is recommending <b>{post.title}</b>
-                                                        {post.recipient_type === 'specific' && post.recipient_id === loggedInUserId ? (
-                                                            <span> to <b>you</b></span>
-                                                        ) : null}
-                                                    </h5>
-                                                </div>
-                                                <div className="position-relative d-flex: column">
-                                                    <p className="card-text">{post.content}</p>
-                                                    <div className="d-flex flex-wrap">
-                                                        {(post.tags?.includes(', ') ? post.tags.split(', ') : [post.tags || 'Unknown']).map((tag, tagIndex) => (
-                                                            <label key={tagIndex} className="card-category d-inline-flex mb-1">
-                                                                <i className="bi bi-film"></i> {tag}
-                                                            </label>
-                                                        ))}
-                                                    </div>
-                                                    <div className="d-flex flex-wrap justify-content-end">
-                                                        <a href="/comments" className="link-icon">Comments</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))
-                            ) : (
-                                <p>No posts found.</p>
-                            )
+                            <p>No posts found.</p>
                         )}
                     </div>
-                    {/* End of First Column */}
-
-                    {/* Second Column */}
+                    {/* Column 2 */}
                     <div className="col-12 col-md-9 col-lg-5">
                         {loading ? (
                             <p>Loading...</p>
+                        ) : columnTwoPosts.length > 0 ? (
+                            columnTwoPosts.map((post, index) => (
+                                <PostCard key={index} post={post} loggedInUserId={loggedInUserId} />
+                            ))
                         ) : (
-                            columnTwoPosts.length > 0 ? (
-                                columnTwoPosts.map((post, index) => (
-                                    <div key={index} className="d-flex justify-content-left">
-                                        <div className="card card-primary mb-3">
-                                            <div className="card-body d-flex flex-column">
-                                                <div className="d-flex gap-2">
-                                                    <img
-                                                        src={post.profile_picture || 'https://i.pinimg.com/564x/e8/d7/d0/e8d7d05f392d9c2cf0285ce928fb9f4a.jpg'}
-                                                        alt=""
-                                                        width="70"
-                                                        height="70"
-                                                        className="rounded-circle me-2"
-                                                    />
-                                                    <h5 className="card-title">
-                                                        <b>{post.displayname}</b> is recommending <b>{post.title}</b>
-                                                        {post.recipient_type === 'specific' && post.recipient_id === loggedInUserId ? (
-                                                            <span> to <b>you</b></span>
-                                                        ) : null}
-                                                    </h5>
-                                                </div>
-                                                <div className="position-relative d-flex: column">
-                                                    <p className="card-text">{post.content}</p>
-                                                    <div className="d-flex flex-wrap">
-                                                        {(post.tags?.includes(', ') ? post.tags.split(', ') : [post.tags || 'Unknown']).map((tag, tagIndex) => (
-                                                            <label key={tagIndex} className="card-category d-inline-flex mb-1">
-                                                                <i className="bi bi-film"></i> {tag}
-                                                            </label>
-                                                        ))}
-                                                    </div>
-                                                    <div className="d-flex flex-wrap justify-content-end">
-                                                        <a href="/comments" className="link-icon">Comments</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))
-                            ) : (
-                                <p></p>
-                            )
+                            <p></p>
                         )}
                     </div>
-                    {/* End of Second Column */}
                 </div>
             </div>
         </div>

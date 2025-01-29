@@ -97,7 +97,6 @@ router.get('/profile', async (req, res) => {
     }
 });
 
-
 //posts from friends
 router.get('/primary', async (req, res) => {
     console.log('Cookies received in primary:', req.cookies);

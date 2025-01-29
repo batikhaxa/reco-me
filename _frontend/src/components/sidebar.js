@@ -40,7 +40,7 @@ const NavPills = () => (
                 className="nav-link link-body-emphasis"
                 activeClassName="active"
             >
-                <i className="bi bi-search-heart"></i>
+                <i class="bi bi-binoculars-fill"></i>
                 explore
             </NavLink>
         </li>

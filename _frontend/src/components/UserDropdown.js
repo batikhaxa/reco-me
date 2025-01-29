@@ -8,7 +8,7 @@ const UserDropdown = () => {
             try {
                 const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user/sidebar`, {
                     method: 'POST',
-                    credentials: 'include', // Ensures cookies are sent with the request
+                    credentials: 'include',
                 });
 
                 if (!response.ok) {
@@ -46,6 +46,11 @@ const UserDropdown = () => {
             </button>
             <ul className="dropdown-menu ms-5 text-small shadow">
                 <li>
+                    <a className="dropdown-item" href="/profile">
+                        profile
+                    </a>
+                </li>
+                <li>
                     <a className="dropdown-item" href="/settings">
                         settings
                     </a>
@@ -56,14 +61,6 @@ const UserDropdown = () => {
                 <li>
                     <a className="dropdown-item" href="/logout">
                         log out
-                    </a>
-                </li>
-                <li>
-                    <hr className="dropdown-divider" />
-                </li>
-                <li>
-                    <a className="dropdown-item" href="/profile">
-                        profile
                     </a>
                 </li>
             </ul>
