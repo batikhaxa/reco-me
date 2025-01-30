@@ -1,4 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState, useCallback, useRef } from 'react';
+import DOMPurify from 'dompurify';
 
 const Post = ({ post, refCallback, isPrimary, loggedInUserId }) => {
     return (
@@ -20,7 +21,12 @@ const Post = ({ post, refCallback, isPrimary, loggedInUserId }) => {
                         )}
                     </h5>
                 </div>
-                <p className="card-text" dangerouslySetInnerHTML={{ __html: post.content.replace(/\n/g, "<br>") }}></p>
+                <p
+                    className="card-text"
+                    dangerouslySetInnerHTML={{
+                        __html: DOMPurify.sanitize(post.content.replace(/\n/g, '<br>')),
+                    }}
+                ></p>
                 <div className="d-flex flex-wrap pb-2">
                     {(post.tags?.split(', ') || ['Unknown']).map((tag, tagIndex) => (
                         <label key={tagIndex} className="card-category d-inline-flex mb-1">

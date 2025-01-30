@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import DOMPurify from 'dompurify';
 
 const Profile = () => {
     const [displayname, setDisplayname] = useState('');
@@ -157,7 +158,12 @@ const Profile = () => {
                     {isEditing ? (
                         <textarea className="form-control text-muted bg-transparent" rows="3" value={editedContent} onChange={handleCombinedChange}></textarea>
                     ) : (
-                            <p className="card-text" dangerouslySetInnerHTML={{ __html: post.content.replace(/\n/g, "<br>") }}></p>
+                            <p
+                                className="card-text"
+                                dangerouslySetInnerHTML={{
+                                    __html: DOMPurify.sanitize(post.content.replace(/\n/g, '<br>')),
+                                }}
+                            ></p>
                     )}
 
                     {/* Tags */}

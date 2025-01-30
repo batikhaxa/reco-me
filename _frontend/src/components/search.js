@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import DOMPurify from 'dompurify';
 
 const PostCard = ({ post, loggedInUserId }) => (
     <div className="d-flex justify-content-left">
@@ -20,7 +21,12 @@ const PostCard = ({ post, loggedInUserId }) => (
                     </h5>
                 </div>
                 <div className="position-relative d-flex: column">
-                    <p className="card-text">{post.content}</p>
+                    <p
+                        className="card-text"
+                        dangerouslySetInnerHTML={{
+                            __html: DOMPurify.sanitize(post.content.replace(/\n/g, '<br>')),
+                        }}
+                    ></p>
                     <div className="d-flex flex-wrap">
                         {(post.tags?.includes(', ') ? post.tags.split(', ') : [post.tags || 'Unknown']).map((tag, index) => (
                             <label key={index} className="card-category d-inline-flex mb-1">
