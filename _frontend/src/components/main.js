@@ -1,9 +1,72 @@
 import React, { useEffect, useLayoutEffect, useState, useCallback, useRef } from 'react';
 
+const Post = ({ post, refCallback, isPrimary, loggedInUserId }) => {
+    return (
+        <div className={`card ${isPrimary ? 'card-main' : 'card-secondary'} mb-4`}>
+            <div className="card-body d-flex flex-column">
+                <div className="d-flex gap-2">
+                    <img
+                        ref={refCallback}
+                        src={post.profile_picture || 'default-profile-pic.jpg'}
+                        alt="Profile-Picture"
+                        width="70"
+                        height="70"
+                        className="object-fit-fill rounded-circle me-2"
+                    />
+                    <h5 className="card-title">
+                        <b>{post.displayname}</b> {isPrimary ? 'recommends' : ', friend of'} <b>{post.title}</b>
+                        {post.recipient_type === 'specific' && post.recipient_id === loggedInUserId && (
+                            <span> to <b>you</b></span>
+                        )}
+                    </h5>
+                </div>
+                <p className="card-text" dangerouslySetInnerHTML={{ __html: post.content.replace(/\n/g, "<br>") }}></p>
+                <div className="d-flex flex-wrap pb-2">
+                    {(post.tags?.split(', ') || ['Unknown']).map((tag, tagIndex) => (
+                        <label key={tagIndex} className="card-category d-inline-flex mb-1">
+                            <i className="bi bi-hash"></i> {tag}
+                        </label>
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
+};
+
+const fetchPosts = async (url) => {
+    try {
+        const response = await fetch(url, {
+            method: 'GET',
+            credentials: 'include',
+        });
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('Error fetching posts:', error);
+        return [];
+    }
+};
+
+const useFetchPosts = (url) => {
+    const [posts, setPosts] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const data = await fetchPosts(url);
+            setPosts(data);
+        };
+        fetchData();
+    }, [url]);
+
+    return posts;
+};
+
 const Main = () => {
-    const [postsPrimary, setPostsPrimary] = useState([]);
-    const [postsSecondary, setPostsSecondary] = useState([]);
     const loggedInUserId = 1;
+    const postsPrimary = useFetchPosts(`${process.env.REACT_APP_BACKEND_URL}/api/posts/primary`);
+    const postsSecondary = useFetchPosts(`${process.env.REACT_APP_BACKEND_URL}/api/posts/secondary`);
 
     const canvasRef = useRef(null);
     const primaryRefs = useRef({});
@@ -20,7 +83,7 @@ const Main = () => {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
         const container = document.querySelector('.scrollable-container');
-        canvas.height = container.scrollHeight; 
+        canvas.height = container.scrollHeight;
         canvas.width = window.innerWidth;
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -28,83 +91,30 @@ const Main = () => {
         ctx.strokeStyle = '#FFCCE3';
         ctx.lineWidth = 3;
 
-        postsPrimary.forEach((primaryPost) => {
-            const primaryEl = primaryRefs.current[primaryPost.post_id];
-            if (!primaryEl) return;
+        const drawLineForPost = (post, refs, endX) => {
+            const el = refs[post.post_id];
+            if (!el) return;
 
-            const primaryRect = primaryEl.getBoundingClientRect();
+            const rect = el.getBoundingClientRect();
             const canvasRect = canvas.getBoundingClientRect();
 
-            const startX = primaryRect.left + primaryRect.width / 2 - canvasRect.left;
-            const startY = primaryRect.top + primaryRect.height / 2 - canvasRect.top;
-            const endX = -100; 
-            const endY = startY; 
+            const startX = rect.left + rect.width / 2 - canvasRect.left;
+            const startY = rect.top + rect.height / 2 - canvasRect.top;
+            const endY = startY;
 
             ctx.beginPath();
             ctx.moveTo(startX, startY);
             ctx.lineTo(endX, endY);
             ctx.stroke();
-        });
-
-        postsSecondary.forEach((secondaryPost) => {
-            const secondaryEl = secondaryRefs.current[secondaryPost.post_id];
-            if (!secondaryEl) return;
-
-            const secondaryRect = secondaryEl.getBoundingClientRect();
-            const canvasRect = canvas.getBoundingClientRect();
-
-            const startX = secondaryRect.left + secondaryRect.width / 2 - canvasRect.left;
-            const startY = secondaryRect.top + secondaryRect.height / 2 - canvasRect.top;
-            const endX = 0; 
-            const endY = startY; 
-
-            ctx.beginPath();
-            ctx.moveTo(startX, startY);
-            ctx.lineTo(endX, endY);
-            ctx.stroke();
-        });
-    }, [postsPrimary, postsSecondary]); 
-
-    useEffect(() => {
-        const fetchPrimaryPosts = async () => {
-            try {
-                const response = await fetch(`${ process.env.REACT_APP_BACKEND_URL }/api/posts/primary`, {
-                    method: 'GET',
-                    credentials: 'include',
-                });
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                const data = await response.json();
-                setPostsPrimary(data);
-            } catch (error) {
-                console.error('Error fetching primary posts:', error);
-            }
         };
 
-        const fetchSecondaryPosts = async () => {
-            try {
-                const response = await fetch(`${ process.env.REACT_APP_BACKEND_URL }/api/posts/secondary`, {
-                    method: 'GET',
-                    credentials: 'include',
-                });
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                const data = await response.json();
-                setPostsSecondary(data);
-            } catch (error) {
-                console.error('Error fetching secondary posts:', error);
-            }
-        };
-
-        fetchPrimaryPosts();
-        fetchSecondaryPosts();
-    }, []);
+        postsPrimary.forEach((primaryPost) => drawLineForPost(primaryPost, primaryRefs.current, -100));
+        postsSecondary.forEach((secondaryPost) => drawLineForPost(secondaryPost, secondaryRefs.current, 0));
+    }, [postsPrimary, postsSecondary]);
 
     useLayoutEffect(() => {
         const handleLayoutUpdate = () => {
-            drawLines(); 
+            drawLines();
         };
         handleLayoutUpdate();
         const handleResize = () => {
@@ -112,7 +122,7 @@ const Main = () => {
             if (canvas) {
                 canvas.width = window.innerWidth;
                 canvas.height = window.innerHeight;
-                drawLines(); 
+                drawLines();
             }
         };
 
@@ -120,7 +130,7 @@ const Main = () => {
         return () => {
             window.removeEventListener('resize', handleResize);
         };
-    }, [postsPrimary, postsSecondary, drawLines]); 
+    }, [postsPrimary, postsSecondary, drawLines]);
 
     const latestPostByUser = React.useMemo(() => {
         return postsPrimary.reduce((acc, post) => {
@@ -158,7 +168,6 @@ const Main = () => {
             <div className="container mx-0 mx-sm-5 mx-lg-5 mt-5">
                 <div className="row justify-content-start">
                     {postsPrimary.map((primaryPost, index) => {
-                        // group secondary posts by sourceFriendId and keep only the most recent post for each
                         const latestSecondaryPosts = postsSecondary.reduce((acc, post) => {
                             if (
                                 !acc[post.sourceFriendId] ||
@@ -178,81 +187,24 @@ const Main = () => {
                             <div key={index} className="row m-0">
                                 {/* Primary Post */}
                                 <div className="col-11 col-sm-11 col-md-9 col-lg-5">
-                                    <div className="card mb-4 card-main">
-                                        <div className="card-body d-flex flex-column">
-                                            <div className="d-flex gap-2">
-                                                <img
-                                                    ref={(el) => (primaryRefs.current[primaryPost.post_id] = el)}
-                                                    src={primaryPost.profile_picture || 'default-profile-pic.jpg'}
-                                                    alt="Profile-Picture"
-                                                    width="70"
-                                                    height="70"
-                                                    className="object-fit-fill rounded-circle me-2"
-                                                />
-                                                <h5 className="card-title">
-                                                    <b>{primaryPost.displayname}</b> recommends <b>{primaryPost.title}</b>
-                                                    {primaryPost.recipient_type === 'specific' &&
-                                                        primaryPost.recipient_id === loggedInUserId && (
-                                                            <span> to <b>you</b></span>
-                                                        )}
-                                                </h5>
-                                            </div>
-                                            <p className="card-text" dangerouslySetInnerHTML={{ __html: primaryPost.content.replace(/\n/g, "<br>") }}></p>
-                                            <div className="d-flex flex-wrap pb-2">
-                                                {(primaryPost.tags?.split(', ') || ['Unknown']).map((tag, tagIndex) => (
-                                                    <label key={tagIndex} className="card-category d-inline-flex mb-1">
-                                                        <i className="bi bi-hash"></i> {tag}
-                                                    </label>
-                                                ))}
-                                            </div>
-                                            {/* <div className="d-flex flex-wrap justify-content-end">
-                                                <a href="/comments" className="link-icon">
-                                                    <i className="bi bi-chat-dots"></i>
-                                                </a>
-                                            </div> */}
-                                        </div>
-                                    </div>
+                                    <Post
+                                        post={primaryPost}
+                                        refCallback={(el) => (primaryRefs.current[primaryPost.post_id] = el)}
+                                        isPrimary={true}
+                                        loggedInUserId={loggedInUserId}
+                                    />
                                 </div>
 
                                 {/* Secondary Posts */}
                                 <div className="col-12 col-sm-12 col-md-9 col-lg-5 d-none d-md-none d-lg-block">
                                     {relatedSecondaryPosts.map((secondaryPost, secIndex) => (
-                                        <div key={secIndex} className="card card-secondary mb-0 ms-3 me-0">
-                                            <div className="card-body d-flex flex-column">
-                                                <div className="d-flex gap-2">
-                                                    <img
-                                                        ref={(el) => (secondaryRefs.current[secondaryPost.post_id] = el)}
-                                                        src={secondaryPost.profile_picture || 'default-profile-pic.jpg'}
-                                                        alt=""
-                                                        width="70"
-                                                        height="70"
-                                                        className="object-fit-cover rounded-circle me-2"
-                                                    />
-                                                    <h5 className="card-title">
-                                                        <b>{secondaryPost.displayname}</b>, friend of{' '}
-                                                        <b>{secondaryPost.sourceFriendDisplayName}</b>, recommends{' '}
-                                                        <b>{secondaryPost.title}</b>
-                                                        {secondaryPost.recipient_type === 'specific' &&
-                                                            secondaryPost.recipient_id === loggedInUserId && (
-                                                                <span> to <b>you</b></span>
-                                                            )}
-                                                    </h5>
-                                                </div>
-                                                <p className="card-text" dangerouslySetInnerHTML={{ __html: secondaryPost.content.replace(/\n/g, "<br>") }}></p>
-                                                <div className="d-flex flex-wrap pb-2">
-                                                    {(secondaryPost.tags?.split(', ') || ['Unknown']).map((tag, tagIndex) => (
-                                                        <label key={tagIndex} className="card-category d-inline-flex mb-1">
-                                                            <i className="bi bi-hash"></i> {tag}
-                                                        </label>
-                                                    ))}
-                                                </div>
-                                                {/* <div className="d-flex flex-wrap justify-content-end">
-                                                    <a href="/comments" className="link-icon">
-                                                    <i className="bi bi-chat-dots"></i>
-                                                   </a>
-                                                </div> */}
-                                            </div>
-                                        </div>
+                                        <Post
+                                            key={secIndex}
+                                            post={secondaryPost}
+                                            refCallback={(el) => (secondaryRefs.current[secondaryPost.post_id] = el)}
+                                            isPrimary={false}
+                                            loggedInUserId={loggedInUserId}
+                                        />
                                     ))}
                                 </div>
                             </div>
@@ -264,4 +216,4 @@ const Main = () => {
     );
 };
 
-export default Main; 
+export default Main;
