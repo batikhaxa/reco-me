@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const PostCard = ({ post, loggedInUserId }) => (
+const PostCard = ({ post, loggedInUserId }) => {
+
+    const navigate = useNavigate(); 
+    return(
     <div className="d-flex justify-content-left">
         <div className="card card-primary mb-3">
             <div className="card-body d-flex flex-column">
@@ -11,6 +15,7 @@ const PostCard = ({ post, loggedInUserId }) => (
                         width="70"
                         height="70"
                         className="rounded-circle me-2"
+                        onClick={() => navigate(`/profile?userId=${post.sender_id}`)}
                     />
                     <h5 className="card-title">
                         <b>{post.displayname}</b> is recommending <b>{post.title}</b>
@@ -31,15 +36,14 @@ const PostCard = ({ post, loggedInUserId }) => (
                 </div>
             </div>
         </div>
-    </div> // <-- Closing div tag added here
+    </div> 
 );
-
+}
 const Explore = () => {
     const [tags, setTags] = useState([]);
     const [inputValue, setInputValue] = useState("");
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(false);
-
     const loggedInUserId = 1;
 
     const handleKeyDown = (e) => {
@@ -137,7 +141,7 @@ const Explore = () => {
                             <p>Loading...</p>
                         ) : columnTwoPosts.length > 0 ? (
                             columnTwoPosts.map((post, index) => (
-                                <PostCard key={index} post={post} loggedInUserId={loggedInUserId} />
+                                <PostCard key={index} post={post} loggedInUserId={loggedInUserId}  />
                             ))
                         ) : (
                             <p></p>
