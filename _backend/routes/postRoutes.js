@@ -154,5 +154,24 @@ router.get('/secondary', async (req, res) => {
         res.status(500).json({ error: 'Database error in fetching secondary posts' });
     }
 });
+router.get('/public', async (req, res) => {
+    try {
+        const [rows] = await pool.query(`
+            SELECT posts.*, 
+                   users.displayname, 
+                   users.profile_picture
+            FROM posts
+            JOIN users ON posts.sender_id = users.user_id
+            WHERE posts.recipient_type = 'everyone'
+            ORDER BY posts.created_at DESC
+            LIMIT 50;
+        `);
+
+        res.json(rows);
+    } catch (error) {
+        console.error('Error fetching public posts:', error);
+        res.status(500).json({ error: 'Database error in fetching public posts.' });
+    }
+});
 
 module.exports = router;
