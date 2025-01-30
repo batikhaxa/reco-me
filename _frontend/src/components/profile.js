@@ -7,6 +7,22 @@ const Profile = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
+    const onDeletePost = (postId) => {
+        setPosts((prevPosts) => prevPosts.filter((post) => post.post_id !== postId));
+        fetchPosts(); 
+    };
+
+    const onUpdatePost = (postId, newTitle, newContent, newTags) => {
+        setPosts((prevPosts) =>
+            prevPosts.map((post) =>
+                post.post_id === postId
+                    ? { ...post, title: newTitle, content: newContent, tags: Array.isArray(newTags) ? newTags.join(', ') : newTags }
+                    : post
+            )
+        );
+        fetchPosts(); 
+    };
+
     useEffect(() => {
         const fetchUserData = async () => {
             setLoading(true);
@@ -34,35 +50,36 @@ const Profile = () => {
         fetchUserData();
     }, []);
 
-    useEffect(() => {
-        const fetchPosts = async () => {
-            setLoading(true);
-            try {
-                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/posts/profile`, {
-                    method: 'GET',
-                    credentials: 'include',
-                });
+    const fetchPosts = async () => {
+        setLoading(true);
+        try {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/posts/profile`, {
+                method: 'GET',
+                credentials: 'include',
+            });
 
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-
-                const data = await response.json();
-                setPosts(data || []);
-            } catch (error) {
-                console.error('Error fetching posts:', error);
-            } finally {
-                setLoading(false);
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
             }
-        };
 
+            const data = await response.json();
+            console.log("Fetched Posts:", data);
+            setPosts(data || []);
+        } catch (error) {
+            console.error('Error fetching posts:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
         fetchPosts();
     }, []);
 
     const columnOnePosts = posts.filter((_, index) => index % 2 === 0);
     const columnTwoPosts = posts.filter((_, index) => index % 2 !== 0);
 
-    const PostCard = ({ post, onUpdatePost }) => {
+    const PostCard = ({ post, onUpdatePost, onDeletePost }) => {
         const [isEditing, setIsEditing] = useState(false);
         const [editedContent, setEditedContent] = useState(post.content);
         const [editedTitle, setEditedTitle] = useState(post.title);
@@ -78,24 +95,27 @@ const Profile = () => {
 
         const handleSave = async () => {
             try {
-                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/posts/update/${post.id}`, {
+                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/posts/update/${post.post_id}`, {
                     method: 'PUT',
                     credentials: 'include',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ title: editedTitle, content: editedContent }),
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ title: editedTitle, content: editedContent, tags: tags }),
                 });
 
-                if (!response.ok) {
-                    throw new Error('Failed to update post');
-                }
+                if (!response.ok) throw new Error('Failed to update post');
 
-                onUpdatePost(post.id, editedTitle, editedContent); // Update the state in parent
+                onUpdatePost(post.id, editedTitle, editedContent, tags);
                 setIsEditing(false);
             } catch (error) {
                 console.error('Error updating post:', error);
             }
+        };
+
+        const handleCancel = () => {
+            setEditedContent(post.content);
+            setEditedTitle(post.title);
+            setTags(post.tags ? post.tags.split(', ') : []);
+            setIsEditing(false);
         };
 
         const handleCombinedChange = (e) => {
@@ -103,40 +123,31 @@ const Profile = () => {
             handlePostContentChange(e); // Calls the additional function
         };
 
-        const handleKeyDown = (e) => {
-            if ((e.key === 'Enter' || e.key === ',') && inputValue.trim() !== '') {
-                e.preventDefault();
-                if (!tags.includes(inputValue.trim())) {
-                    setTags([...tags, inputValue.trim()]);
-                }
-                setInputValue('');
-            }
-        };
+        const handleDelete = async () => {
+            if (!window.confirm("Are you sure you want to delete this post?")) return;
 
-        const removeTag = (tagToRemove) => {
-            setTags(tags.filter(tag => tag !== tagToRemove));
+            try {
+                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/posts/delete/${post.post_id}`, {
+                    method: 'DELETE',
+                    credentials: 'include',
+                });
+
+                if (!response.ok) throw new Error('Failed to delete post');
+
+                onDeletePost(post.post_id);
+            } catch (error) {
+                console.error('Error deleting post:', error);
+            }
         };
 
         return (
             <div className="card card-primary mb-3">
                 <div className="card-body">
                     <div className="d-flex gap-2">
-                        <img
-                            src={post.profile_picture || 'default-profile-pic.jpg'}
-                            alt=""
-                            width="70"
-                            height="70"
-                            className="rounded-circle me-2"
-                        />
+                        <img src={post.profile_picture || 'default-profile-pic.jpg'} alt="" width="70" height="70" className="rounded-circle me-2" />
                         <h5 className="card-title">
-                            <b>{post.displayname}</b> is recommending{' '}
-                            {isEditing ? (
-                                <input
-                                    className="form-control form-control-lg text-muted bg-transparent border-0"
-                                    type="text"
-                                    value={editedTitle}
-                                    onChange={(e) => setEditedTitle(e.target.value)}
-                                />
+                            <b>{post.displayname}</b> is recommending {isEditing ? (
+                                <input className="form-control text-muted bg-transparent border-0 ms-0" type="text" value={editedTitle} onChange={(e) => setEditedTitle(e.target.value)} />
                             ) : (
                                 <b>{post.title}</b>
                             )}
@@ -144,40 +155,29 @@ const Profile = () => {
                     </div>
 
                     {isEditing ? (
-                        <textarea
-                            className="form-control text-muted bg-transparent"
-                            placeholder="Describe what you're recommending..."
-                            rows="3"
-                            value={editedContent}
-                            onChange={handleCombinedChange}
-                        ></textarea>
+                        <textarea className="form-control text-muted bg-transparent" rows="3" value={editedContent} onChange={handleCombinedChange}></textarea>
                     ) : (
-                        <p className="card-text">{post.content}</p>
+                            <p className="card-text" dangerouslySetInnerHTML={{ __html: post.content.replace(/\n/g, "<br>") }}></p>
                     )}
 
-                    {/* Editable Tags */}
+                    {/* Tags */}
                     <div className="mt-2">
                         {isEditing ? (
                             <>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="Input tag..."
-                                    value={inputValue}
-                                    onChange={(e) => setInputValue(e.target.value)}
-                                    onKeyDown={handleKeyDown}
-                                    style={{ backgroundColor: 'transparent' }}
+                                <input type="text" className="form-control bg-transparent" placeholder="Input tag..." value={inputValue}
+                                    onChange={(e) => setInputValue(e.target.value)} onKeyDown={(e) => {
+                                        if ((e.key === 'Enter' || e.key === ',') && inputValue.trim() !== '') {
+                                            e.preventDefault();
+                                            if (!tags.includes(inputValue.trim())) setTags([...tags, inputValue.trim()]);
+                                            setInputValue('');
+                                        }
+                                    }}
                                 />
                                 <div className="mt-1">
                                     {tags.map((tag, index) => (
                                         <label key={index} className="card-category d-inline-flex mb-1">
                                             <i className="bi bi-hash"></i> {tag}
-                                            <button
-                                                type="button"
-                                                className="btn-close btn-close-black ms-1"
-                                                onClick={() => removeTag(tag)}
-                                                aria-label="Remove tag"
-                                            ></button>
+                                            <button type="button" className="btn-close btn-close-black ms-1" onClick={() => setTags(tags.filter(t => t !== tag))} aria-label="Remove tag"></button>
                                         </label>
                                     ))}
                                 </div>
@@ -199,7 +199,7 @@ const Profile = () => {
                                 <button className="btn btn-outline-dark rounded me-2" onClick={handleSave}>
                                     <i className="bi bi-check p-0 m-0"></i>
                                 </button>
-                                <button className="btn btn-outline-dark rounded me-2" onClick={() => setIsEditing(false)}>
+                                <button className="btn btn-outline-dark rounded me-2" onClick={handleCancel}>
                                     <i className="bi bi-x p-0 m-0"></i>
                                 </button>
                             </>
@@ -208,7 +208,7 @@ const Profile = () => {
                                 <i className="bi bi-pencil p-0 m-0"></i>
                             </button>
                         )}
-                        <button className="btn btn-outline-dark rounded">
+                        <button className="btn btn-outline-dark rounded" onClick={handleDelete}>
                             <i className="bi bi-trash p-0 m-0"></i>
                         </button>
                     </div>
@@ -241,7 +241,12 @@ const Profile = () => {
                             <p>Loading...</p>
                         ) : (
                             columnOnePosts.map((post, index) => (
-                                <PostCard key={`column1-${index}`} post={post} />
+                                <PostCard
+                                    key={`column1-${index}`}
+                                    post={post}
+                                    onDeletePost={onDeletePost}
+                                    onUpdatePost={onUpdatePost}
+                                />
                             ))
                         )}
                     </div>
@@ -250,7 +255,12 @@ const Profile = () => {
                     <div className="col-12 col-md-9 col-lg-5">
                         {!loading &&
                             columnTwoPosts.map((post, index) => (
-                                <PostCard key={`column2-${index}`} post={post} />
+                                <PostCard
+                                    key={`column2-${index}`}
+                                    post={post}
+                                    onDeletePost={onDeletePost}
+                                    onUpdatePost={onUpdatePost}
+                                />
                             ))}
                     </div>
                 </div>

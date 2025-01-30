@@ -197,11 +197,11 @@ const Main = () => {
                                                         )}
                                                 </h5>
                                             </div>
-                                            <p className="card-text">{primaryPost.content}</p>
+                                            <p className="card-text" dangerouslySetInnerHTML={{ __html: primaryPost.content.replace(/\n/g, "<br>") }}></p>
                                             <div className="d-flex flex-wrap pb-2">
                                                 {(primaryPost.tags?.split(', ') || ['Unknown']).map((tag, tagIndex) => (
                                                     <label key={tagIndex} className="card-category d-inline-flex mb-1">
-                                                        <i class="bi bi-hash"></i> {tag}
+                                                        <i className="bi bi-hash"></i> {tag}
                                                     </label>
                                                 ))}
                                             </div>
@@ -238,11 +238,11 @@ const Main = () => {
                                                             )}
                                                     </h5>
                                                 </div>
-                                                <p className="card-text">{secondaryPost.content}</p>
+                                                <p className="card-text" dangerouslySetInnerHTML={{ __html: secondaryPost.content.replace(/\n/g, "<br>") }}></p>
                                                 <div className="d-flex flex-wrap pb-2">
                                                     {(secondaryPost.tags?.split(', ') || ['Unknown']).map((tag, tagIndex) => (
                                                         <label key={tagIndex} className="card-category d-inline-flex mb-1">
-                                                            <i class="bi bi-hash"></i> {tag}
+                                                            <i className="bi bi-hash"></i> {tag}
                                                         </label>
                                                     ))}
                                                 </div>

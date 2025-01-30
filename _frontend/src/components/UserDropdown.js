@@ -40,7 +40,7 @@ const UserDropdown = () => {
                 />
                 <strong className="text-white fw-light fs-4">{userData.displayname || 'Guest'}</strong>
                 <i 
-                    class="bi bi-caret-down-fill"
+                    className="bi bi-caret-down-fill"
                     style={{color:'white'}}
                 ></i>
             </button>
