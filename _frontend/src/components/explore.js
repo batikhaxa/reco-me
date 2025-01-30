@@ -4,6 +4,7 @@ const PostCard = ({ post, loggedInUserId }) => (
     <div className="d-flex justify-content-left">
         <div className="card card-primary mb-3">
             <div className="card-body d-flex flex-column">
+                <div className="d-flex gap-2">
                     <img
                         src={post.profile_picture || 'default-profile-pic.jpg'}
                         alt=""
@@ -30,7 +31,7 @@ const PostCard = ({ post, loggedInUserId }) => (
                 </div>
             </div>
         </div>
-  
+    </div> // <-- Closing div tag added here
 );
 
 const Explore = () => {
@@ -56,23 +57,21 @@ const Explore = () => {
     };
 
     const fetchPosts = useCallback(async () => {
-        if (tags.length === 0) return;
-
         setLoading(true);
         try {
             const url = tags.length > 0
                 ? `${process.env.REACT_APP_BACKEND_URL}/api/posts/search?tags=${tags.join(',')}`
                 : `${process.env.REACT_APP_BACKEND_URL}/api/posts/public`;
-
+    
             const response = await fetch(url, {
                 method: 'GET',
                 credentials: 'include',
             });
-
+    
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
-
+    
             const data = await response.json();
             setPosts(data);
         } catch (error) {

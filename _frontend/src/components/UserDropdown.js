@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import DOMPurify from 'dompurify';
 const UserDropdown = () => {
     const [userData, setUserData] = useState({ displayname: '', profile_picture: '' });
     const navigate = useNavigate(); 
@@ -47,7 +47,10 @@ const UserDropdown = () => {
                     }}
                 />
                 <strong className="text-white fw-light fs-4">{userData.displayname || 'Guest'}</strong>
-                <i className="bi bi-caret-down-fill" style={{color:'white'}}></i>
+                <i 
+                    className="bi bi-caret-down-fill"
+                    style={{color:'white'}}
+                ></i>
             </button>
             <ul className="dropdown-menu ms-5 text-small shadow">
                 <li>

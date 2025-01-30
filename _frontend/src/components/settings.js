@@ -237,7 +237,7 @@ const Settings = () => {
                                         />
                                         <label htmlFor="confirmPassword">Confirm New Password</label>
                                     </div>
-                                    <div class="d-flex justify-content-end">
+                                    <div className="d-flex justify-content-end">
                                         <button type="submit" className="set-btn mb-2" disabled={loading}>
                                             {loading ? 'Updating...' : 'Save'}
                                         </button>

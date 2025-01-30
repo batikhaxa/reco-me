@@ -20,6 +20,7 @@
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dayjs": "^1.11.13",
+    "dompurify": "^3.2.3",
     "express": "^4.21.1",
     "express-session": "^1.18.1",
     "graceful-fs": "^4.2.11",

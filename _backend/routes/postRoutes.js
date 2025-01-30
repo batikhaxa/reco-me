@@ -31,6 +31,56 @@ router.post('/', async (req, res) => {
     }
 });
 
+router.put('/update/:post_id', async (req, res) => {
+    const loggedInUserId = req.userSession?.user_id;
+    const { title, content, tags } = req.body;
+    const postId = req.params.post_id;
+
+    if (!loggedInUserId) {
+        return res.status(401).json({ error: 'Unauthorized. Please log in.' });
+    }
+
+    try {
+        const [post] = await pool.query(`SELECT sender_id FROM posts WHERE post_id = ?`, [postId]);
+        if (!post.length || post[0].sender_id !== loggedInUserId) {
+            return res.status(403).json({ error: 'Unauthorized to edit this post.' });
+        }
+
+        await pool.query(
+            `UPDATE posts SET title = ?, content = ?, tags = ? WHERE post_id = ?`,
+            [title, content, tags.join(', '), postId]
+        );
+
+        res.json({ success: true });
+    } catch (error) {
+        console.error('Error updating post:', error);
+        res.status(500).json({ error: 'Database error while updating post.' });
+    }
+});
+
+router.delete('/delete/:post_id', async (req, res) => {
+    const loggedInUserId = req.userSession?.user_id;
+    const postId = req.params.post_id;
+
+    if (!loggedInUserId) {
+        return res.status(401).json({ error: 'Unauthorized. Please log in.' });
+    }
+
+    try {
+        const [post] = await pool.query(`SELECT sender_id FROM posts WHERE post_id = ?`, [postId]);
+        if (!post.length || post[0].sender_id !== loggedInUserId) {
+            return res.status(403).json({ error: 'Unauthorized to delete this post.' });
+        }
+
+        await pool.query(`DELETE FROM posts WHERE post_id = ?`, [postId]);
+
+        res.json({ success: true });
+    } catch (error) {
+        console.error('Error deleting post:', error);
+        res.status(500).json({ error: 'Database error while deleting post.' });
+    }
+});
+
 router.get('/search', async (req, res) => {
     const { tags } = req.query;
     const loggedInUserId = req.userSession?.user_id; 
@@ -153,6 +203,25 @@ router.get('/secondary', async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Database error in fetching secondary posts' });
+    }
+});
+router.get('/public', async (req, res) => {
+    try {
+        const [rows] = await pool.query(`
+            SELECT posts.*, 
+                   users.displayname, 
+                   users.profile_picture
+            FROM posts
+            JOIN users ON posts.sender_id = users.user_id
+            WHERE posts.recipient_type = 'everyone'
+            ORDER BY posts.created_at DESC
+            LIMIT 50;
+        `);
+
+        res.json(rows);
+    } catch (error) {
+        console.error('Error fetching public posts:', error);
+        res.status(500).json({ error: 'Database error in fetching public posts.' });
     }
 });
 
