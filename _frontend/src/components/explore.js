@@ -30,7 +30,7 @@ const PostCard = ({ post, loggedInUserId }) => (
                 </div>
             </div>
         </div>
-    </div>
+  
 );
 
 const Explore = () => {

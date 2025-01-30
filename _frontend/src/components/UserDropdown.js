@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const UserDropdown = () => {
     const [userData, setUserData] = useState({ displayname: '', profile_picture: '' });
+    const navigate = useNavigate(); 
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -24,6 +26,7 @@ const UserDropdown = () => {
 
         fetchUserData();
     }, []);
+
     return (
         <div className="dropdown mt-auto">
             <button
@@ -33,26 +36,23 @@ const UserDropdown = () => {
             >
                 <img
                     src={userData.profile_picture || 'default-profile-pic.jpg'} 
-                    alt=""
+                    alt="Profile"
                     width="50"
                     height="50"
                     className="rounded-circle me-2 ms-2"
+                    style={{ cursor: "pointer" }}
+                    onClick={(e) => {
+                        e.stopPropagation(); 
+                        navigate('/profile'); 
+                    }}
                 />
                 <strong className="text-white fw-light fs-4">{userData.displayname || 'Guest'}</strong>
-                <i 
-                    class="bi bi-caret-down-fill"
-                    style={{color:'white'}}
-                ></i>
+                <i className="bi bi-caret-down-fill" style={{color:'white'}}></i>
             </button>
             <ul className="dropdown-menu ms-5 text-small shadow">
                 <li>
-                    <a className="dropdown-item" href="/profile">
-                        profile
-                    </a>
-                </li>
-                <li>
                     <a className="dropdown-item" href="/settings">
-                        settings
+                        Settings
                     </a>
                 </li>
                 <li>
@@ -60,7 +60,7 @@ const UserDropdown = () => {
                 </li>
                 <li>
                     <a className="dropdown-item" href="/logout">
-                        log out
+                        Log out
                     </a>
                 </li>
             </ul>

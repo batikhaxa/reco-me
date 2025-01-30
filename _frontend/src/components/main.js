@@ -1,20 +1,13 @@
 import React, { useEffect, useLayoutEffect, useState, useCallback, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Main = () => {
     const [postsPrimary, setPostsPrimary] = useState([]);
     const [postsSecondary, setPostsSecondary] = useState([]);
+    const navigate = useNavigate();
+
+  
     const loggedInUserId = 1;
-
-    const canvasRef = useRef(null);
-    const primaryRefs = useRef({});
-    const secondaryRefs = useRef({});
-
-    useEffect(() => {
-        const script = document.createElement('script');
-        script.src = "https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs";
-        script.type = "module";
-        document.body.appendChild(script);
-    }, []);
 
     const drawLines = useCallback(() => {
         const canvas = canvasRef.current;
@@ -102,6 +95,10 @@ const Main = () => {
         fetchSecondaryPosts();
     }, []);
 
+    const canvasRef = useRef(null);
+    const primaryRefs = useRef({});
+    const secondaryRefs = useRef({});
+
     useLayoutEffect(() => {
         const handleLayoutUpdate = () => {
             drawLines(); 
@@ -134,17 +131,7 @@ const Main = () => {
     return (
         <div className="scrollable-container pt-4 pt-md-3 pt-lg-3">
             {postsPrimary.length === 0 ? (
-                <div className="mx-3 mx-sm-5 mx-lg-5 mt-5 w-80 text-center text-muted">
-                    <div className="d-flex justify-content-center align-items-center">
-                        <dotlottie-player
-                            src="https://lottie.host/13172bc7-1a22-4a85-a29e-06b2b87f69c1/vTZo6mMxMt.lottie"
-                            background="transparent"
-                            speed="1"
-                            style={{ width: 300 }}
-                            loop
-                            autoplay
-                        ></dotlottie-player>
-                    </div>
+                <div className="container mx-0 mx-sm-5 mx-lg-5 mt-5 text-center w-50">
                     <p>No posts available! To find new friends, go to the <a href="/explore">Explore</a> page or add existing friends via the <a href="/friends">Friends</a> page.</p>
                 </div>
             ) : (
@@ -188,6 +175,10 @@ const Main = () => {
                                                     width="70"
                                                     height="70"
                                                     className="object-fit-fill rounded-circle me-2"
+                                                    onClick={() => {
+                                                  
+                                                        navigate(`/profile?userId=${primaryPost.sender_id}`);
+                                                    }}
                                                 />
                                                 <h5 className="card-title">
                                                     <b>{primaryPost.displayname}</b> recommends <b>{primaryPost.title}</b>
@@ -227,6 +218,10 @@ const Main = () => {
                                                         width="70"
                                                         height="70"
                                                         className="object-fit-cover rounded-circle me-2"
+                                                        onClick={() => {
+                                                  
+                                                            navigate(`/profile?userId=${secondaryPost.sender_id}`);
+                                                        }}
                                                     />
                                                     <h5 className="card-title">
                                                         <b>{secondaryPost.displayname}</b>, friend of{' '}

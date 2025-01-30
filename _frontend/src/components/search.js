@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const PostCard = ({ post, loggedInUserId }) => (
+const PostCard = ({ post, loggedInUserId, navigate }) => (
     <div className="d-flex justify-content-left">
         <div className="card card-primary mb-3">
             <div className="card-body d-flex flex-column">
@@ -11,6 +12,9 @@ const PostCard = ({ post, loggedInUserId }) => (
                         width="70"
                         height="70"
                         className="rounded-circle me-2"
+                        onClick={() => {
+                            navigate(`/profile?userId=${post.sender_id}`);
+                        }}
                     />
                     <h5 className="card-title">
                         <b>{post.displayname}</b> is recommending <b>{post.title}</b>
@@ -39,7 +43,7 @@ const Search = () => {
     const [inputValue, setInputValue] = useState("");
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(false);
-
+    const navigate = useNavigate(); 
     const loggedInUserId = 1;
 
     const handleKeyDown = (e) => {
@@ -123,7 +127,7 @@ const Search = () => {
                             <p>Loading...</p>
                         ) : columnOnePosts.length > 0 ? (
                             columnOnePosts.map((post, index) => (
-                                <PostCard key={index} post={post} loggedInUserId={loggedInUserId} />
+                                <PostCard key={index} post={post} loggedInUserId={loggedInUserId} navigate={navigate} />
                             ))
                         ) : (
                             <p>No posts found.</p>
@@ -135,7 +139,7 @@ const Search = () => {
                             <p>Loading...</p>
                         ) : columnTwoPosts.length > 0 ? (
                             columnTwoPosts.map((post, index) => (
-                                <PostCard key={index} post={post} loggedInUserId={loggedInUserId} />
+                                <PostCard key={index} post={post} loggedInUserId={loggedInUserId} navigate={navigate} />
                             ))
                         ) : (
                             <p></p>
