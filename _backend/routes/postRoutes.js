@@ -121,13 +121,12 @@ router.get('/search', async (req, res) => {
 
 router.get('/profile', async (req, res) => {
     const loggedInUserId = req.userSession?.user_id;
-    const userId = req.query.userId; 
+    
     if (!loggedInUserId) {
         return res.status(401).json({ error: 'Unauthorized. Please log in.' });
     }
 
-    const userToFetch = userId || loggedInUserId;
-
+   
     try {
         const [rows] = await pool.query(`
             SELECT posts.*, 
@@ -136,9 +135,8 @@ router.get('/profile', async (req, res) => {
             FROM posts
             JOIN users ON posts.sender_id = users.user_id
             WHERE posts.sender_id = ? 
-            AND (posts.recipient_type != 'specific' OR posts.recipient_id = ?)
             ORDER BY posts.created_at DESC
-        `, [userToFetch, loggedInUserId]);
+        `, [loggedInUserId]);
 
         res.json(rows);
     } catch (error) {
