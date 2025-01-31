@@ -17,7 +17,7 @@ const UserProfile = () => {
             try {
                 const queryParams = new URLSearchParams(location.search);
                 const userId = queryParams.get('userId'); 
-                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/posts/Userprofile?userId=${userId || ''}`, {
+                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/posts/userprofile?userId=${userId || ''}`, {
                     method: 'GET',  
                     credentials: 'include',  
                     headers: {

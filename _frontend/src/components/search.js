@@ -7,16 +7,21 @@ const PostCard = ({ post, loggedInUserId, navigate }) => (
         <div className="card card-primary mb-3">
             <div className="card-body d-flex flex-column">
                 <div className="d-flex gap-2">
-                    <img
-                        src={post.profile_picture || 'default-profile-pic.jpg'}
-                        alt=""
-                        width="70"
-                        height="70"
-                        className="rounded-circle me-2"
+                    <button
+                        className="border-0 bg-transparent p-0"
                         onClick={() => {
                             navigate(`/userprofile?userId=${post.sender_id}`);
                         }}
-                    />
+                        aria-label="View user profile"
+                    >
+                        <img
+                            src={post.profile_picture || 'default-profile-pic.jpg'}
+                            alt=""
+                            width="70"
+                            height="70"
+                            className="rounded-circle me-2"
+                        />
+                    </button>
                     <h5 className="card-title">
                         <b>{post.displayname}</b> is recommending <b>{post.title}</b>
                         {post.recipient_type === 'specific' && post.recipient_id === loggedInUserId && (

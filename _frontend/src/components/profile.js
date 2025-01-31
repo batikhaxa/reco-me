@@ -147,7 +147,15 @@ const Profile = () => {
             <div className="card card-primary mb-3">
                 <div className="card-body">
                     <div className="d-flex gap-2">
-                        <img src={profileImageUrl || 'default-profile-pic.jpg'} alt="" width="70" height="70" className="rounded-circle me-2"  onClick={() => navigate('/profile')}  />
+                        <button
+                            className="border-0 bg-transparent p-0"
+                            onClick={() => {
+                                navigate(`/profile`);
+                            }}
+                            aria-label="View user profile"
+                        >
+                            <img src={profileImageUrl || 'default-profile-pic.jpg'} alt="" width="70" height="70" className="rounded-circle me-2"/>
+                        </button>
                         <h5 className="card-title">
                             <b>{displayname}</b> is recommending {isEditing ? (
                                 <input className="form-control text-muted bg-transparent border-0 ms-0" type="text" value={editedTitle} onChange={(e) => setEditedTitle(e.target.value)} />

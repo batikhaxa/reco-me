@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const UserDropdown = () => {
     const [userData, setUserData] = useState({ displayname: '', profile_picture: '' });
-    const navigate = useNavigate(); 
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -41,10 +39,6 @@ const UserDropdown = () => {
                     height="50"
                     className="rounded-circle me-2 ms-2"
                     style={{ cursor: "pointer" }}
-                    onClick={(e) => {
-                        e.stopPropagation(); // Prevent dropdown from opening
-                        navigate('/profile'); // Navigate to profile page
-                    }}
                 />
                 <strong className="text-white fw-light fs-4">{userData.displayname || 'Guest'}</strong>
                 <i className="bi bi-caret-down-fill" style={{color:'white'}}></i>
@@ -52,7 +46,12 @@ const UserDropdown = () => {
             <ul className="dropdown-menu ms-5 text-small shadow">
                 <li>
                     <a className="dropdown-item" href="/settings">
-                        Settings
+                        settings
+                    </a>
+                </li>
+                <li>
+                    <a className="dropdown-item" href="/profile">
+                        profile
                     </a>
                 </li>
                 <li>
@@ -60,7 +59,7 @@ const UserDropdown = () => {
                 </li>
                 <li>
                     <a className="dropdown-item" href="/logout">
-                        Log out
+                        log out
                     </a>
                 </li>
             </ul>

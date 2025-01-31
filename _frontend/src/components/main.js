@@ -8,17 +8,22 @@ const Post = ({ post, refCallback, isPrimary, loggedInUserId }) => {
         <div className={`card ${isPrimary ? 'card-main' : 'card-secondary'} mb-4`}>
             <div className="card-body d-flex flex-column">
                 <div className="d-flex gap-2">
-                    <img
-                        ref={refCallback}
-                        src={post.profile_picture || 'default-profile-pic.jpg'}
-                        alt="Profile-Picture"
-                        width="70"
-                        height="70"
-                        className="object-fit-fill rounded-circle me-2"
+                    <button
+                        className="border-0 bg-transparent p-0"
                         onClick={() => {
-                            navigate(`/Userprofile?userId=${post.sender_id}`);
+                            navigate(`/userprofile?userId=${post.sender_id}`);
                         }}
-                    />
+                        aria-label="View user profile" 
+                    >
+                        <img
+                            ref={refCallback}
+                            src={post.profile_picture || 'default-profile-pic.jpg'}
+                            alt="Profile-Picture"
+                            width="70"
+                            height="70"
+                            className="object-fit-fill rounded-circle me-2"
+                        />
+                    </button>
                     <h5 className="card-title">
                         <b>{post.displayname}</b> {isPrimary ? 'recommends' : ', friend of'} <b>{post.title}</b>
                         {post.recipient_type === 'specific' && post.recipient_id === loggedInUserId && (
