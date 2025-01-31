@@ -16,7 +16,7 @@ const Post = ({ post, refCallback, isPrimary, loggedInUserId }) => {
                         height="70"
                         className="object-fit-fill rounded-circle me-2"
                         onClick={() => {
-                            navigate(`/profile?userId=${post.sender_id}`);
+                            navigate(`/Userprofile?userId=${post.sender_id}`);
                         }}
                     />
                     <h5 className="card-title">

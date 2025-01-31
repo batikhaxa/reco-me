@@ -147,6 +147,34 @@ router.get('/profile', async (req, res) => {
     }
 });
 
+router.get('/Userprofile', async (req, res) => {
+    const loggedInUserId = req.userSession?.user_id;
+    const userId = req.query.userId; 
+    if (!loggedInUserId) {
+        return res.status(401).json({ error: 'Unauthorized. Please log in.' });
+    }
+
+    const userToFetch = userId || loggedInUserId;
+
+    try {
+        const [rows] = await pool.query(`
+            SELECT posts.*, 
+                   users.username AS displayname, 
+                   users.profile_picture
+            FROM posts
+            JOIN users ON posts.sender_id = users.user_id
+            WHERE posts.sender_id = ? 
+            AND (posts.recipient_type != 'specific' OR posts.recipient_id = ?)
+            ORDER BY posts.created_at DESC
+        `, [userToFetch, loggedInUserId]);
+
+        res.json(rows);
+    } catch (error) {
+        console.error('Error fetching posts:', error);
+        res.status(500).json({ error: 'Database error while fetching posts.' });
+    }
+});
+
 
 //posts from friends
 router.get('/primary', async (req, res) => {

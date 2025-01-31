@@ -6,6 +6,7 @@ import Recommend from './components/recommend';
 import Settings from './components/settings';
 import Search from './components/search';
 import Profile from './components/profile'
+import UserProfile from './components/userprofile'
 import LoginRegister from './components/Login';
 import Logout from './components/Logout';
 import Explore from './components/explore';
@@ -68,6 +69,7 @@ const App = () => {
                     <Route path="/explore" element={<Explore />} />
                     <Route path="/logout" element={<Logout onLogout={handleLogout} />} />
                     <Route path="/profile" element={<Profile />} />
+                    <Route path="/Userprofile" element={<UserProfile />} />
                     <Route path="*" element={<Navigate to="/home" replace />} />
                   </Routes>
                 </div>

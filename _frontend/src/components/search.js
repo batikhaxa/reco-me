@@ -14,7 +14,7 @@ const PostCard = ({ post, loggedInUserId, navigate }) => (
                         height="70"
                         className="rounded-circle me-2"
                         onClick={() => {
-                            navigate(`/profile?userId=${post.sender_id}`);
+                            navigate(`/userprofile?userId=${post.sender_id}`);
                         }}
                     />
                     <h5 className="card-title">
