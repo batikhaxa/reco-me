@@ -7,9 +7,38 @@ const Profile = () => {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
-
+    const [displayname, setDisplayname] = useState('');
+    const [profileImageUrl, setProfileImageUrl] = useState('');
     const navigate = useNavigate();  
     const location = useLocation();
+
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            setLoading(true);
+            try {
+                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user/sidebar`, {
+                    method: 'POST',
+                    credentials: 'include',
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch user data');
+                }
+
+                const data = await response.json();
+                setDisplayname(data.displayname || '');
+                setProfileImageUrl(data.profile_picture || '');
+                setPosts(data.posts || []);
+            } catch (error) {
+                setError('Failed to fetch user data');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchUserData();
+    }, []);
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -119,9 +148,9 @@ const Profile = () => {
             <div className="card card-primary mb-3">
                 <div className="card-body">
                     <div className="d-flex gap-2">
-                        <img src={post.profile_picture || 'default-profile-pic.jpg'} alt="" width="70" height="70" className="rounded-circle me-2"  onClick={() => navigate('/profile')}  />
+                        <img src={profileImageUrl || 'default-profile-pic.jpg'} alt="" width="70" height="70" className="rounded-circle me-2"  onClick={() => navigate('/profile')}  />
                         <h5 className="card-title">
-                            <b>{post.displayname}</b> is recommending {isEditing ? (
+                            <b>{displayname}</b> is recommending {isEditing ? (
                                 <input className="form-control text-muted bg-transparent border-0 ms-0" type="text" value={editedTitle} onChange={(e) => setEditedTitle(e.target.value)} />
                             ) : (
                                 <b>{post.title}</b>
