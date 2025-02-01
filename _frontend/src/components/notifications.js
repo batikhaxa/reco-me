@@ -66,7 +66,16 @@ const Notifications = ({ show, onClose, notifications, setNotifications, loading
                                             </div>
                                         ))
                                     ) :
-                                        <p>No new notifications 🦋</p>
+                                        <div className="mx-3 mx-sm-5 mx-lg-5 text-center text-muted">
+                                            <div className="d-flex justify-content-center align-items-center">
+                                                <iframe 
+                                                    src="https://lottie.host/embed/557559e9-0882-4bc2-b112-e7ab6d8bfa7f/ek0W6CeXHi.lottie"
+                                                    height="300px"
+                                                    title="Cat sleeping on notification bell."
+                                                ></iframe>
+                                            </div>
+                                            <p><b>No notifications!</b> When you have a notification, you will see them here.</p>
+                                        </div>
                             }
                         </div>
                     </div>

@@ -1,17 +1,16 @@
 // src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import 'bootstrap/dist/css/bootstrap.min.css'; 
+import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import './css/main.min.css';
 import './css/custom-choices.css';
 import './css/style.css';
 import './css/Login.min.css';
 import App from './App';
-//import 'bootstrap/dist/css/bootstrap.min.css'; 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(  
+root.render(
   <React.StrictMode>
     <App />
   </React.StrictMode>
