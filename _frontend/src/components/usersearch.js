@@ -3,11 +3,12 @@ import { useNavigate } from 'react-router-dom';
 
 const PostCard = ({ user, navigate }) => (
     <div className="d-flex justify-content-left">
-        <div className="card card-primary mb-3">
-           <div className="card-body d-flex flex-column">
-                <div key={user.user_id} >
-                   
-                        <div className="d-flex align-items-center">
+        <div className="card card-primary  mb-3">
+           <div className="card-body p-2 d-flex flex-column">
+           <div className="d-flex gap-2">
+                   <div className='d-flex  align-items-center' key={user.user_id} >
+                       
+                       
                         <button
                                 className="btn btn-primary"
                                 onClick={() => navigate(`/userprofile?userId=${user.user_id}`)}
@@ -16,14 +17,17 @@ const PostCard = ({ user, navigate }) => (
                             <img
                                 src={user.profile_picture || 'default-profile-pic.jpg'}
                                 alt={user.displayname}
-                                width="70"
-                                height="70"
+                                width="50"
+                                height="50"
                                 className="rounded-circle me-2"
                             />
-                            <h5 className="card-title">{user.displayname}</h5>
+                        </button>
+                            <span className="text fw-light fs-4  ms-auto">{user.displayname}</span>
                         
-                            </button>
-                        </div>
+                          
+                          
+                       
+                    </div>
                    
                 </div>
             </div>
@@ -76,9 +80,9 @@ const UserSearch = () => {
     return (
         <div className="scrollable-container pt-4 pt-md-3 pt-lg-3" data-bs-offset="0">
             <div className="container mx-0 mx-sm-5 mx-lg-5 mt-5">
-                <div className="row justify-content-center"> 
+                <div className="row justify-content-start m-0"> 
                     {/* Search Bar */}
-                    <div className="col-12 col-sm-12 col-md-9 col-lg-5 mb-4">
+                    <div className="col-12 col-sm-12 col-md-9 col-lg-5">
                         <div className="card mb-3">
                             <div className="card-body">
                                 <div className="d-flex align-items-center">
@@ -116,7 +120,7 @@ const UserSearch = () => {
                     </div>
 
                     {/* Column 2 */}
-                    <div className="col-12 col-md-9 col-lg-5 mb-4">
+                    <div className="col-12 col-md-9 col-lg-5">
                         {loading ? (
                             <p>Loading...</p>
                         ) : columnTwoUsers.length > 0 ? (
