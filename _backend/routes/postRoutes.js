@@ -145,7 +145,7 @@ router.get('/profile', async (req, res) => {
     }
 });
 
-router.get('/Userprofile', async (req, res) => {
+router.get('/userprofile', async (req, res) => {
     const loggedInUserId = req.userSession?.user_id;
     const userId = req.query.userId; 
     if (!loggedInUserId) {
@@ -189,11 +189,12 @@ router.get('/primary', async (req, res) => {
                    users.profile_picture
             FROM posts
             JOIN users ON posts.sender_id = users.user_id
-            JOIN friendships ON (friendships.user_id = ? AND friendships.friend_id = posts.sender_id AND friendships.status = 'accepted')
+            JOIN friendships AS f1 ON (f1.user_id = ? AND f1.friend_id = posts.sender_id AND f1.status = 'accepted')
+            JOIN friendships AS f2 ON (f2.user_id = posts.sender_id AND f2.friend_id = ? AND f2.status = 'accepted')
             WHERE (posts.recipient_type != 'specific' OR posts.recipient_id = ?)
             ORDER BY posts.created_at DESC
             LIMIT 50;
-        `, [loggedInUserId, loggedInUserId]);
+        `, [loggedInUserId, loggedInUserId, loggedInUserId]);
 
         res.json(rows);
     } catch (error) {
@@ -201,6 +202,7 @@ router.get('/primary', async (req, res) => {
         res.status(500).json({ error: 'Database error in fetching primary posts' });
     }
 });
+
 // posts from friends of friends (excluding direct friends)
 router.get('/secondary', async (req, res) => {
     console.log('Cookies received in secondary:', req.cookies);

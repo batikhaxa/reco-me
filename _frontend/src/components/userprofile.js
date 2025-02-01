@@ -167,7 +167,8 @@ const UserProfile = () => {
 
         return (
             <button
-                className="btn btn-outline-dark rounded position-absolute"
+                className="btn btn-outline-dark rounded position-absolute p-0"
+                style={{ aspectRatio: '1/1' }}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
                 onClick={handleClick}

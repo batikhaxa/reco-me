@@ -1,7 +1,18 @@
 import React, { useEffect, useState } from 'react';
+import Notifications from "./notifications";
 
 const UserDropdown = () => {
     const [userData, setUserData] = useState({ displayname: '', profile_picture: '' });
+
+    const [showNotifications, setShowNotifications] = useState(false);
+
+    const handleNotificationsClick = () => {
+        setShowNotifications(true);
+    };
+
+    const handleCloseNotifications = () => {
+        setShowNotifications(false);
+    };
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -46,9 +57,13 @@ const UserDropdown = () => {
 
             {/* Bell Icon */}
             <a
-                href="/notifications"
+                href="#notifications"
                 className="position-absolute top-50 end-0 translate-middle-y me-2"
-                style={{ color: 'white', textDecoration: 'none' }}
+                style={{ color: "white", textDecoration: "none" }}
+                onClick={(e) => {
+                    e.preventDefault(); 
+                    handleNotificationsClick();
+                }}
             >
                 <i className="bi bi-bell-fill"></i>
             </a>
@@ -74,6 +89,11 @@ const UserDropdown = () => {
                     </a>
                 </li>
             </ul>
+
+            <Notifications
+                show={showNotifications}
+                onClose={handleCloseNotifications}
+            />
         </div>
     );
 };

@@ -5,6 +5,60 @@ const { checkAuth } = require('../middleware/authMiddleware');
 
 router.use(checkAuth);
 
+router.get('/pending', async (req, res) => {
+    const loggedInUserId = req.userSession?.user_id;
+    console.log("Attempting to fetch pending");
+
+    if (!loggedInUserId) {
+        return res.status(401).json({ error: 'Unauthorized. Please log in.' });
+    }
+
+    try {
+        const [rows] = await pool.query(`
+            SELECT f.friendship_id, f.friend_id AS requester_id, u.displayname AS requester_name, f.created_at
+            FROM friendships f
+            JOIN users u ON f.friend_id = u.user_id
+            WHERE f.user_id = ? AND f.status = 'pending'
+        `, [loggedInUserId]);
+
+        console.log("Finished SQL");
+        console.log('Pending Requests:', rows);
+        res.json(rows || []);
+    } catch (error) {
+        console.error('Error fetching pending friend requests:', error);
+        res.status(500).json({ error: 'Database error in fetching pending friend requests.' });
+    }
+});
+
+router.post('/:friendship_id/:action(accept|reject)', async (req, res) => {
+    const loggedInUserId = req.userSession?.user_id;
+    const { friendship_id, action } = req.params;
+
+    if (!loggedInUserId) {
+        return res.status(401).json({ error: 'Unauthorized. Please log in.' });
+    }
+
+    const status = action === 'accept' ? 'accepted' : 'rejected';
+
+    try {
+        const [result] = await pool.query(`
+            UPDATE friendships
+            SET status = ?
+            WHERE friendship_id = ? AND user_id = ? AND status = 'pending'
+        `, [status, friendship_id, loggedInUserId]);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'Friend request not found or already processed.' });
+        }
+
+        res.json({ message: `Friend request ${status}.` });
+    } catch (error) {
+        console.error(`Error ${action}ing friend request:`, error);
+        res.status(500).json({ error: `Database error in ${action}ing friend request.` });
+    }
+});
+
+
 router.get('/', async (req, res) => {
     const loggedInUserId = req.userSession?.user_id; 
     if (!loggedInUserId) {
@@ -33,7 +87,6 @@ router.get('/:user_id', async (req, res) => {
     }
 
     try {
-        console.log("attempting to fetch friendhsip")
         const [rows] = await pool.query(`
             SELECT status
             FROM friendships
