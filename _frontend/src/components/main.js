@@ -2,7 +2,7 @@ import React, { useEffect, useLayoutEffect, useState, useCallback, useRef } from
 import { useNavigate } from 'react-router-dom';
 import DOMPurify from 'dompurify';
 
-const Post = ({ post, refCallback, isPrimary, loggedInUserId }) => {
+const Post = ({ post, refCallback, isPrimary, loggedInUserId, primaryFriendDisplayName }) => {
     const navigate = useNavigate();
     return (
         <div className={`card ${isPrimary ? 'card-main' : 'card-secondary'} mb-4`}>
@@ -13,7 +13,7 @@ const Post = ({ post, refCallback, isPrimary, loggedInUserId }) => {
                         onClick={() => {
                             navigate(`/userprofile?userId=${post.sender_id}`);
                         }}
-                        aria-label="View user profile" 
+                        aria-label="View user profile"
                     >
                         <img
                             ref={refCallback}
@@ -25,7 +25,13 @@ const Post = ({ post, refCallback, isPrimary, loggedInUserId }) => {
                         />
                     </button>
                     <h5 className="card-title">
-                        <b>{post.displayname}</b> {isPrimary ? 'recommends' : ', friend of'} <b>{post.title}</b>
+                        <b>{post.displayname}</b>
+                        {isPrimary ? (
+                            ' recommends '
+                        ) : (
+                            <span>, friend of <b>{primaryFriendDisplayName}</b>, recommends </span>
+                        )}
+                        <b>{post.title}</b>
                         {post.recipient_type === 'specific' && post.recipient_id === loggedInUserId && (
                             <span> to <b>you</b></span>
                         )}
@@ -221,6 +227,7 @@ const Main = () => {
                                             refCallback={(el) => (secondaryRefs.current[secondaryPost.post_id] = el)}
                                             isPrimary={false}
                                             loggedInUserId={loggedInUserId}
+                                            primaryFriendDisplayName={primaryPost.displayname} // Pass the primary friend's display name
                                         />
                                     ))}
                                 </div>

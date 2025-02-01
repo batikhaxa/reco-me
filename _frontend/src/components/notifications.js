@@ -1,36 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
-const Notifications = ({ show, onClose }) => {
-    const [notifications, setNotifications] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState('');
-
-    useEffect(() => {
-        if (show) {
-            const fetchNotifications = async () => {
-                try {
-                    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/friends/pending`, {
-                        method: "GET",
-                        credentials: "include",
-                        headers: { "Content-Type": "application/json" },
-                    });
-
-                    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-
-                    const data = await response.json();
-                    setNotifications(data);
-                } catch (error) {
-                    console.error("Error fetching notifications:", error);
-                    setError("Failed to fetch notifications");
-                } finally {
-                    setLoading(false);
-                }
-            };
-
-            fetchNotifications();
-        }
-    }, [show]);
-
+const Notifications = ({ show, onClose, notifications, setNotifications, loading, error }) => {
     const handleFriendRequest = async (friendshipId, action) => {
         try {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/friends/${friendshipId}/${action}`, {
@@ -50,11 +20,8 @@ const Notifications = ({ show, onClose }) => {
     const getTimeDifference = (timestamp) => {
         const now = new Date();
         const requestTime = new Date(timestamp);
-        const requestUTC = Date.UTC(
-            requestTime.getFullYear(), requestTime.getMonth(), requestTime.getDate(),
-            requestTime.getHours(), requestTime.getMinutes(), requestTime.getSeconds()
-        );
-        const differenceInSeconds = Math.floor((now - requestUTC) / 1000);
+
+        const differenceInSeconds = Math.floor((now - requestTime) / 1000);
 
         if (differenceInSeconds < 60) return `${differenceInSeconds} seconds ago`;
         if (differenceInSeconds < 3600) return `${Math.floor(differenceInSeconds / 60)} minutes ago`;
@@ -98,7 +65,7 @@ const Notifications = ({ show, onClose }) => {
                                                 <small className="text-muted">{getTimeDifference(created_at)}</small>
                                             </div>
                                         ))
-                                    ) : 
+                                    ) :
                                         <p>No new notifications 🦋</p>
                             }
                         </div>
