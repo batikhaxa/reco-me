@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import DOMPurify from 'dompurify';
 
@@ -9,9 +9,8 @@ const Profile = () => {
     const [error, setError] = useState('');
     const [displayname, setDisplayname] = useState('');
     const [profileImageUrl, setProfileImageUrl] = useState('');
-    const navigate = useNavigate();  
+    const navigate = useNavigate();
     const location = useLocation();
-
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -29,7 +28,6 @@ const Profile = () => {
                 const data = await response.json();
                 setDisplayname(data.displayname || '');
                 setProfileImageUrl(data.profile_picture || '');
-                setPosts(data.posts || []);
             } catch (error) {
                 setError('Failed to fetch user data');
             } finally {
@@ -44,10 +42,9 @@ const Profile = () => {
         const fetchPosts = async () => {
             setLoading(true);
             try {
-                
                 const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/posts/profile`, {
-                    method: 'GET',  
-                    credentials: 'include',  
+                    method: 'GET',
+                    credentials: 'include',
                     headers: {
                         'Content-Type': 'application/json',
                     }
@@ -97,8 +94,8 @@ const Profile = () => {
         const handlePostContentChange = (event) => {
             setEditedContent(event.target.value);
             const textarea = event.target;
-            textarea.style.height = "auto"; 
-            textarea.style.height = `${textarea.scrollHeight}px`; 
+            textarea.style.height = "auto";
+            textarea.style.height = `${textarea.scrollHeight}px`;
         };
 
         const handleSave = async () => {
@@ -154,7 +151,7 @@ const Profile = () => {
                             }}
                             aria-label="View user profile"
                         >
-                            <img src={profileImageUrl || 'default-profile-pic.jpg'} alt="" width="70" height="70" className="rounded-circle me-2"/>
+                            <img src={profileImageUrl || 'default-profile-pic.jpg'} alt="" width="70" height="70" className="rounded-circle me-2" />
                         </button>
                         <h5 className="card-title">
                             <b>{displayname}</b> is recommending {isEditing ? (
@@ -168,12 +165,12 @@ const Profile = () => {
                     {isEditing ? (
                         <textarea className="form-control text-muted bg-transparent" rows="3" value={editedContent} onChange={handlePostContentChange}></textarea>
                     ) : (
-                            <p
-                                className="card-text"
-                                dangerouslySetInnerHTML={{
-                                    __html: DOMPurify.sanitize(post.content.replace(/\n/g, '<br>')),
-                                }}
-                            ></p>
+                        <p
+                            className="card-text"
+                            dangerouslySetInnerHTML={{
+                                __html: DOMPurify.sanitize(post.content.replace(/\n/g, '<br>')),
+                            }}
+                        ></p>
                     )}
 
                     {/* Tags */}
@@ -242,13 +239,13 @@ const Profile = () => {
                         <div className="card shadow-none p-1 mb-3">
                             <div className="card-body text-center">
                                 <img
-                                    src={posts[0]?.profile_picture || 'default-profile-pic.jpg'}
+                                    src={profileImageUrl || 'default-profile-pic.jpg'}
                                     className="rounded-circle"
                                     style={{ width: '100px', height: '100px', objectFit: 'cover' }}
                                     alt="Profile"
                                     onClick={() => navigate('/profile')}  // Navigate to /profile on image click
                                 />
-                                <p className="fw-light fs-4 mt-3">{posts[0]?.displayname}</p>
+                                <p className="fw-light fs-4 mt-3">{displayname}</p>
                                 {error && <div className="alert alert-danger mt-3">{error}</div>}
                             </div>
                         </div>

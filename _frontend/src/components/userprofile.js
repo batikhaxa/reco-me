@@ -81,6 +81,9 @@ const UserProfile = () => {
                     <div className="col-12 col-sm-12 col-md-9 col-lg-5">
                         <div className="card shadow-none p-1 mb-3">
                             <div className="card-body text-center">
+                                <div className="d-flex justify-content-end">
+                                    <i class="bi bi-person-check-fill"></i>
+                                </div>
                                 <img
                                     src={posts[0]?.profile_picture || 'default-profile-pic.jpg'}
                                     className="rounded-circle"

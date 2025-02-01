@@ -80,6 +80,7 @@ const useFetchPosts = (url) => {
 };
 
 const Main = () => {
+    // animation script
     useEffect(() => {
         const script = document.createElement('script');
         script.src = "https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs";

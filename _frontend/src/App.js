@@ -38,10 +38,12 @@ const App = () => {
     setIsLoggedIn(true);
   };
   const handleLogout = () => {
-    setIsLoggedIn(false); // Immediately update the login state
+    setIsLoggedIn(false); 
   };
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="d-flex justify-content-center align-items-center">
+      Loading...
+    </div>
   }
   return (
     <Router>
