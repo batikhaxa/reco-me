@@ -80,6 +80,37 @@ router.delete('/delete/:post_id', async (req, res) => {
         res.status(500).json({ error: 'Database error while deleting post.' });
     }
 });
+router.get('/finduser', async (req, res) => {
+    const { name } = req.query;
+
+    if (!name) {
+        return res.status(400).json({ error: 'Missing search query' });
+    }
+    console.log('Search query received:', name); 
+
+    try {
+        const [users] = await pool.query(
+            `SELECT user_id, displayname, profile_picture
+            FROM users
+            WHERE displayname LIKE ?  
+            ORDER BY 
+                CASE 
+                    WHEN displayname = ? THEN 1 
+                    WHEN displayname LIKE ? THEN 2  
+                    ELSE 3  -- Remaining partial matches last
+                END,
+                displayname  -- Optionally, order alphabetically after prioritizing exact match
+            LIMIT 10`,
+            [`%${name}%`, name, `${name}%`]  
+        );
+        
+        
+        res.json(users);
+    } catch (error) {
+        console.error('Error fetching users:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
 
 router.get('/search', async (req, res) => {
     const { tags } = req.query;
