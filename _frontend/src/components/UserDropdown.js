@@ -3,8 +3,10 @@ import Notifications from "./notifications";
 
 const UserDropdown = () => {
     const [userData, setUserData] = useState({ displayname: '', profile_picture: '' });
-
     const [showNotifications, setShowNotifications] = useState(false);
+    const [notifications, setNotifications] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState('');
 
     const handleNotificationsClick = () => {
         setShowNotifications(true);
@@ -14,6 +16,7 @@ const UserDropdown = () => {
         setShowNotifications(false);
     };
 
+    // Fetch user data and notifications when the component mounts
     useEffect(() => {
         const fetchUserData = async () => {
             try {
@@ -33,7 +36,28 @@ const UserDropdown = () => {
             }
         };
 
+        const fetchNotifications = async () => {
+            try {
+                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/friends/pending`, {
+                    method: "GET",
+                    credentials: "include",
+                    headers: { "Content-Type": "application/json" },
+                });
+
+                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+
+                const data = await response.json();
+                setNotifications(data);
+            } catch (error) {
+                console.error("Error fetching notifications:", error);
+                setError("Failed to fetch notifications");
+            } finally {
+                setLoading(false);
+            }
+        };
+
         fetchUserData();
+        fetchNotifications(); // Fetch notifications when the component mounts
     }, []);
 
     return (
@@ -61,11 +85,14 @@ const UserDropdown = () => {
                 className="position-absolute top-50 end-0 translate-middle-y me-2"
                 style={{ color: "white", textDecoration: "none" }}
                 onClick={(e) => {
-                    e.preventDefault(); 
+                    e.preventDefault();
                     handleNotificationsClick();
                 }}
             >
-                <i className="bi bi-bell-fill"></i>
+                <i className="bi bi-bell-fill" style={{ fontSize: "1.3rem" }}></i>
+                {notifications.length > 0 && (
+                    <i className="bi bi-circle-fill" style={{ color: "red", fontSize: "0.6rem", position: "absolute", top: "0", right: "0" }}></i>
+                )}
             </a>
 
             {/* Dropdown Menu */}
@@ -93,6 +120,10 @@ const UserDropdown = () => {
             <Notifications
                 show={showNotifications}
                 onClose={handleCloseNotifications}
+                notifications={notifications}
+                setNotifications={setNotifications}
+                loading={loading}
+                error={error}
             />
         </div>
     );
