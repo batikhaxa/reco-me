@@ -11,6 +11,14 @@ const saltRounds = 10;
 
 router.use(checkAuth);
 
+router.get('/id', async (req, res) => {
+    const loggedInUserId = req.userSession?.user_id;
+    if (!loggedInUserId) {
+        return res.status(401).json({ error: 'Unauthorized. Please log in.' });
+    }
+    res.json({ loggedInUserId });
+});
+
 router.post('/sidebar', async (req, res) => {
     const loggedInUserId = req.userSession?.user_id;
     if (!loggedInUserId) {

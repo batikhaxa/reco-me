@@ -4,8 +4,19 @@ import DOMPurify from 'dompurify';
 
 const Post = ({ post, refCallback, isPrimary, loggedInUserId, primaryFriendDisplayName }) => {
     const navigate = useNavigate();
+
     return (
-        <div className={`card ${isPrimary ? 'card-main' : 'card-secondary'} mb-4`}>
+        <div className={`card ${isPrimary ? 'card-main' : 'card-secondary'} mb-4 position-relative`}>
+            {post.recipient_type === 'specific' && post.recipient_id === loggedInUserId && (
+                <>
+                    <div className="position-absolute top-0 end-0 me-2 mt-2">
+                        <iframe
+                            src="https://lottie.host/embed/908fa8cd-ee9f-4cef-bc37-bf5d3958d9e6/P7ccQ3T1ss.lottie"
+                            title="Sparkles"
+                        ></iframe>
+                    </div>
+                </>
+            )}
             <div className="card-body d-flex flex-column">
                 <div className="d-flex gap-2">
                     <button
@@ -33,8 +44,11 @@ const Post = ({ post, refCallback, isPrimary, loggedInUserId, primaryFriendDispl
                         )}
                         <b>{post.title}</b>
                         {post.recipient_type === 'specific' && post.recipient_id === loggedInUserId && (
-                            <span> to <b>you</b></span>
+                            <>
+                                <span> to <b>you</b></span>
+                            </>
                         )}
+
                     </h5>
                 </div>
                 <p
@@ -71,6 +85,23 @@ const fetchPosts = async (url) => {
     }
 };
 
+const fetchLoggedInUserId = async () => {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user/id`, {
+            method: 'GET',
+            credentials: 'include',
+        });
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        return data.loggedInUserId;
+    } catch (error) {
+        console.error('Error fetching loggedInUserId:', error);
+        return null;
+    }
+};
+
 const useFetchPosts = (url) => {
     const [posts, setPosts] = useState([]);
 
@@ -86,9 +117,17 @@ const useFetchPosts = (url) => {
 };
 
 const Main = () => {
-    const loggedInUserId = 1;
+    const [loggedInUserId, setLoggedInUserId] = useState(null);
     const postsPrimary = useFetchPosts(`${process.env.REACT_APP_BACKEND_URL}/api/posts/primary`);
     const postsSecondary = useFetchPosts(`${process.env.REACT_APP_BACKEND_URL}/api/posts/secondary`);
+
+    useEffect(() => {
+        const fetchUserId = async () => {
+            const userId = await fetchLoggedInUserId();
+            setLoggedInUserId(userId);
+        };
+        fetchUserId();
+    }, []);
 
     const drawLines = useCallback(() => {
         const canvas = canvasRef.current;

@@ -52,12 +52,37 @@ const PostCard = ({ post, loggedInUserId }) => {
     </div> 
 );
 }
+const fetchLoggedInUserId = async () => {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user/id`, {
+            method: 'GET',
+            credentials: 'include',
+        });
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        return data.loggedInUserId;
+    } catch (error) {
+        console.error('Error fetching loggedInUserId:', error);
+        return null;
+    }
+};
+
 const Explore = () => {
     const [tags, setTags] = useState([]);
     const [inputValue, setInputValue] = useState("");
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(false);
-    const loggedInUserId = 1;
+    const [loggedInUserId, setLoggedInUserId] = useState(null);
+
+    useEffect(() => {
+            const fetchUserId = async () => {
+                const userId = await fetchLoggedInUserId();
+                setLoggedInUserId(userId);
+            };
+            fetchUserId();
+        }, []);
 
     const handleKeyDown = (e) => {
         if ((e.key === 'Enter' || e.key === ',') && inputValue.trim() !== "") {
