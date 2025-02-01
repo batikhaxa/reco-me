@@ -10,6 +10,7 @@ import UserProfile from './components/userprofile'
 import LoginRegister from './components/Login';
 import Logout from './components/Logout';
 import Explore from './components/explore';
+import UserSearch from './components/usersearch';
 import Notifications from './components/notifications';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -74,6 +75,7 @@ const App = () => {
                     <Route path="/logout" element={<Logout onLogout={handleLogout} />} />
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/userprofile" element={<UserProfile />} />
+                    <Route path="/usersearch" element={<UserSearch/>} />
                     <Route path="/notifications" element={<Notifications />} />
                     <Route path="*" element={<Navigate to="/home" replace />} />
                   </Routes>

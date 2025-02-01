@@ -80,6 +80,7 @@ router.put('/profile', async (req, res) => {
     }
 });
 
+
 router.put('/password', async (req, res) => {
     console.log('Request body:', req.body); 
     const loggedInUserId = req.userSession?.user_id;

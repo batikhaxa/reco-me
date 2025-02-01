@@ -97,6 +97,10 @@ const Search = () => {
     useEffect(() => {
         fetchPosts();
     }, [fetchPosts]);
+    useEffect(() => {
+        console.log("Fetched users:", posts);
+    }, [posts]);  // Log fetched results
+
 
     const columnOnePosts = posts.filter((_, index) => index % 2 === 0);
     const columnTwoPosts = posts.filter((_, index) => index % 2 !== 0);
