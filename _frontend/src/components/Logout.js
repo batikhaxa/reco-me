@@ -22,7 +22,11 @@ const Logout = ({ onLogout }) => {
         handleLogout();
     }, [navigate, onLogout]);
 
-    return <div>Logging out...</div>;
+    return <div className="mx-3 mx-sm-5 mx-lg-5 text-center text-muted vh-100">
+        <div className="d-flex justify-content-center align-items-center vh-100">
+            <p>Logging out...</p>
+        </div>
+    </div>;
 };
 
 export default Logout;

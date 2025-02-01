@@ -16,7 +16,6 @@ const UserDropdown = () => {
         setShowNotifications(false);
     };
 
-    // Fetch user data and notifications when the component mounts
     useEffect(() => {
         const fetchUserData = async () => {
             try {
@@ -57,7 +56,7 @@ const UserDropdown = () => {
         };
 
         fetchUserData();
-        fetchNotifications(); // Fetch notifications when the component mounts
+        fetchNotifications(); 
     }, []);
 
     return (

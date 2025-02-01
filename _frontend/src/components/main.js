@@ -86,14 +86,6 @@ const useFetchPosts = (url) => {
 };
 
 const Main = () => {
-    // animation script
-    useEffect(() => {
-        const script = document.createElement('script');
-        script.src = "https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs";
-        script.type = "module";
-        document.body.appendChild(script);
-    }, []);
-
     const loggedInUserId = 1;
     const postsPrimary = useFetchPosts(`${process.env.REACT_APP_BACKEND_URL}/api/posts/primary`);
     const postsSecondary = useFetchPosts(`${process.env.REACT_APP_BACKEND_URL}/api/posts/secondary`);
@@ -163,20 +155,16 @@ const Main = () => {
             return acc;
         }, {});
     }, [postsPrimary]);
-
     return (
         <div className="scrollable-container pt-4 pt-md-3 pt-lg-3">
             {postsPrimary.length === 0 ? (
                 <div className="mx-3 mx-sm-5 mx-lg-5 mt-5 w-80 text-center text-muted">
                     <div className="d-flex justify-content-center align-items-center">
-                        <dotlottie-player
-                            src="https://lottie.host/13172bc7-1a22-4a85-a29e-06b2b87f69c1/vTZo6mMxMt.lottie"
-                            background="transparent"
-                            speed="1"
-                            style={{ width: 300 }}
-                            loop
-                            autoplay
-                        ></dotlottie-player>
+                        <iframe 
+                            src="https://lottie.host/embed/13172bc7-1a22-4a85-a29e-06b2b87f69c1/vTZo6mMxMt.lottie"
+                            height="300px"
+                            title="Magnifying glass searching web-page."
+                        ></iframe>
                     </div>
                     <p>No posts available! To find new friends, go to the <a href="/explore">Explore</a> page or add existing friends via the <a href="/friends">Friends</a> page.</p>
                 </div>

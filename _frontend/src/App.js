@@ -43,10 +43,17 @@ const App = () => {
     setIsLoggedIn(false); 
   };
   if (loading) {
-    return <div className="d-flex justify-content-center align-items-center">
-      Loading...
-    </div>
+    return (
+      <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+        <iframe 
+          src="https://lottie.host/embed/452530c2-598e-4e52-bd85-65b49edccb36/b0zoe5wzJE.lottie"
+          height="200px"
+          title="Loading animation."
+        ></iframe>
+      </div>
+    );
   }
+  
   return (
     <Router>
       <Routes>
