@@ -186,7 +186,8 @@ router.get('/userprofile', async (req, res) => {
     const userToFetch = userId || loggedInUserId;
 
     try {
-        const [rows] = await pool.query(`
+       
+        const [posts] = await pool.query(`
             SELECT posts.*, 
                    users.username AS displayname, 
                    users.profile_picture
@@ -197,12 +198,23 @@ router.get('/userprofile', async (req, res) => {
             ORDER BY posts.created_at DESC
         `, [userToFetch, loggedInUserId]);
 
-        res.json(rows);
+    
+        const [userInfo] = await pool.query(`
+            SELECT displayname, profile_picture 
+            FROM users
+            WHERE user_id = ?
+        `, [userToFetch]);
+
+        res.json({
+            posts: posts.length > 0 ? posts : [], 
+            userInfo: userInfo[0] || {} 
+        });
     } catch (error) {
         console.error('Error fetching posts:', error);
         res.status(500).json({ error: 'Database error while fetching posts.' });
     }
 });
+
 
 
 //posts from friends

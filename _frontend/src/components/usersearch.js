@@ -8,6 +8,11 @@ const PostCard = ({ user, navigate }) => (
                 <div key={user.user_id} >
                    
                         <div className="d-flex align-items-center">
+                        <button
+                                className="btn btn-primary"
+                                onClick={() => navigate(`/userprofile?userId=${user.user_id}`)}
+                            >
+                        
                             <img
                                 src={user.profile_picture || 'default-profile-pic.jpg'}
                                 alt={user.displayname}
@@ -16,11 +21,7 @@ const PostCard = ({ user, navigate }) => (
                                 className="rounded-circle me-2"
                             />
                             <h5 className="card-title">{user.displayname}</h5>
-                            <button
-                                className="btn btn-primary"
-                                onClick={() => navigate(`/userprofile?userId=${user.user_id}`)}
-                            >
-                                View Profile
+                        
                             </button>
                         </div>
                    

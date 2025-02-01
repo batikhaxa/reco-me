@@ -5,6 +5,7 @@ import DOMPurify from 'dompurify';
 
 const UserProfile = () => {
     const [posts, setPosts] = useState([]);
+    const [userInfo, setUserInfo] = useState({});
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
@@ -30,7 +31,9 @@ const UserProfile = () => {
                 }
 
                 const data = await response.json();
-                setPosts(data || []);
+                setPosts(data.posts);
+                setUserInfo(data.userInfo || {});
+                
             } catch (error) {
                 console.error('Error fetching posts:', error);
                 setError('Failed to fetch posts');
@@ -189,13 +192,13 @@ const UserProfile = () => {
                                     <FriendButton profileUserId={new URLSearchParams(location.search).get('userId')} />
                                 </div>
                                 <img
-                                    src={posts[0]?.profile_picture || 'default-profile-pic.jpg'}
+                                    src={userInfo.profile_picture || 'default-profile-pic.jpg'}
                                     className="rounded-circle"
                                     style={{ width: '100px', height: '100px', objectFit: 'cover' }}
                                     alt="Profile"
                                   
                                 />
-                                <p className="fw-light fs-4 mt-3">{posts[0]?.displayname}</p>
+                                <p className="fw-light fs-4 mt-3">{userInfo.displayname}</p>
                                 {error && <div className="alert alert-danger mt-3">{error}</div>}
                             </div>
                         </div>
