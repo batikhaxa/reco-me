@@ -22,7 +22,7 @@ const PostCard = ({ user, navigate }) => (
                                 className="rounded-circle me-2"
                             />
                         </button>
-                            <span className="card-title ms-auto">{user.displayname}</span>
+                            <span className="text fw-light fs-4  ms-auto">{user.displayname}</span>
                         
                           
                           
@@ -78,11 +78,11 @@ const UserSearch = () => {
     const columnTwoUsers = users.filter((_, index) => index % 2 !== 0);
 
     return (
-        <div className="scrollable-container pt-4 pt-md-2 pt-lg-2" data-bs-offset="0">
+        <div className="scrollable-container pt-4 pt-md-3 pt-lg-3" data-bs-offset="0">
             <div className="container mx-0 mx-sm-5 mx-lg-5 mt-5">
-                <div className="row justify-content-start"> 
+                <div className="row justify-content-start m-0"> 
                     {/* Search Bar */}
-                    <div className="col-12 col-sm-12 col-md-9 col-lg-5 mb-4">
+                    <div className="col-12 col-sm-12 col-md-9 col-lg-5">
                         <div className="card mb-3">
                             <div className="card-body">
                                 <div className="d-flex align-items-center">
@@ -120,7 +120,7 @@ const UserSearch = () => {
                     </div>
 
                     {/* Column 2 */}
-                    <div className="col-12 col-md-9 col-lg-5 mb-4">
+                    <div className="col-12 col-md-9 col-lg-5">
                         {loading ? (
                             <p>Loading...</p>
                         ) : columnTwoUsers.length > 0 ? (
