@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 
 const PostCard = ({ user, navigate }) => (
     <div className="d-flex justify-content-left">
-        <div className="card card-primary mb-3">
-           <div className="card-body d-flex flex-column">
+        <div className="card card-primary  mb-3">
+           <div className="card-body p-2 d-flex flex-column">
            <div className="d-flex gap-2">
-                   <div className='d-flex gap-2 align-items-center' key={user.user_id} >
+                   <div className='d-flex  align-items-center' key={user.user_id} >
                        
                        
                         <button
@@ -17,12 +17,12 @@ const PostCard = ({ user, navigate }) => (
                             <img
                                 src={user.profile_picture || 'default-profile-pic.jpg'}
                                 alt={user.displayname}
-                                width="70"
-                                height="70"
+                                width="50"
+                                height="50"
                                 className="rounded-circle me-2"
                             />
                         </button>
-                            <h5 className="card-title ms-auto">{user.displayname}</h5>
+                            <span className="card-title ms-auto">{user.displayname}</span>
                         
                           
                           
