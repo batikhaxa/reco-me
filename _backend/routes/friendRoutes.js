@@ -6,7 +6,7 @@ const { checkAuth } = require('../middleware/authMiddleware');
 router.use(checkAuth);
 
 router.get('/', async (req, res) => {
-    const loggedInUserId = req.userSession?.user_id; // Extracted by checkAuth
+    const loggedInUserId = req.userSession?.user_id; 
     if (!loggedInUserId) {
         return res.status(401).json({ error: 'Unauthorized. Please log in.' });
     }
@@ -24,5 +24,87 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.get('/:user_id', async (req, res) => {
+    const loggedInUserId = req.userSession?.user_id;
+    const profileUserId = req.params.user_id;
+
+    if (!loggedInUserId) {
+        return res.status(401).json({ error: 'Unauthorized. Please log in.' });
+    }
+
+    try {
+        console.log("attempting to fetch friendhsip")
+        const [rows] = await pool.query(`
+            SELECT status
+            FROM friendships
+            WHERE (user_id = ? AND friend_id = ?) OR (user_id = ? AND friend_id = ?)
+        `, [loggedInUserId, profileUserId, profileUserId, loggedInUserId]);
+
+        if (rows.length > 0) {
+            res.json({ status: rows[0].status });
+        } else {
+            res.json({ status: 'not_friends' });
+        }
+    } catch (error) {
+        console.error('Error fetching friendship status:', error);
+        res.status(500).json({ error: 'Database error in fetching friendship status.' });
+    }
+});
+
+router.post('/:user_id/add', async (req, res) => {
+    const loggedInUserId = req.userSession?.user_id;
+    const profileUserId = req.params.user_id;
+
+    if (!loggedInUserId) {
+        return res.status(401).json({ error: 'Unauthorized. Please log in.' });
+    }
+
+    try {
+        const [existing] = await pool.query(`
+            SELECT status
+            FROM friendships
+            WHERE (user_id = ? AND friend_id = ?) OR (user_id = ? AND friend_id = ?)
+        `, [loggedInUserId, profileUserId, profileUserId, loggedInUserId]);
+
+        if (existing.length > 0) {
+            return res.status(400).json({ error: 'Friendship already exists.' });
+        }
+
+        await pool.query(`
+            INSERT INTO friendships (user_id, friend_id, status)
+            VALUES (?, ?, 'accepted'), (?, ?, 'pending')
+        `, [loggedInUserId, profileUserId, profileUserId, loggedInUserId]);
+
+        res.json({ message: 'Friend request sent.' });
+    } catch (error) {
+        console.error('Error adding friend:', error);
+        res.status(500).json({ error: 'Database error in adding friend.' });
+    }
+});
+
+router.delete('/:user_id/remove', async (req, res) => {
+    const loggedInUserId = req.userSession?.user_id;
+    const profileUserId = req.params.user_id;
+
+    if (!loggedInUserId) {
+        return res.status(401).json({ error: 'Unauthorized. Please log in.' });
+    }
+
+    try {
+        const [result] = await pool.query(`
+            DELETE FROM friendships
+            WHERE (user_id = ? AND friend_id = ?) OR (user_id = ? AND friend_id = ?)
+        `, [loggedInUserId, profileUserId, profileUserId, loggedInUserId]);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'Friendship not found.' });
+        }
+
+        res.json({ message: 'Friend removed successfully.' });
+    } catch (error) {
+        console.error('Error removing friend:', error);
+        res.status(500).json({ error: 'Database error in removing friend.' });
+    }
+});
 
 module.exports = router;

@@ -26,23 +26,34 @@ const UserDropdown = () => {
     }, []);
 
     return (
-        <div className="dropdown mt-auto">
+        <div className="dropdown mt-auto position-relative">
+            {/* Dropdown Button */}
             <button
-                className="d-flex align-items-center link-body-emphasis text-decoration-none btn btn-link p-0 text-decoration-none"
+                className="d-flex align-items-center link-body-emphasis text-decoration-none btn btn-link p-0 text-decoration-none w-75"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
             >
                 <img
-                    src={userData.profile_picture || 'default-profile-pic.jpg'} 
+                    src={userData.profile_picture || 'default-profile-pic.jpg'}
                     alt="Profile"
                     width="50"
                     height="50"
                     className="rounded-circle me-2 ms-2"
-                    style={{ cursor: "pointer" }}
                 />
                 <strong className="text-white fw-light fs-4">{userData.displayname || 'Guest'}</strong>
-                <i className="bi bi-caret-down-fill" style={{color:'white'}}></i>
+                <i className="bi bi-caret-down-fill" style={{ color: 'white' }}></i>
             </button>
+
+            {/* Bell Icon */}
+            <a
+                href="/notifications"
+                className="position-absolute top-50 end-0 translate-middle-y me-2"
+                style={{ color: 'white', textDecoration: 'none' }}
+            >
+                <i className="bi bi-bell-fill"></i>
+            </a>
+
+            {/* Dropdown Menu */}
             <ul className="dropdown-menu ms-5 text-small shadow">
                 <li>
                     <a className="dropdown-item" href="/settings">

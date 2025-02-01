@@ -10,6 +10,8 @@ import UserProfile from './components/userprofile'
 import LoginRegister from './components/Login';
 import Logout from './components/Logout';
 import Explore from './components/explore';
+import Notifications from './components/notifications';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 
@@ -71,7 +73,8 @@ const App = () => {
                     <Route path="/explore" element={<Explore />} />
                     <Route path="/logout" element={<Logout onLogout={handleLogout} />} />
                     <Route path="/profile" element={<Profile />} />
-                    <Route path="/Userprofile" element={<UserProfile />} />
+                    <Route path="/userprofile" element={<UserProfile />} />
+                    <Route path="/notifications" element={<Notifications />} />
                     <Route path="*" element={<Navigate to="/home" replace />} />
                   </Routes>
                 </div>
