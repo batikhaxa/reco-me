@@ -5,9 +5,10 @@ const PostCard = ({ user, navigate }) => (
     <div className="d-flex justify-content-left">
         <div className="card card-primary mb-3">
            <div className="card-body d-flex flex-column">
-                <div key={user.user_id} >
-                   
-                        <div className="d-flex align-items-center">
+           <div className="d-flex gap-2">
+                   <div className='d-flex gap-2 align-items-center' key={user.user_id} >
+                       
+                       
                         <button
                                 className="btn btn-primary"
                                 onClick={() => navigate(`/userprofile?userId=${user.user_id}`)}
@@ -20,10 +21,13 @@ const PostCard = ({ user, navigate }) => (
                                 height="70"
                                 className="rounded-circle me-2"
                             />
-                            <h5 className="card-title">{user.displayname}</h5>
+                        </button>
+                            <h5 className="card-title ms-auto">{user.displayname}</h5>
                         
-                            </button>
-                        </div>
+                          
+                          
+                       
+                    </div>
                    
                 </div>
             </div>
@@ -74,9 +78,9 @@ const UserSearch = () => {
     const columnTwoUsers = users.filter((_, index) => index % 2 !== 0);
 
     return (
-        <div className="scrollable-container pt-4 pt-md-3 pt-lg-3" data-bs-offset="0">
+        <div className="scrollable-container pt-4 pt-md-2 pt-lg-2" data-bs-offset="0">
             <div className="container mx-0 mx-sm-5 mx-lg-5 mt-5">
-                <div className="row justify-content-center"> 
+                <div className="row justify-content-start"> 
                     {/* Search Bar */}
                     <div className="col-12 col-sm-12 col-md-9 col-lg-5 mb-4">
                         <div className="card mb-3">
