@@ -154,7 +154,7 @@ const UserProfile = () => {
             if (friendshipStatus === 'accepted') {
                 return isHovered ? 'bi-person-dash-fill' : 'bi-person-check-fill';
             } else if (friendshipStatus === 'pending') {
-                return 'bi-person-check-fill'; // You can customize this for pending state
+                return 'bi-person-check-fill'; 
             } else {
                 return isHovered ? 'bi-person-plus-fill' : 'bi-person-fill';
             }

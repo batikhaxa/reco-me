@@ -9,7 +9,7 @@ const Post = ({ post, refCallback, isPrimary, loggedInUserId, primaryFriendDispl
         <div className={`card ${isPrimary ? 'card-main' : 'card-secondary'} mb-4 position-relative`}>
             {post.recipient_type === 'specific' && post.recipient_id === loggedInUserId && (
                 <>
-                    <div className="position-absolute top-0 end-0 me-2 mt-2">
+                    <div className="position-absolute top-0 start-0 m-1">
                         <iframe
                             src="https://lottie.host/embed/908fa8cd-ee9f-4cef-bc37-bf5d3958d9e6/P7ccQ3T1ss.lottie"
                             title="Sparkles"
