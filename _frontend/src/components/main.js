@@ -5,20 +5,26 @@ import DOMPurify from 'dompurify';
 const Post = ({ post, refCallback, isPrimary, loggedInUserId, primaryFriendDisplayName }) => {
     const navigate = useNavigate();
 
+
+    const render = post.recipient_type === 'specific' && post.recipient_id === loggedInUserId && (
+        <div className="position-absolute top-0 start-0 mb-2 " >
+            <iframe
+                src="https://lottie.host/embed/908fa8cd-ee9f-4cef-bc37-bf5d3958d9e6/P7ccQ3T1ss.lottie"
+                title="Sparkles"
+                width="78px"
+                height="78px"
+                className="sparkle-iframe"
+                style={{ position: 'absolute', top: 0, left: 0, zIndex: 5 }}
+            ></iframe>
+        </div>
+    );
+
     return (
         <div className={`card ${isPrimary ? 'card-main' : 'card-secondary'} mb-4 position-relative`}>
-            {post.recipient_type === 'specific' && post.recipient_id === loggedInUserId && (
-                <>
-                    <div className="position-absolute top-0 start-0 m-1">
-                        <iframe
-                            src="https://lottie.host/embed/908fa8cd-ee9f-4cef-bc37-bf5d3958d9e6/P7ccQ3T1ss.lottie"
-                            title="Sparkles"
-                        ></iframe>
-                    </div>
-                </>
-            )}
+             {render}
             <div className="card-body d-flex flex-column">
-                <div className="d-flex gap-2">
+         
+                <div className="d-flex gap-2 mt-2">
                     <button
                         className="border-0 bg-transparent p-0"
                         onClick={() => {
@@ -32,7 +38,8 @@ const Post = ({ post, refCallback, isPrimary, loggedInUserId, primaryFriendDispl
                             alt="Profile-Picture"
                             width="70"
                             height="70"
-                            className="object-fit-fill rounded-circle me-2"
+                            className="object-fit-fill rounded-circle me-2 position-relative"
+                            style={{ zIndex: 1 }} 
                         />
                     </button>
                     <h5 className="card-title">
@@ -48,7 +55,6 @@ const Post = ({ post, refCallback, isPrimary, loggedInUserId, primaryFriendDispl
                                 <span> to <b>you</b></span>
                             </>
                         )}
-
                     </h5>
                 </div>
                 <p
@@ -68,6 +74,7 @@ const Post = ({ post, refCallback, isPrimary, loggedInUserId, primaryFriendDispl
         </div>
     );
 };
+
 
 const fetchPosts = async (url) => {
     try {

@@ -106,40 +106,35 @@ const FriendButton = ({ profileUserId }) => {
 
 const PostCard = ({ user, navigate }) => (
     <div className="d-flex justify-content-left">
-        <div className="card card-primary  mb-3 position-relative">
-           <div className="card-body p-2 d-flex flex-column">
-                <div className="d-flex gap-1 ">
-                                    <div className='d-flex  align-items-center' key={user.user_id} >
-                                            
-                                            
-                                                <button
-                                                        className="btn btn-primary"
-                                                        onClick={() => navigate(`/userprofile?userId=${user.user_id}`)}
-                                                    >
-                                                
-                                                    <img
-                                                        src={user.profile_picture || 'default-profile-pic.jpg'}
-                                                        alt={user.displayname}
-                                                        width="50"
-                                                        height="50"
-                                                        className="rounded-circle me-2"
-                                                    />
-                                                </button>
-                                                    <span className="text fw-light fs-4  ">{user.displayname}</span>
-                                                   
-                                                   
-                                    </div>
-                                               
-                                    <div className="position-relative  mr-auto p-2">
-                                                    <FriendButton profileUserId={user.user_id} />
-                                                </div>
-                                            
-                        </div>
-                    
+        <div className="card card-primary mb-3 position-relative">
+            <div className="card-body">
+                <div className="d-flex align-items-center justify-content-between">
+                    <div className="d-flex align-items-center" key={user.user_id}>
+                        <button
+                            className="btn btn-primary"
+                            onClick={() => navigate(`/userprofile?userId=${user.user_id}`)}
+                        >
+                            <img
+                                src={user.profile_picture || 'default-profile-pic.jpg'}
+                                alt={user.displayname}
+                                width="50"
+                                height="50"
+                                className="rounded-circle me-2"
+                            />
+                        </button>
+                        <span className="text fw-light fs-4">{user.displayname}</span>
+                    </div>
+
+                   
+                    <div className="d-flex m-4 align-items-center">
+                        <FriendButton profileUserId={user.user_id} />
+                    </div>
                 </div>
+            </div>
         </div>
     </div>
 );
+
 
 const UserSearch = () => {
     const [searchQuery, setSearchQuery] = useState("");
