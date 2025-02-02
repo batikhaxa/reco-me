@@ -1,36 +1,142 @@
-import React, { useState,  useCallback } from 'react';
+import React, { useState,  useEffect,useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+const FriendButton = ({ profileUserId }) => {
+    const [friendshipStatus, setFriendshipStatus] = useState('not_friends');
+    const [isHovered, setIsHovered] = useState(false);
+
+    useEffect(() => {
+        const fetchFriendship = async (profileUserId) => {
+            try {
+                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/friends/${profileUserId}`, {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                return data.status; // 'accepted', 'pending', 'not_friends'
+            } catch (error) {
+                console.error('Error fetching friendship status:', error);
+                return 'not_friends'; // Default to 'not_friends' in case of error
+            }
+        };
+        const getFriendshipStatus = async () => {
+            const status = await fetchFriendship(profileUserId);
+            setFriendshipStatus(status);
+        };
+
+        getFriendshipStatus();
+    }, [profileUserId]);
+
+    const handleAddFriend = async () => {
+        try {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/friends/${profileUserId}/add`, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            setFriendshipStatus('pending');
+        } catch (error) {
+            console.error('Error adding friend:', error);
+        }
+    };
+
+    const handleRemoveFriend = async () => {
+        try {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/friends/${profileUserId}/remove`, {
+                method: 'DELETE',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            setFriendshipStatus('not_friends');
+        } catch (error) {
+            console.error('Error removing friend:', error);
+        }
+    };
+
+    const getButtonIcon = () => {
+        if (friendshipStatus === 'accepted') {
+            return isHovered ? 'bi-person-dash-fill' : 'bi-person-check-fill';
+        } else if (friendshipStatus === 'pending') {
+            return 'bi-person-check-fill'; 
+        } else {
+            return isHovered ? 'bi-person-plus-fill' : 'bi-person-fill';
+        }
+    };
+
+    const handleClick = () => {
+        if (friendshipStatus === 'accepted') {
+            handleRemoveFriend();
+        } else if (friendshipStatus === 'not_friends') {
+            handleAddFriend();
+        }
+    };
+    return (
+        <button
+            className="btn btn-outline-dark rounded position-absolute p-0"
+            style={{ aspectRatio: '1/1' }}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            onClick={handleClick}
+        >
+            <i className={`bi ${getButtonIcon()}`}></i>
+        </button>
+    );
+};
 
 const PostCard = ({ user, navigate }) => (
     <div className="d-flex justify-content-left">
-        <div className="card card-primary  mb-3">
+        <div className="card card-primary  mb-3 position-relative">
            <div className="card-body p-2 d-flex flex-column">
-           <div className="d-flex gap-2">
-                   <div className='d-flex  align-items-center' key={user.user_id} >
-                       
-                       
-                        <button
-                                className="btn btn-primary"
-                                onClick={() => navigate(`/userprofile?userId=${user.user_id}`)}
-                            >
-                        
-                            <img
-                                src={user.profile_picture || 'default-profile-pic.jpg'}
-                                alt={user.displayname}
-                                width="50"
-                                height="50"
-                                className="rounded-circle me-2"
-                            />
-                        </button>
-                            <span className="text fw-light fs-4  ms-auto">{user.displayname}</span>
-                        
-                          
-                          
-                       
-                    </div>
-                   
+                <div className="d-flex gap-1 ">
+                                    <div className='d-flex  align-items-center' key={user.user_id} >
+                                            
+                                            
+                                                <button
+                                                        className="btn btn-primary"
+                                                        onClick={() => navigate(`/userprofile?userId=${user.user_id}`)}
+                                                    >
+                                                
+                                                    <img
+                                                        src={user.profile_picture || 'default-profile-pic.jpg'}
+                                                        alt={user.displayname}
+                                                        width="50"
+                                                        height="50"
+                                                        className="rounded-circle me-2"
+                                                    />
+                                                </button>
+                                                    <span className="text fw-light fs-4  ">{user.displayname}</span>
+                                                   
+                                                   
+                                    </div>
+                                               
+                                    <div className="position-relative  mr-auto p-2">
+                                                    <FriendButton profileUserId={user.user_id} />
+                                                </div>
+                                            
+                        </div>
+                    
                 </div>
-            </div>
         </div>
     </div>
 );
@@ -40,6 +146,7 @@ const UserSearch = () => {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+
 
     const handleKeyDown = (e) => {
         if (e.key === 'Enter' && searchQuery.trim() !== "") {
@@ -76,6 +183,8 @@ const UserSearch = () => {
 
     const columnOneUsers = users.filter((_, index) => index % 2 === 0);
     const columnTwoUsers = users.filter((_, index) => index % 2 !== 0);
+
+   
 
     return (
         <div className="scrollable-container pt-4 pt-md-3 pt-lg-3" data-bs-offset="0">

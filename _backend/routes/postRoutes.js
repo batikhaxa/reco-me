@@ -86,31 +86,34 @@ router.get('/finduser', async (req, res) => {
     if (!name) {
         return res.status(400).json({ error: 'Missing search query' });
     }
-    console.log('Search query received:', name); 
+
+    console.log('Search query received:', name);
 
     try {
         const [users] = await pool.query(
-            `SELECT user_id, displayname, profile_picture
+            `SELECT user_id, username, displayname, profile_picture
             FROM users
-            WHERE displayname LIKE ?  
+            WHERE displayname LIKE ? OR username LIKE ?
             ORDER BY 
                 CASE 
-                    WHEN displayname = ? THEN 1 
-                    WHEN displayname LIKE ? THEN 2  
-                    ELSE 3  -- Remaining partial matches last
+                    WHEN username = ? THEN 1
+                    WHEN username LIKE ? THEN 2
+                    WHEN displayname = ? THEN 3
+                    WHEN displayname LIKE ? THEN 4
+                    ELSE 5
                 END,
-                displayname  -- Optionally, order alphabetically after prioritizing exact match
+                displayname
             LIMIT 10`,
-            [`%${name}%`, name, `${name}%`]  
+            [`%${name}%`, `%${name}%`, name, `${name}%`, name, `${name}%`]
         );
-        
-        
+
         res.json(users);
     } catch (error) {
         console.error('Error fetching users:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
 });
+
 
 router.get('/search', async (req, res) => {
     const { tags } = req.query;
