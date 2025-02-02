@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Choices from 'choices.js';
 import 'choices.js/public/assets/styles/choices.min.css';
 import Select from 'react-select';
@@ -11,6 +12,8 @@ const Recommend = () => {
     const [inputValue, setInputValue] = useState("");
     const [postContent, setPostContent] = useState(""); 
     const [postResult, setPostResult] = useState(''); 
+    
+    const navigate = useNavigate();
 
     const [audienceOptions, setAudienceOptions] = useState([
         { value: "everyone", label: "Everyone" },
@@ -74,7 +77,7 @@ const Recommend = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                credentials: 'include', // Include cookies for session validation
+                credentials: 'include', 
                 body: JSON.stringify(newPost),
             });
 
@@ -84,7 +87,17 @@ const Recommend = () => {
 
             const data = await response.json();
             if (data.success) {
-                setPostResult('Post created successfully!');
+                setPostResult(
+                    <>
+                        Post created successfully! View it via your{' '}
+                        <span
+                            style={{  textDecoration: 'underline', cursor: 'pointer' }}
+                            onClick={() => navigate('/profile')}
+                        >
+                            Profile
+                        </span>
+                    </>
+                );
                 setTitle('');
                 setPostContent('');
                 setTags([]);

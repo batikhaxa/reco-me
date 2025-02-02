@@ -194,6 +194,8 @@ const Main = () => {
             return acc;
         }, {});
     }, [postsPrimary]);
+
+    const navigate = useNavigate();
     return (
         <div className="scrollable-container pt-4 pt-md-3 pt-lg-3">
             {postsPrimary.length === 0 ? (
@@ -205,7 +207,23 @@ const Main = () => {
                             title="Magnifying glass searching web-page."
                         ></iframe>
                     </div>
-                    <p>No posts available! To find new friends, go to the <a href="/explore">Explore</a> page or add existing friends via the <a href="/friends">Friends</a> page.</p>
+                    <p>
+                        No posts available! To find new friends, go to the{' '}
+                        <span
+                            style={{ textDecoration: 'underline', cursor: 'pointer' }}
+                            onClick={() => navigate('/explore')}
+                        >
+                            Explore
+                        </span>{' '}
+                        page or add existing friends by{' '}
+                        <span
+                            style={{ textDecoration: 'underline', cursor: 'pointer' }}
+                            onClick={() => navigate('/usersearch')}
+                        >
+                            searching for them
+                        </span>
+                        .
+                    </p>
                 </div>
             ) : (
                 <div className="d-none"> </div>
