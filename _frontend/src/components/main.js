@@ -5,14 +5,13 @@ import DOMPurify from 'dompurify';
 const Post = ({ post, refCallback, isPrimary, loggedInUserId, primaryFriendDisplayName }) => {
     const navigate = useNavigate();
 
-
     const render = post.recipient_type === 'specific' && post.recipient_id === loggedInUserId && (
-        <div className="position-absolute top-0 start-0 mb-2 " >
+        <div className="position-absolute top-0 start-0 mb-2">
             <iframe
                 src="https://lottie.host/embed/908fa8cd-ee9f-4cef-bc37-bf5d3958d9e6/P7ccQ3T1ss.lottie"
                 title="Sparkles"
-                width="78px"
-                height="78px"
+                width="100px"
+                height="100px"
                 className="sparkle-iframe"
                 style={{ position: 'absolute', top: 0, left: 0, zIndex: 5 }}
             ></iframe>
@@ -21,9 +20,8 @@ const Post = ({ post, refCallback, isPrimary, loggedInUserId, primaryFriendDispl
 
     return (
         <div className={`card ${isPrimary ? 'card-main' : 'card-secondary'} mb-4 position-relative`}>
-             {render}
-            <div className="card-body d-flex flex-column">
-         
+            {render}
+            <div className={`card-body d-flex flex-column ${post.recipient_type === 'specific' ? 'mt-2' : ''}`}>
                 <div className="d-flex gap-2 mt-2">
                     <button
                         className="border-0 bg-transparent p-0"
@@ -74,6 +72,7 @@ const Post = ({ post, refCallback, isPrimary, loggedInUserId, primaryFriendDispl
         </div>
     );
 };
+
 
 
 const fetchPosts = async (url) => {
