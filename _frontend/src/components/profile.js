@@ -240,8 +240,8 @@ const Profile = () => {
                             <div className="card-body text-center">
                                 <img
                                     src={profileImageUrl || 'default-profile-pic.jpg'}
-                                    className="rounded-circle"
-                                    style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                                    className="rounded-circle object-fit-cover"
+                                    style={{ width: '100px', height: '100px' }}
                                     alt="Profile"
                                     onClick={() => navigate('/profile')}  // Navigate to /profile on image click
                                 />

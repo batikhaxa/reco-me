@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; 
 import { useLocation } from 'react-router-dom';
 import DOMPurify from 'dompurify';
 import FriendButton from './friendbutton';
@@ -10,7 +9,6 @@ const UserProfile = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
-    const navigate = useNavigate();  
     const location = useLocation();
 
     useEffect(() => {
@@ -52,7 +50,7 @@ const UserProfile = () => {
             <div className="card card-primary mb-3">
                 <div className="card-body">
                     <div className="d-flex gap-2">
-                        <img src={post.profile_picture || 'default-profile-pic.jpg'} alt="" width="70" height="70" className="rounded-circle me-2"/>
+                        <img src={post.profile_picture || 'default-profile-pic.jpg'} alt="" width="70" height="70" className="rounded-circle me-2 object-fit-cover"/>
                         <h5 className="card-title">
                             <b>{post.displayname}</b> is recommending <b>{post.title}</b>
                         </h5>
@@ -89,8 +87,8 @@ const UserProfile = () => {
                                 </div>
                                 <img
                                     src={userInfo.profile_picture || 'default-profile-pic.jpg'}
-                                    className="rounded-circle"
-                                    style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                                    className="rounded-circle object-fit-cover"
+                                    style={{ width: '100px', height: '100px' }}
                                     alt="Profile"
                                   
                                 />

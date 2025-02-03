@@ -19,7 +19,7 @@ const PostCard = ({ post, loggedInUserId, navigate }) => (
                             alt=""
                             width="70"
                             height="70"
-                            className="rounded-circle me-2"
+                            className="rounded-circle me-2 object-fit-cover"
                         />
                     </button>
                     <h5 className="card-title">

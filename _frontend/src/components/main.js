@@ -38,8 +38,8 @@ const Post = ({ post, refCallback, isPrimary, loggedInUserId, primaryFriendDispl
                             alt="Profile-Picture"
                             width="70"
                             height="70"
-                            className="object-fit-fill rounded-circle me-2 position-relative"
-                            style={{ zIndex: 1 }}
+                            className="object-fit-cover rounded-circle me-2 position-relative"
+                            style={{ zIndex: 1, objectFit: 'cover' }}
                         />
                     </button>
                     <h5 className="card-title">
