@@ -37,7 +37,7 @@ const Post = ({ post, refCallback, isPrimary, loggedInUserId, primaryFriendDispl
                             width="70"
                             height="70"
                             className="object-fit-fill rounded-circle me-2 position-relative"
-                            style={{ zIndex: 1 }} 
+                            style={{ zIndex: 1 }}
                         />
                     </button>
                     <h5 className="card-title">
@@ -127,6 +127,61 @@ const Main = () => {
     const postsPrimary = useFetchPosts(`${process.env.REACT_APP_BACKEND_URL}/api/posts/primary`);
     const postsSecondary = useFetchPosts(`${process.env.REACT_APP_BACKEND_URL}/api/posts/secondary`);
 
+    const secondaryPostsBySource = React.useMemo(() => {
+        const grouped = {};
+        postsSecondary.forEach(post => {
+            const key = post.sourceFriendId;
+            if (!grouped[key]) grouped[key] = [];
+            grouped[key].push(post);
+        });
+         // sort by created_at DESCENDING
+        Object.values(grouped).forEach(posts => {
+            posts.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        });
+        return grouped;
+    }, [postsSecondary]);
+
+    const latestPrimaryPosts = React.useMemo(() => {
+        return postsPrimary.reduce((acc, post) => {
+            const existing = acc[post.sender_id];
+            if (!existing || new Date(post.created_at) > new Date(existing.created_at)) {
+                acc[post.sender_id] = post;
+            }
+            return acc;
+        }, {});
+    }, [postsPrimary]);
+
+    const { primaryWithSecondary } = React.useMemo(() => {
+        const usedSecondaryIds = new Set();
+        const primaryWithSecondary = [];
+
+        // prrocess primary posts sorted by latest first
+        const sortedPrimaries = Object.values(latestPrimaryPosts)
+            .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+        sortedPrimaries.forEach(primaryPost => {
+            const sourceId = primaryPost.sender_id;
+            const availablePosts = secondaryPostsBySource[sourceId] || [];
+
+            // find the first unused secondary post for this source
+            let assignedPost = null;
+            for (const post of availablePosts) {
+                if (!usedSecondaryIds.has(post.post_id)) {
+                    assignedPost = post;
+                    usedSecondaryIds.add(post.post_id);
+                    break;
+                }
+            }
+
+            primaryWithSecondary.push({
+                primary: primaryPost,
+                secondary: assignedPost ? [assignedPost] : []
+            });
+        });
+
+        return { primaryWithSecondary };
+    }, [latestPrimaryPosts, secondaryPostsBySource]);
+    
     useEffect(() => {
         const fetchUserId = async () => {
             const userId = await fetchLoggedInUserId();
@@ -192,22 +247,13 @@ const Main = () => {
         };
     }, [postsPrimary, postsSecondary, drawLines]);
 
-    const latestPostByUser = React.useMemo(() => {
-        return postsPrimary.reduce((acc, post) => {
-            if (!acc[post.sender_id] || new Date(post.created_at) > new Date(acc[post.sender_id].created_at)) {
-                acc[post.sender_id] = post;
-            }
-            return acc;
-        }, {});
-    }, [postsPrimary]);
-
     const navigate = useNavigate();
     return (
         <div className="scrollable-container pt-4 pt-md-3 pt-lg-3">
             {postsPrimary.length === 0 ? (
                 <div className="mx-3 mx-sm-5 mx-lg-5 mt-5 w-80 text-center text-muted">
                     <div className="d-flex justify-content-center align-items-center">
-                        <iframe 
+                        <iframe
                             src="https://lottie.host/embed/13172bc7-1a22-4a85-a29e-06b2b87f69c1/vTZo6mMxMt.lottie"
                             height="300px"
                             title="Magnifying glass searching web-page."
@@ -241,54 +287,37 @@ const Main = () => {
             />
             <div className="container mx-0 mx-sm-5 mx-lg-5 mt-5">
                 <div className="row justify-content-start">
-                    {postsPrimary.map((primaryPost, index) => {
-                        const latestSecondaryPosts = postsSecondary.reduce((acc, post) => {
-                            if (
-                                !acc[post.sourceFriendId] ||
-                                new Date(post.created_at) > new Date(acc[post.sourceFriendId].created_at)
-                            ) {
-                                acc[post.sourceFriendId] = post;
-                            }
-                            return acc;
-                        }, {});
-                        const relatedSecondaryPosts =
-                            latestPostByUser[primaryPost.sender_id] === primaryPost
-                                ? Object.values(latestSecondaryPosts).filter(
-                                    (post) => post.sourceFriendId === primaryPost.sender_id
-                                )
-                                : [];
-                        return (
-                            <div key={index} className="row m-0">
-                                {/* Primary Post */}
-                                <div className="col-11 col-sm-11 col-md-9 col-lg-5">
-                                    <Post
-                                        post={primaryPost}
-                                        refCallback={(el) => (primaryRefs.current[primaryPost.post_id] = el)}
-                                        isPrimary={true}
-                                        loggedInUserId={loggedInUserId}
-                                    />
-                                </div>
-
-                                {/* Secondary Posts */}
-                                <div className="col-12 col-sm-12 col-md-9 col-lg-5 d-none d-md-none d-lg-block">
-                                    {relatedSecondaryPosts.map((secondaryPost, secIndex) => (
-                                        <Post
-                                            key={secIndex}
-                                            post={secondaryPost}
-                                            refCallback={(el) => (secondaryRefs.current[secondaryPost.post_id] = el)}
-                                            isPrimary={false}
-                                            loggedInUserId={loggedInUserId}
-                                            primaryFriendDisplayName={primaryPost.displayname} // Pass the primary friend's display name
-                                        />
-                                    ))}
-                                </div>
+                    {primaryWithSecondary.map(({ primary, secondary }, index) => (
+                        <div key={index} className="row m-0">
+                            {/* Primary Post */}
+                            <div className="col-11 col-sm-11 col-md-9 col-lg-5">
+                                <Post
+                                    post={primary}
+                                    refCallback={(el) => (primaryRefs.current[primary.post_id] = el)}
+                                    isPrimary={true}
+                                    loggedInUserId={loggedInUserId}
+                                />
                             </div>
-                        );
-                    })}
+
+                            {/* Secondary Posts */}
+                            <div className="col-12 col-sm-12 col-md-9 col-lg-5 d-none d-md-none d-lg-block">
+                                {secondary.map((secondaryPost, secIndex) => (
+                                    <Post
+                                        key={secIndex}
+                                        post={secondaryPost}
+                                        refCallback={(el) => (secondaryRefs.current[secondaryPost.post_id] = el)}
+                                        isPrimary={false}
+                                        loggedInUserId={loggedInUserId}
+                                        primaryFriendDisplayName={primary.displayname}
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>
     );
 };
 
-export default Main;
+export default Main; 

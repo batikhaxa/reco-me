@@ -299,7 +299,7 @@ router.get('/secondary', async (req, res) => {
               AND direct.friend_id IS NULL
               AND posts.sender_id != ?  -- Exclude the logged-in user's posts
             ORDER BY posts.created_at DESC
-            LIMIT 50;
+            LIMIT 150;
         `, [loggedInUserId, loggedInUserId, loggedInUserId]);
 
         res.json(rows);
