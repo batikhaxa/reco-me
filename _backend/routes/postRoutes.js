@@ -309,17 +309,33 @@ router.get('/secondary', async (req, res) => {
     }
 });
 router.get('/public', async (req, res) => {
+    const { tags } = req.query;  // Get the tags from query parameters
+
+    let tagConditions = ''; // Variable to hold tag conditions for the query
+    let tagArray = []; // Array to hold tag values
+
+    // Check if tags were provided
+    if (tags) {
+        // Split the tags into an array and create conditions for each tag
+        tagArray = tags.split(',').map(tag => `%${tag.trim()}%`);
+        tagConditions = tagArray.map(() => 'posts.tags LIKE ?').join(' AND ');
+    }
+
     try {
-        const [rows] = await pool.query(`
+        // Build the SQL query dynamically based on whether tags are provided
+        const query = `
             SELECT posts.*, 
                    users.displayname, 
                    users.profile_picture
             FROM posts
             JOIN users ON posts.sender_id = users.user_id
             WHERE posts.recipient_type = 'everyone'
+            ${tagConditions ? 'AND ' + tagConditions : ''}
             ORDER BY posts.created_at DESC
             LIMIT 50;
-        `);
+        `;
+
+        const [rows] = await pool.query(query, tagArray);
 
         res.json(rows);
     } catch (error) {
@@ -327,5 +343,6 @@ router.get('/public', async (req, res) => {
         res.status(500).json({ error: 'Database error in fetching public posts.' });
     }
 });
+
 
 module.exports = router;
