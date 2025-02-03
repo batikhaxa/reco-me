@@ -52,7 +52,7 @@ const UserProfile = () => {
             <div className="card card-primary mb-3">
                 <div className="card-body">
                     <div className="d-flex gap-2">
-                        <img src={post.profile_picture || 'default-profile-pic.jpg'} alt="" width="70" height="70" className="rounded-circle me-2" onClick={() => navigate('/profile')} />
+                        <img src={post.profile_picture || 'default-profile-pic.jpg'} alt="" width="70" height="70" className="rounded-circle me-2"/>
                         <h5 className="card-title">
                             <b>{post.displayname}</b> is recommending <b>{post.title}</b>
                         </h5>
