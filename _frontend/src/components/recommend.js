@@ -4,14 +4,14 @@ import Choices from 'choices.js';
 import 'choices.js/public/assets/styles/choices.min.css';
 import Select from 'react-select';
 
-
 const Recommend = () => {
     const [title, setTitle] = useState('');
     const [audience, setAudience] = useState({ value: "everyone", label: "Everyone" });
     const [tags, setTags] = useState([]);
     const [inputValue, setInputValue] = useState("");
     const [postContent, setPostContent] = useState(""); 
-    const [postResult, setPostResult] = useState(''); 
+    const [postResult, setPostResult] = useState('');
+    const [showTagReminder, setShowTagReminder] = useState(false); 
     
     const navigate = useNavigate();
 
@@ -56,6 +56,11 @@ const Recommend = () => {
     }, []);
 
     const handlePost = async () => {
+        if (tags.length === 0) {
+            setShowTagReminder(true);  
+            return; 
+        }
+
         const recipient_type =
             audience.value === "everyone" || audience.value === "friends"
                 ? audience.value
@@ -102,6 +107,7 @@ const Recommend = () => {
                 setPostContent('');
                 setTags([]);
                 setAudience({ value: "everyone", label: "Everyone" });
+                setShowTagReminder(false); // Hide the reminder message after posting
             }
         } catch (error) {
             console.error('Error creating post:', error);
@@ -126,7 +132,7 @@ const Recommend = () => {
 
     const handleKeyDown = (e) => {
         if ((e.key === 'Enter' || e.key === ',') && inputValue.trim() !== "") {
-            e.preventDefault();
+            e.preventDefault(); // Prevent form submission on Enter key press
             if (!tags.includes(inputValue.trim())) {
                 setTags([...tags, inputValue.trim()]);
             }
@@ -140,11 +146,9 @@ const Recommend = () => {
                 <row className="m-0">
                     <div className="col-12 col-md-9 col-lg-12">
                         <div 
-                        id="recommend-card" 
-                        className="card shadow-none p-1 mb-5" 
-                        style={{ 
-                            width:'100%', 
-                        }}
+                            id="recommend-card" 
+                            className="card shadow-none p-1 mb-5" 
+                            style={{ width:'100%' }}
                         >
                             <div className="card-body">
                                 <form>
@@ -268,10 +272,23 @@ const Recommend = () => {
                         </div>
                     </div>
                     <div className="mt-2 ms-2" id="post-result">
-                        {postResult && <p>{postResult}</p>} {/* Display the result message */}
+                        {postResult && <p className="text-success">{postResult}</p>}
                     </div>
                 </row>
             </div>
+
+            {showTagReminder && (
+                <div className="alert alert-warning" role="alert"  
+                style={{
+                    border: 'none', 
+                    backgroundColor: 'transparent', 
+                    color: 'gray', 
+                   
+                }}>
+                    Hey! You haven't added any tags yet. 
+                Please press 'Enter' or ',' when you're finished.
+                </div>
+            )}
         </div>
     );
 };
