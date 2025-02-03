@@ -13,7 +13,8 @@ const Logout = ({ onLogout }) => {
                 });
                 console.log('Logged out successfully');
                 onLogout(); 
-                navigate('/login');
+                navigate('/login', { replace: true });
+                //window.location.reload(); // Force refresh after navigation
             } catch (error) {
                 console.error('Error logging out:', error);
             }
