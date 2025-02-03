@@ -56,7 +56,7 @@ router.post('/login', async (req, res) => {
             secure: process.env.NODE_ENV === 'production', // true for production, false for development
             sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax', // 'None' for cross-site in production
             path: '/',
-            maxAge: 3600000, // 1 hour in milliseconds
+            maxAge: 86400000, // 24 hours in milliseconds
         });
 
         console.log('Session ID:', sessionId);
