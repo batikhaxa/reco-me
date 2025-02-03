@@ -15,8 +15,8 @@ const Logout = ({ onLogout }) => {
                 onLogout();
                 console.log('Redirecting to login...');
                 navigate('/login');
-                console.log("gona refresh now!")
-                window.location.reload();
+                // console.log("gona refresh now!")
+                // window.location.reload();
             } catch (error) {
                 console.error('Error logging out:', error);
             }
