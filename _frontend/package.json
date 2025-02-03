@@ -36,6 +36,7 @@
     "react-script": "^2.0.5",
     "react-scripts": "^5.0.1",
     "react-select": "^5.8.3",
+    "react-toastify": "^11.0.3",
     "react-transition-group": "^4.4.5",
     "url": "^0.11.4",
     "web-vitals": "^4.2.4",

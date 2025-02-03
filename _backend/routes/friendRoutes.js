@@ -88,15 +88,18 @@ router.get('/:user_id', async (req, res) => {
 
     try {
         const [rows] = await pool.query(`
-            SELECT status
-            FROM friendships
-            WHERE (user_id = ? AND friend_id = ?) OR (user_id = ? AND friend_id = ?)
-        `, [loggedInUserId, profileUserId, profileUserId, loggedInUserId]);
+            SELECT f.status, u.displayname
+            FROM friendships f
+            JOIN users u ON u.user_id = ?
+            WHERE (f.user_id = ? AND f.friend_id = ?) OR (f.user_id = ? AND f.friend_id = ?)
+        `, [profileUserId, loggedInUserId, profileUserId, profileUserId, loggedInUserId]);
 
         if (rows.length > 0) {
-            res.json({ status: rows[0].status });
+            res.json({ status: rows[0].status, displayname: rows[0].displayname });
         } else {
-            res.json({ status: 'not_friends' });
+            // even if no friendship exists, fetch the profile user's displayname
+            const [userRows] = await pool.query('SELECT displayname FROM users WHERE user_id = ?', [profileUserId]);
+            res.json({ status: 'not_friends', displayname: userRows[0].displayname });
         }
     } catch (error) {
         console.error('Error fetching friendship status:', error);

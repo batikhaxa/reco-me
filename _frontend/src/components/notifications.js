@@ -18,10 +18,10 @@ const Notifications = ({ show, onClose, notifications, setNotifications, loading
     };
 
     const getTimeDifference = (timestamp) => {
-        const now = new Date();
-        const requestTime = new Date(timestamp);
+        const nowUTC = new Date().getTime();
+        const requestTimeUTC = new Date(timestamp).getTime();
 
-        const differenceInSeconds = Math.floor((now - requestTime) / 1000);
+        const differenceInSeconds = Math.floor((nowUTC - requestTimeUTC) / 1000);
 
         if (differenceInSeconds < 60) return `${differenceInSeconds} seconds ago`;
         if (differenceInSeconds < 3600) return `${Math.floor(differenceInSeconds / 60)} minutes ago`;

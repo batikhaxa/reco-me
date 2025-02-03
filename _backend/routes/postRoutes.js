@@ -117,7 +117,7 @@ router.get('/finduser', async (req, res) => {
 
 router.get('/search', async (req, res) => {
     const { tags } = req.query;
-    const loggedInUserId = req.userSession?.user_id; 
+    const loggedInUserId = req.userSession?.user_id;
 
     if (!loggedInUserId) {
         return res.status(401).json({ error: 'Unauthorized. Please log in.' });
@@ -127,8 +127,8 @@ router.get('/search', async (req, res) => {
         return res.status(400).json({ error: 'Tags are required for search.' });
     }
 
-    const tagArray = tags.split(',').map(tag => `%${tag.trim()}%`); 
-    const tagConditions = tagArray.map(() => 'posts.tags LIKE ?').join(' AND '); 
+    const tagArray = tags.split(',').map(tag => `%${tag.trim()}%`);
+    const tagConditions = tagArray.map(() => 'posts.tags LIKE ?').join(' AND ');
 
     try {
         const [rows] = await pool.query(`
@@ -137,14 +137,17 @@ router.get('/search', async (req, res) => {
                    users.profile_picture
             FROM posts
             JOIN users ON posts.sender_id = users.user_id
-            JOIN friendships ON friendships.user_id = ? 
-                AND friendships.friend_id = posts.sender_id 
-                AND friendships.status = 'accepted'
+            JOIN friendships AS friendship1 ON friendship1.user_id = ? 
+                AND friendship1.friend_id = posts.sender_id 
+                AND friendship1.status = 'accepted'
+            JOIN friendships AS friendship2 ON friendship2.user_id = posts.sender_id 
+                AND friendship2.friend_id = ? 
+                AND friendship2.status = 'accepted'
             WHERE (posts.recipient_type != 'specific' OR posts.recipient_id = ?)
             AND ${tagConditions}
             AND posts.sender_id != ? 
             ORDER BY posts.created_at DESC
-        `, [loggedInUserId, loggedInUserId, ...tagArray, loggedInUserId]);
+        `, [loggedInUserId, loggedInUserId, loggedInUserId, ...tagArray, loggedInUserId]);
 
         res.json(rows);
     } catch (error) {
@@ -153,35 +156,10 @@ router.get('/search', async (req, res) => {
     }
 });
 
-router.get('/profile', async (req, res) => {
-    const loggedInUserId = req.userSession?.user_id;
-    
-    if (!loggedInUserId) {
-        return res.status(401).json({ error: 'Unauthorized. Please log in.' });
-    }
-
-   
-    try {
-        const [rows] = await pool.query(`
-            SELECT posts.*, 
-                   users.username AS displayname, 
-                   users.profile_picture
-            FROM posts
-            JOIN users ON posts.sender_id = users.user_id
-            WHERE posts.sender_id = ? 
-            ORDER BY posts.created_at DESC
-        `, [loggedInUserId]);
-
-        res.json(rows);
-    } catch (error) {
-        console.error('Error fetching posts:', error);
-        res.status(500).json({ error: 'Database error while fetching posts.' });
-    }
-});
-
 router.get('/userprofile', async (req, res) => {
     const loggedInUserId = req.userSession?.user_id;
-    const userId = req.query.userId; 
+    const userId = req.query.userId;
+
     if (!loggedInUserId) {
         return res.status(401).json({ error: 'Unauthorized. Please log in.' });
     }
@@ -189,19 +167,45 @@ router.get('/userprofile', async (req, res) => {
     const userToFetch = userId || loggedInUserId;
 
     try {
-       
-        const [posts] = await pool.query(`
-            SELECT posts.*, 
-                   users.username AS displayname, 
-                   users.profile_picture
-            FROM posts
-            JOIN users ON posts.sender_id = users.user_id
-            WHERE posts.sender_id = ? 
-            AND (posts.recipient_type != 'specific' OR posts.recipient_id = ?)
-            ORDER BY posts.created_at DESC
-        `, [userToFetch, loggedInUserId]);
+        const [friendship] = await pool.query(`
+            SELECT status 
+            FROM friendships 
+            WHERE (user_id = ? AND friend_id = ? AND status = 'accepted')
+               OR (user_id = ? AND friend_id = ? AND status = 'accepted')
+        `, [loggedInUserId, userToFetch, userToFetch, loggedInUserId]);
 
-    
+        const areFriends = friendship.length > 0;
+        let postsQuery;
+        let postsParams;
+
+        if (areFriends) {
+            postsQuery = `
+                SELECT posts.*, 
+                       users.username AS displayname, 
+                       users.profile_picture
+                FROM posts
+                JOIN users ON posts.sender_id = users.user_id
+                WHERE posts.sender_id = ? 
+                AND (posts.recipient_type != 'specific' OR posts.recipient_id = ?)
+                ORDER BY posts.created_at DESC
+            `;
+            postsParams = [userToFetch, loggedInUserId];
+        } else {
+            postsQuery = `
+                SELECT posts.*, 
+                       users.username AS displayname, 
+                       users.profile_picture
+                FROM posts
+                JOIN users ON posts.sender_id = users.user_id
+                WHERE posts.sender_id = ? 
+                AND posts.recipient_type = 'everyone'
+                ORDER BY posts.created_at DESC
+            `;
+            postsParams = [userToFetch];
+        }
+
+        const [posts] = await pool.query(postsQuery, postsParams);
+
         const [userInfo] = await pool.query(`
             SELECT displayname, profile_picture 
             FROM users
@@ -209,16 +213,14 @@ router.get('/userprofile', async (req, res) => {
         `, [userToFetch]);
 
         res.json({
-            posts: posts.length > 0 ? posts : [], 
-            userInfo: userInfo[0] || {} 
+            posts: posts.length > 0 ? posts : [],
+            userInfo: userInfo[0] || {}
         });
     } catch (error) {
         console.error('Error fetching posts:', error);
         res.status(500).json({ error: 'Database error while fetching posts.' });
     }
 });
-
-
 
 //posts from friends
 router.get('/primary', async (req, res) => {

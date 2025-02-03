@@ -1,8 +1,11 @@
-import React, { useState,  useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const FriendButton = ({ profileUserId }) => {
     const [friendshipStatus, setFriendshipStatus] = useState('not_friends');
     const [isHovered, setIsHovered] = useState(false);
+    const [displayname, setDisplayname] = useState('');
 
     useEffect(() => {
         const fetchFriendship = async (profileUserId) => {
@@ -20,6 +23,7 @@ const FriendButton = ({ profileUserId }) => {
                 }
 
                 const data = await response.json();
+                setDisplayname(data.displayname); // Set the displayname
                 return data.status; // 'accepted', 'pending', 'not_friends'
             } catch (error) {
                 console.error('Error fetching friendship status:', error);
@@ -50,6 +54,14 @@ const FriendButton = ({ profileUserId }) => {
             }
 
             setFriendshipStatus('pending');
+            toast.success(
+                <span>
+                    Friend request sent to <strong>{displayname}</strong>
+                </span>,
+                {
+                    icon: ({ theme, type }) => <i className="bi bi-envelope-check"></i>
+                }
+            );
         } catch (error) {
             console.error('Error adding friend:', error);
         }
@@ -67,6 +79,28 @@ const FriendButton = ({ profileUserId }) => {
 
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            if (friendshipStatus === 'pending') {
+                toast.info(
+                    <span>
+                        Friend request to <strong>{displayname}</strong> removed.
+                    </span>,
+                    {
+                        icon: ({ theme, type }) => <i className="bi bi-envelope-x me-2"></i>
+                    }
+                );
+            }
+            // Friendship removed
+            else if (friendshipStatus === 'accepted') {
+                toast.warning(
+                    <span>
+                        Friendship with <strong>{displayname}</strong> removed. You will no longer be able to see each other's posts.
+                    </span>,
+                    {
+                        icon: ({ theme, type }) => <i className="bi bi-person-x-fill me-2"></i>
+                    }
+                );
             }
 
             setFriendshipStatus('not_friends');
@@ -96,15 +130,17 @@ const FriendButton = ({ profileUserId }) => {
     };
 
     return (
-        <button
-            className="btn btn-outline-dark rounded position-absolute p-0"
-            style={{ aspectRatio: '1/1' }}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-            onClick={handleClick}
-        >
-            <i className={`bi ${getButtonIcon()}`}></i>
-        </button>
+        <>
+            <button
+                className="btn btn-outline-dark rounded position-absolute p-0"
+                style={{ aspectRatio: '1/1' }}
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+                onClick={handleClick}
+            >
+                <i className={`bi ${getButtonIcon()}`}></i>
+            </button>
+        </>
     );
 };
 
