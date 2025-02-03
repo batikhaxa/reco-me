@@ -11,9 +11,7 @@ const Logout = ({ onLogout }) => {
                 await axios.post(`${ process.env.REACT_APP_BACKEND_URL }/api/logout`, {}, {
                     withCredentials: true,
                 });
-                console.log('Logged out successfully');
                 onLogout();
-                console.log('Redirecting to login...');
                 navigate('/login');
                 // console.log("gona refresh now!")
                 // window.location.reload();
