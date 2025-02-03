@@ -13,7 +13,7 @@ const Post = ({ post, refCallback, isPrimary, loggedInUserId, primaryFriendDispl
                 width="300px"
                 height="200px"
                 className="sparkle-iframe"
-                style={{ position: 'absolute', top: -60, left: -140, zIndex: 5 }}
+                style={{ position: 'absolute', top: -70, left: -160, zIndex: 5 }}
             ></iframe>
         </div>
     );
