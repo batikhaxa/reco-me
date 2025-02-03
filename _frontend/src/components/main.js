@@ -39,7 +39,7 @@ const Post = ({ post, refCallback, isPrimary, loggedInUserId, primaryFriendDispl
                             width="70"
                             height="70"
                             className="object-fit-cover rounded-circle me-2 position-relative"
-                            style={{ zIndex: 1 }}
+                            style={{ zIndex: 1, objectFit: 'cover' }}
                         />
                     </button>
                     <h5 className="card-title">
@@ -189,8 +189,7 @@ const Main = () => {
         ctx.strokeStyle = '#FFCCE3';
         ctx.lineWidth = 3;
 
-        // Function to draw a line from a post to a fixed X position (e.g., left edge of the screen)
-        const drawLineToEdge = (post, refs, endX) => {
+        const drawLineForPost = (post, refs, endX) => {
             const el = refs[post.post_id];
             if (!el) return;
 
@@ -207,43 +206,10 @@ const Main = () => {
             ctx.stroke();
         };
 
-        // Function to draw a line between a primary post and its secondary post
-        const drawLineBetweenPosts = (primaryPost, secondaryPost) => {
-            const primaryEl = primaryRefs.current[primaryPost.post_id];
-            const secondaryEl = secondaryRefs.current[secondaryPost.post_id];
-            if (!primaryEl || !secondaryEl) return;
+        postsPrimary.forEach((primaryPost) => drawLineForPost(primaryPost, primaryRefs.current, -100));
+        postsSecondary.forEach((secondaryPost) => drawLineForPost(secondaryPost, secondaryRefs.current, 0));
+    }, [postsPrimary, postsSecondary]);
 
-            // Get positions of primary and secondary posts
-            const primaryRect = primaryEl.getBoundingClientRect();
-            const secondaryRect = secondaryEl.getBoundingClientRect();
-            const canvasRect = canvas.getBoundingClientRect();
-
-            // Calculate start point (center of primary post)
-            const startX = primaryRect.left + primaryRect.width / 2 - canvasRect.left;
-            const startY = primaryRect.top + primaryRect.height / 2 - canvasRect.top;
-
-            // Calculate end point (center of secondary post)
-            const endX = secondaryRect.left + secondaryRect.width / 2 - canvasRect.left;
-            const endY = secondaryRect.top + secondaryRect.height / 2 - canvasRect.top;
-
-            // Draw the line
-            ctx.beginPath();
-            ctx.moveTo(startX, startY);
-            ctx.lineTo(endX, endY);
-            ctx.stroke();
-        };
-
-        // Draw lines for primary posts to the left edge of the screen
-        postsPrimary.forEach((primaryPost) => drawLineToEdge(primaryPost, primaryRefs.current, -100));
-
-        // Draw lines between primary posts and their assigned secondary posts
-        primaryWithSecondary.forEach(({ primary, secondary }) => {
-            if (secondary.length > 0) {
-                drawLineBetweenPosts(primary, secondary[0]);
-            }
-        });
-    }, [postsPrimary, primaryWithSecondary]);
-    
     const canvasRef = useRef(null);
     const primaryRefs = useRef({});
     const secondaryRefs = useRef({});
