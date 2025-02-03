@@ -13,7 +13,7 @@ const Post = ({ post, refCallback, isPrimary, loggedInUserId, primaryFriendDispl
                 width="300px"
                 height="200px"
                 className="sparkle-iframe"
-                style={{ position: 'absolute', top: -75, left: -160, zIndex: 5 }}
+                style={{ position: 'absolute', top: -75, left: -160, zIndex: 2 }}
             ></iframe>
         </div>
     );
@@ -27,8 +27,10 @@ const Post = ({ post, refCallback, isPrimary, loggedInUserId, primaryFriendDispl
                         className="border-0 bg-transparent p-0"
                         onClick={() => {
                             navigate(`/userprofile?userId=${post.sender_id}`);
+                           
                         }}
                         aria-label="View user profile"
+                        style={{ zIndex: 3 }}
                     >
                         <img
                             ref={refCallback}
