@@ -12,7 +12,7 @@ const Logout = ({ onLogout }) => {
                     withCredentials: true,
                 });
                 onLogout(); 
-                setTimeout(() => navigate('/login'), 100); 
+                navigate('/login', { replace: true });
                 window.location.reload();
             } catch (error) {
                 console.error('Error logging out:', error);
