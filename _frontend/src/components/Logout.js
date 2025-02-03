@@ -18,7 +18,6 @@ const Logout = ({ onLogout }) => {
                 console.error('Error logging out:', error);
             }
         };
-
         handleLogout();
     }, [navigate, onLogout]);
 

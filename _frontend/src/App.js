@@ -8,8 +8,8 @@ import Main from './components/main';
 import Recommend from './components/recommend';
 import Settings from './components/settings';
 import Search from './components/search';
-import Profile from './components/profile'
-import UserProfile from './components/userprofile'
+import Profile from './components/profile';
+import UserProfile from './components/userprofile';
 import LoginRegister from './components/Login';
 import Logout from './components/Logout';
 import Explore from './components/explore';
@@ -25,7 +25,7 @@ const App = () => {
 
   const checkLoginStatus = async () => {
     try {
-      const response = await axios.get(`${ process.env.REACT_APP_BACKEND_URL }/api/auth/status`, {
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/auth/status`, {
         withCredentials: true,
       });
       setIsLoggedIn(response.data.loggedIn);
@@ -40,65 +40,55 @@ const App = () => {
   useEffect(() => {
     checkLoginStatus();
   }, []);
+
   const handleLoginSuccess = () => {
     setIsLoggedIn(true);
   };
+
   const handleLogout = () => {
-    setIsLoggedIn(false); 
+    setIsLoggedIn(false);
   };
+
   if (loading) {
     return (
       <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
-        <div className="spinner-border" role="status">
-        </div>
+        <div className="spinner-border" role="status"></div>
       </div>
     );
   }
-  
+
   return (
     <>
       <Router>
-        <Routes>
-          {!isLoggedIn && (
-            <>
-              <Route path="/login" element={<LoginRegister onLoginSuccess={handleLoginSuccess} />} />
-              <Route path="/register" element={<LoginRegister />} />
-              <Route path="*" element={<Navigate to="/login" replace />} />
-            </>
-          )}
-
-          {isLoggedIn && (
-            <Route
-              path="*"
-              element={
-                <main className="d-flex flex-nowrap full-height min-vh-100">
-                  <Sidebar />
-                  <div className="content flex-grow-1 overflow-auto">
-                    <Routes>
-                      <Route path="/home" element={<Main />} />
-                      <Route path="/recommend" element={<Recommend />} />
-                      <Route path="/search" element={<Search />} />
-                      <Route path="/settings" element={<Settings />} />
-                      <Route path="/explore" element={<Explore />} />
-                      <Route path="/logout" element={<Logout onLogout={handleLogout} />} />
-                      <Route path="/profile" element={<Profile />} />
-                      <Route path="/userprofile" element={<UserProfile />} />
-                      <Route path="/usersearch" element={<UserSearch/>} />
-                      <Route path="/notifications" element={<Notifications />} />
-                      <Route path="*" element={<Navigate to="/home" replace />} />
-                    </Routes>
-                  </div>
-                </main>
-              }
-            />
-          )}
-        </Routes>
+        {!isLoggedIn ? (
+          <Routes>
+            <Route path="/login" element={<LoginRegister onLoginSuccess={handleLoginSuccess} />} />
+            <Route path="/register" element={<LoginRegister />} />
+            <Route path="*" element={<Navigate to="/login" replace />} />
+          </Routes>
+        ) : (
+          <div className="d-flex flex-nowrap full-height min-vh-100">
+            <Sidebar />
+            <div className="content flex-grow-1 overflow-auto">
+              <Routes>
+                <Route path="/home" element={<Main />} />
+                <Route path="/recommend" element={<Recommend />} />
+                <Route path="/search" element={<Search />} />
+                <Route path="/settings" element={<Settings />} />
+                <Route path="/explore" element={<Explore />} />
+                <Route path="/logout" element={<Logout onLogout={handleLogout} />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/userprofile" element={<UserProfile />} />
+                <Route path="/usersearch" element={<UserSearch />} />
+                <Route path="/notifications" element={<Notifications />} />
+                <Route path="*" element={<Navigate to="/home" replace />} />
+              </Routes>
+            </div>
+          </div>
+        )}
       </Router>
-      <ToastContainer 
-        position="bottom-right" 
-        autoClose={5000} 
-        transition={Slide}
-      />
+
+      <ToastContainer position="bottom-right" autoClose={5000} transition={Slide} />
     </>
   );
 };
