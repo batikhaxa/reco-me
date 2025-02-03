@@ -220,7 +220,7 @@ router.get('/userprofile', async (req, res) => {
         } else {
             postsQuery = `
                 SELECT posts.*, 
-                       users.username AS displayname, 
+                       users.displayname, 
                        users.profile_picture
                 FROM posts
                 JOIN users ON posts.sender_id = users.user_id
