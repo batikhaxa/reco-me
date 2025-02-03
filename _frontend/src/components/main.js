@@ -10,10 +10,10 @@ const Post = ({ post, refCallback, isPrimary, loggedInUserId, primaryFriendDispl
             <iframe
                 src="https://lottie.host/embed/908fa8cd-ee9f-4cef-bc37-bf5d3958d9e6/P7ccQ3T1ss.lottie"
                 title="Sparkles"
-                width="300px"
-                height="200px"
+                width="100px"
+                height="100px"
                 className="sparkle-iframe"
-                style={{ position: 'absolute', top: -60, left: -140, zIndex: 5 }}
+                style={{ position: 'absolute', top: 0, left: 0, zIndex: 5 }}
             ></iframe>
         </div>
     );
@@ -21,7 +21,7 @@ const Post = ({ post, refCallback, isPrimary, loggedInUserId, primaryFriendDispl
     return (
         <div className={`card ${isPrimary ? 'card-main' : 'card-secondary'} mb-4 position-relative`}>
             {render}
-            <div className="card-body d-flex flex-column ">
+            <div className={`card-body d-flex flex-column ${post.recipient_type === 'specific' ? 'mt-2' : ''}`}>
                 <div className="d-flex gap-2 mt-2">
                     <button
                         className="border-0 bg-transparent p-0"
