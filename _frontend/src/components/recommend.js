@@ -144,10 +144,10 @@ const Recommend = () => {
         <div className="scrollable-container pt-4 pt-md-3 pt-lg-3" data-bs-offset="0">
             <div className="container mx-0 mx-sm-5 mx-lg-5 mt-5">
                 <row className="m-0">
-                    <div className="col-12 col-md-9 col-lg-12">
+                    <div className="col-12 col-sm-12 col-md-9 col-lg-5">
                         <div 
                             id="recommend-card" 
-                            className="card shadow-none p-1 mb-5" 
+                            className="card shadow-none p-1 mb-2" 
                             style={{ width:'100%' }}
                         >
                             <div className="card-body">
@@ -199,16 +199,7 @@ const Recommend = () => {
                                                 style={{ backgroundColor: 'transparent' }}
                                                 autocomplete="off"
                                                 id="tag-select"
-                                                list="media_list"
                                             />
-                                            <datalist id="media_list">
-                                                <option>games</option>
-                                                <option>anime</option>
-                                                <option>movies</option>
-                                                <option>music</option>
-                                                <option>books</option>
-                                                <option>sports</option>
-                                            </datalist>
                                         </div>
 
                                         <div className="mt-1">
@@ -270,25 +261,18 @@ const Recommend = () => {
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="mt-2 ms-2" id="post-result">
-                        {postResult && <p className="text-success">{postResult}</p>}
+                        {showTagReminder && (
+                            <div className="alert alert-warning" role="alert">
+                                <span>Hey! You haven't added any tags yet.
+                                Please press 'Enter' or ',' to register your tags.</span>
+                            </div>
+                        )}
+                        <div className="m-0 p-0" id="post-result">
+                            {postResult && <p className="alert alert-success text-success">{postResult}</p>}
+                        </div>
                     </div>
                 </row>
             </div>
-
-            {showTagReminder && (
-                <div className="alert alert-warning" role="alert"  
-                style={{
-                    border: 'none', 
-                    backgroundColor: 'transparent', 
-                    color: 'gray', 
-                   
-                }}>
-                    Hey! You haven't added any tags yet. 
-                Please press 'Enter' or ',' when you're finished.
-                </div>
-            )}
         </div>
     );
 };
