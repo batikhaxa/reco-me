@@ -139,7 +139,7 @@ const Explore = () => {
                         <div className="card mb-3">
                             <div className="card-body">
                                 <div className="d-flex align-items-center">
-                                    <i class="bi bi-binoculars"></i>
+                                    <i className="bi bi-binoculars"></i>
                                     <input
                                         type="text"
                                         className="form-control"
