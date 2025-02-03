@@ -83,7 +83,8 @@ router.post('/logout', async (req, res) => {
         res.clearCookie('sessionId', {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production', // true for production, false for development
-            sameSite: process.env.NODE_ENV === 'production' ? 'Secure' : 'Lax', // 'None' for cross-site in production
+            sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
+            secure: process.env.NODE_ENV === 'production', 
             path: '/', // Ensure the cookie is cleared globally
         });
         res.status(200).json({ message: 'Logged out successfully' });
