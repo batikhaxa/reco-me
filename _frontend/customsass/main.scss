@@ -103,4 +103,9 @@ $form-select-box-shadow: none;
 $form-select-border-width: 0px;
 $input-border-width: 0px;
 
+.dropdown-menu {
+    --bs-dropdown-link-active-color: #3d3b3b;
+    --bs-dropdown-link-active-bg: #6f6d6e;
+}
+
 @import '../node_modules/bootstrap/scss/bootstrap';
