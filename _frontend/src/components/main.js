@@ -13,7 +13,7 @@ const Post = ({ post, refCallback, isPrimary, loggedInUserId, primaryFriendDispl
                 width="300px"
                 height="200px"
                 className="sparkle-iframe"
-                style={{ position: 'absolute', top: -70, left: -160, zIndex: 5 }}
+                style={{ position: 'absolute', top: -75, left: -160, zIndex: 5 }}
             ></iframe>
         </div>
     );
@@ -21,8 +21,8 @@ const Post = ({ post, refCallback, isPrimary, loggedInUserId, primaryFriendDispl
     return (
         <div className={`card ${isPrimary ? 'card-main' : 'card-secondary'} mb-4 position-relative`}>
             {render}
-            <div className="card-body d-flex flex-column ">
-                <div className="d-flex gap-2 mt-2">
+            <div className="card-body d-flex flex-column">
+                <div className="d-flex gap-2">
                     <button
                         className="border-0 bg-transparent p-0"
                         onClick={() => {
