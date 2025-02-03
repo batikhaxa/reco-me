@@ -156,6 +156,51 @@ router.get('/search', async (req, res) => {
     }
 });
 
+router.put('/profile', async (req, res) => {
+    const loggedInUserId = req.userSession?.user_id;
+    if (!loggedInUserId) {
+        return res.status(401).json({ error: 'Unauthorized. Please log in.' });
+    }
+
+    const { displayname, onlineProfileImageLink } = req.body;
+
+    if (!displayname && !onlineProfileImageLink) {
+        return res.status(400).json({ error: 'No changes detected for profile update' });
+    }
+
+    try {
+        const updateFields = [];
+        const updateValues = [];
+
+        if (displayname) {
+            updateFields.push('displayname = ?');
+            updateValues.push(displayname);
+        }
+        if (onlineProfileImageLink) {
+            updateFields.push('profile_picture = ?');
+            updateValues.push(onlineProfileImageLink);
+        }
+
+        const query = `
+            UPDATE users
+            SET ${updateFields.join(', ')}
+            WHERE user_id = ?
+        `;
+        updateValues.push(loggedInUserId);
+
+        const [result] = await pool.query(query, updateValues);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        res.status(200).json({ message: 'Profile updated successfully' });
+    } catch (error) {
+        console.error('Error updating profile:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
 router.get('/userprofile', async (req, res) => {
     const loggedInUserId = req.userSession?.user_id;
     const userId = req.query.userId;
