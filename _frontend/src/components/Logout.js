@@ -11,10 +11,9 @@ const Logout = ({ onLogout }) => {
                 await axios.post(`${ process.env.REACT_APP_BACKEND_URL }/api/logout`, {}, {
                     withCredentials: true,
                 });
-                console.log('Logged out successfully');
                 onLogout(); 
-                navigate('/login', { replace: true });
-                //window.location.reload(); // Force refresh after navigation
+                setTimeout(() => navigate('/login'), 100); 
+                window.location.reload();
             } catch (error) {
                 console.error('Error logging out:', error);
             }
