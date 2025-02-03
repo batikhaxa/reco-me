@@ -134,36 +134,20 @@ const Main = () => {
             if (!grouped[key]) grouped[key] = [];
             grouped[key].push(post);
         });
-         // sort by created_at DESCENDING
         Object.values(grouped).forEach(posts => {
             posts.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
         });
         return grouped;
     }, [postsSecondary]);
 
-    const latestPrimaryPosts = React.useMemo(() => {
-        return postsPrimary.reduce((acc, post) => {
-            const existing = acc[post.sender_id];
-            if (!existing || new Date(post.created_at) > new Date(existing.created_at)) {
-                acc[post.sender_id] = post;
-            }
-            return acc;
-        }, {});
-    }, [postsPrimary]);
-
     const { primaryWithSecondary } = React.useMemo(() => {
         const usedSecondaryIds = new Set();
-        const primaryWithSecondary = [];
+        const pairs = [];
 
-        // prrocess primary posts sorted by latest first
-        const sortedPrimaries = Object.values(latestPrimaryPosts)
-            .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-
-        sortedPrimaries.forEach(primaryPost => {
+        postsPrimary.forEach(primaryPost => {
             const sourceId = primaryPost.sender_id;
             const availablePosts = secondaryPostsBySource[sourceId] || [];
 
-            // find the first unused secondary post for this source
             let assignedPost = null;
             for (const post of availablePosts) {
                 if (!usedSecondaryIds.has(post.post_id)) {
@@ -173,14 +157,15 @@ const Main = () => {
                 }
             }
 
-            primaryWithSecondary.push({
+            pairs.push({
                 primary: primaryPost,
                 secondary: assignedPost ? [assignedPost] : []
             });
         });
 
-        return { primaryWithSecondary };
-    }, [latestPrimaryPosts, secondaryPostsBySource]);
+        return { primaryWithSecondary: pairs };
+    }, [postsPrimary, secondaryPostsBySource]);
+
     
     useEffect(() => {
         const fetchUserId = async () => {
@@ -288,7 +273,7 @@ const Main = () => {
             <div className="container mx-0 mx-sm-5 mx-lg-5 mt-5">
                 <div className="row justify-content-start">
                     {primaryWithSecondary.map(({ primary, secondary }, index) => (
-                        <div key={index} className="row m-0">
+                        <div key={`primary-${primary.post_id}`} className="row m-0">
                             {/* Primary Post */}
                             <div className="col-11 col-sm-11 col-md-9 col-lg-5">
                                 <Post
@@ -301,9 +286,9 @@ const Main = () => {
 
                             {/* Secondary Posts */}
                             <div className="col-12 col-sm-12 col-md-9 col-lg-5 d-none d-md-none d-lg-block">
-                                {secondary.map((secondaryPost, secIndex) => (
+                                {secondary.map((secondaryPost) => (
                                     <Post
-                                        key={secIndex}
+                                        key={`secondary-${secondaryPost.post_id}`}
                                         post={secondaryPost}
                                         refCallback={(el) => (secondaryRefs.current[secondaryPost.post_id] = el)}
                                         isPrimary={false}
