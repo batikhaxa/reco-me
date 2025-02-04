@@ -151,7 +151,7 @@ const Profile = () => {
                             }}
                             aria-label="View user profile"
                         >
-                            <img src={profileImageUrl || 'default-profile-pic.jpg'} alt="" width="70" height="70" className="rounded-circle me-2" />
+                            <img src={profileImageUrl || 'default-profile-pic.jpg'} alt="" width="70" height="70" className="rounded-circle me-2 object-fit-cover" />
                         </button>
                         <h5 className="card-title">
                             <b>{displayname}</b> is recommending {isEditing ? (

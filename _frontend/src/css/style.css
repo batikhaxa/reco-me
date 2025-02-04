@@ -206,9 +206,7 @@ a {
 
 .dropdown-item:active {
   background-color: #d7d7d7;
-  /* Replace with your preferred color */
   color: #000;
-  /* Optional: Adjust text color for contrast */
 }
 
 /* * {
