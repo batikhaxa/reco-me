@@ -97,6 +97,9 @@ $card-border-radius: 25px;
     align-items: center;
     margin-top: 0.75rem;
 }
+label{
+   margin-bottom:"2rem"
+}
 
 .nav-link {
     &:hover, &:focus, &.active {
@@ -112,25 +115,3 @@ $form-select-border-width: 0px;
 $input-border-width: 0px;
 
 @import '../node_modules/bootstrap/scss/bootstrap';
-
-.tag-label {
-    color: black;
-    border-radius: 0.5rem;
-}
-
-.bi {
-    margin-right: 10px;
-    margin-left: 10px;
-}
-
-.scrollable-container {
-    position: relative;
-    flex-grow: 1;
-    padding: 0;
-    box-sizing: border-box;
-    scrollbar-width: thin;
-}
-
-.scrollable-container::-webkit-scrollbar {
-    width: 1px;
-}

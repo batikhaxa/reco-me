@@ -4,15 +4,12 @@ import axios from 'axios';
 
 const LoginRegister = ({ onLoginSuccess }) => {
     const [isSigningUp, setIsSigningUp] = useState(false);
-
-    // Login state
     const navigate = useNavigate();
+
+    // State variables
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loginMessage, setLoginMessage] = useState('');
-
-    // Registration state
-    
     const [username, setUsername] = useState('');
     const [displayname, setDisplayname] = useState('');
     const [regEmail, setRegEmail] = useState('');
@@ -30,7 +27,6 @@ const LoginRegister = ({ onLoginSuccess }) => {
 
     const handleLogin = (e) => {
         e.preventDefault();
-
         setLoginMessage('');
         setError('');
 
@@ -40,8 +36,8 @@ const LoginRegister = ({ onLoginSuccess }) => {
         }
 
         setLoading(true);
-
-        axios.post('http://localhost:5000/api/login', { email, password })
+        axios
+            .post('http://localhost:5000/api/login', { email, password }, { withCredentials: true })
             .then((response) => {
                 setLoading(false);
                 setLoginMessage(`Login successful! Welcome, ${response.data.user.displayname}.`);
@@ -58,6 +54,8 @@ const LoginRegister = ({ onLoginSuccess }) => {
 
     const handleRegister = (e) => {
         e.preventDefault();
+        setError('');
+        setSuccess('');
 
         if (!username || !displayname || !regEmail || !regPassword) {
             setError('Please fill out all fields');
@@ -76,15 +74,13 @@ const LoginRegister = ({ onLoginSuccess }) => {
         }
 
         setLoading(true);
-        setError('');
-        setSuccess('');
-
-        axios.post('http://localhost:5000/api/registration', {
-            username,
-            displayname,
-            email: regEmail,
-            password: regPassword,
-        })
+        axios
+            .post('http://localhost:5000/api/registration', {
+                username,
+                displayname,
+                email: regEmail,
+                password: regPassword,
+            })
             .then(() => {
                 setLoading(false);
                 setSuccess('Registration successful!');
@@ -99,151 +95,399 @@ const LoginRegister = ({ onLoginSuccess }) => {
             });
     };
 
+
+
+
+
     return (
-        <div className="container  mx-0 mx-sm-5 mx-lg-5 mt-5">
-            
-            <div className={`mt-5 cont border ${isSigningUp ? 's--signup' : ''}`} style={{backgroundColor:"#FCEEF2"}}>
-            <div className='container mt-5 d-flex align-items-center '> 
-                <div className="form sign-in" 
-                style={{marginLeft:"100px",}}>
-               
-                <div className='col-7' style={{backgroundColor:""}}> 
-                    <h2 className="fs-2 p-3 mb-3">👋 Welcome back!</h2>
-                   
-                                    <form onSubmit={handleLogin}>
-                                        <label style={{marginBottom:"2rem"}}>
-                                       
-                                            <input
-                                                style={{width:"300px",
-                                                    background:"transparent",
-                                                    border:"none",
-                                                    borderBottom:"1px solid white"
-                                                }}
-                                                type="email"
-                                                value={email}
-                                                placeholder='email'
-                                                onChange={(e) => setEmail(e.target.value)}
-                                                required
-                                            />
-                                        </label>
-                                        <label style={{marginBottom:"2rem"}}>
-                                            <input
-                                                style={{width:"300px",
-                                                background:"transparent",
-                                                border:"none",
-                                                  borderBottom:"1px solid white"
-                                                }}
-                                                type="password"
-                                                value={password}
-                                                 placeholder='password'
-                                                onChange={(e) => setPassword(e.target.value)}
-                                                required
-                                            />
-                                        </label>
-                                        <p className="forgot-pass">Forgot password?</p>
+    <>
+    
 
-                                        <button type="submit"  disabled={loading} 
-                                        style={{
-                                            backgroundColor: "pink",
-                                            border: "2px  #000", 
-                                            borderRadius: "10px", 
-                                            boxShadow: "none", 
-                                            padding: "3px", 
-                                            width: "100px",
-                                            textAlign: "center",
-                                            fontSize: "1rem",
-                                            margin:"auto 120px"
-                                        }}>
-                                            {loading ? 'Logging in...' : 'SIGN IN'}
-                                       
-                                        </button>
-                                    </form>
-                                    {error && <div className="alert alert-danger">{error}</div>}
-                                    {loginMessage && <div className="alert alert-success">{loginMessage}</div>}
+    <div className="container d-none d-lg-block" style={{loginWrapper}}>
+                    <div className="row justify-content-center  mx-auto mt-3" >
+                        <div className={`mt-5 cont ${isSigningUp ? 's--signup' : ''}`} style={{ backgroundColor: "#FFEEF2" }}>
+                         
+                            
+                                <div className=" col-12 col-md-8 offset-md-1 mt-5">
+                                        {/* Sign-in Form */}
+
+                                
+                                        <div className="form-floating sign-in d-flex justify-content-center align-items-center mx-auto">
+                                            {/* for the card's content */}
+                                            <div className="col-10 col-lg-10 col-md-8 col-sm-8"> 
+                                            
+                                                <h2 className="fs-2 p-2 mb-3 text-lowercase" style={{ fontFamily: "monospace"}}>👋 Welcome back!</h2>
+                                                <form onSubmit={handleLogin} style={{marginLeft:"2rem"}}>
+                                                    <label>
+                                                        <input
+                                                            type="email"
+                                                            className=" form-control mb-3"
+                                                            id="floatingInput" 
+                                                            value={email}
+                                                            placeholder="email"
+                                                            onChange={(e) => setEmail(e.target.value)}
+                                                            style={inputStyle}
+                                                            required
+                                                        />
+                                                        <label for="floatingInput"></label>
+                                                    </label>
+                                                    <label>
+                                                        <input
+                                                            type="password"
+                                                            className="form-control mb-1"
+                                                            id="floatingPassword" 
+                                                            value={password}
+                                                            placeholder="password"
+                                                            onChange={(e) => setPassword(e.target.value)}
+                                                            style={inputStyle}
+                                                            required
+                                                        />
+                                                    
+                                                        <label for="floatingPassword"></label>
+                                                        <p className="forgot-pass text-lowercase  mb-3" style={forgotPassStyle}>Forgot password?</p>
+                                                    
+
+                                                
+                                                    </label>
+                                                    <button type="submit" disabled={loading} style={buttonStyle}>
+                                                        {loading ? 'Logging in...' : 'SIGN IN'}
+                                                    </button>
+                                                {error && <div className="alert alert-danger">{error}</div>}
+                                                {loginMessage && <div className="alert alert-success">{loginMessage}</div>}
+                                                <button className="mt-2  d-block d-md-none" type="submit" onClick={() => setIsSigningUp(!isSigningUp)} style={buttonStyle} >SIGN UP</button>
+                                                
+                                                </form>
+                                               
+                                            </div>
+                                            
+
+                                            
+                                        </div>
+                               
+                            
+                                    </div>
+
+                                   
+
+                            {/* Sign-up Form */}
+                            <div className="sub-cont img-fluid" style={{ backgroundColor: "#FFEEF2" }}>
+                                <div className="row">
+                                    <div className="col-md-8 offset-md-1">
+                                         <div className="img bg-gradient img-fluid  d-none d-lg-block">
+                                          <div className="img__text m--up">
+                                        <a href="/" className="d-flex align-items-center link-body-emphasis text-decoration-none">
+                                            <img src="/img/icon.png" alt="icon" width="60" height="60" className="ms-2 img-fluid"/>
+                                            <span id="sidebar-title" className="fs-2">reco.me</span>
+                                        </a>
+                                        <p className="mt-4 text-justify text-lowercase" style={imgTextStyle}>Don't have an account? Become one of us by signing up below!</p>
+                                    </div>
+                                    {/* sign in img side */}
+                                    <div className="img__text m--in" >
+                                        <a href="/" className="d-flex align-items-center link-body-emphasis text-decoration-none">
+                                            <img src="/img/icon.png" alt="icon" width="60" height="60" className="ms-2" />
+                                            <span id="sidebar-title" className="fs-2">reco.me</span>
+                                        </a>
+                                        <p className="mt-4  text-justify text-lowercase" style={imgTextStyle}>Already have an account? Sign in with the button below.</p>
+                                    </div>
+                                    <div className="img__btn mt-4" onClick={() => setIsSigningUp(!isSigningUp)}>
+                                        <span className="m--up" >Sign Up</span>
+                                        <span className="m--in" >Sign In</span>
+                                    </div>
                                 </div>
-                        </div>
-                </div>
+                                </div>
+                                </div>
 
-                <div className="sub-cont">
-                    <div className="img bg-gradient">
-                        <div className="img__text m--up">
-                            <a
-                                href="/"
-                                className="d-flex align-items-center link-body-emphasis text-decoration-none"
-                            >
-                                <img
-                                    src="/img/icon.png"
-                                    className="bi pe-none me-2"
-                                    width="60"
-                                    height="60"
-                                    alt="icon"
-                                />
-                                <span id="sidebar-title" className="fs-2">reco.me</span>
-                            </a>
-                        </div>
-                        <div className="img__text m--in">
-                            <h2>One of us?</h2>
-                            <p>If you already have an account, just sign in. We've missed you!</p>
-                        </div>
-                        <div
-                            className="img__btn"
-                            onClick={() => setIsSigningUp(!isSigningUp)}
-                        >
-                            <span className="m--up">Sign Up</span>
-                            <span className="m--in">Sign In</span>
+                                <div className="container mx-auto mt-3 d-flex justify-content-center align-items-center " style={signUpStyle}>
+                                    <div className="mt-4 form sign-up">
+                                        <div className="row justify-content-center">
+                                            <div className="col-12">
+                                                <p className="fs-2 text-lowercase text-center mb-4" style={forgotPassStyle}>
+                                                    new here? 🤗
+                                                </p>
+                                                <form onSubmit={handleRegister} className="text-center">
+                                                    <div className="mb-3">
+                                                        <input
+                                                            type="text"
+                                                            className="form-control"
+                                                            value={username}
+                                                            placeholder="username"
+                                                            onChange={(e) => setUsername(e.target.value)}
+                                                            style={inputStyle}
+                                                            required
+                                                        />
+                                                    </div>
+                                                    <div className="mb-3">
+                                                        <input
+                                                            type="text"
+                                                            className="form-control"
+                                                            value={displayname}
+                                                            placeholder="display name"
+                                                            onChange={(e) => setDisplayname(e.target.value)}
+                                                            style={inputStyle}
+                                                            required
+                                                        />
+                                                    </div>
+                                                    <div className="mb-3">
+                                                        <input
+                                                            type="email"
+                                                            className="form-control"
+                                                            value={regEmail}
+                                                            placeholder="email"
+                                                            onChange={(e) => setRegEmail(e.target.value)}
+                                                            style={inputStyle}
+                                                            required
+                                                        />
+                                                    </div>
+                                                    <div className="mb-3">
+                                                        <input
+                                                            type="password"
+                                                            className="form-control"
+                                                            value={regPassword}
+                                                            placeholder="password"
+                                                            onChange={(e) => setRegPassword(e.target.value)}
+                                                            style={inputStyle}
+                                                            required
+                                                        />
+                                                    </div>
+                                                    <div className='row'>
+                                                    <button type="submit" disabled={loading} style={buttonStyle} className="btn btn-primary mt-3">
+                                                        {loading ? 'Registering...' : 'SIGN UP'}
+                                                    </button>
+                                                    <button className="mt-2  d-block d-md-none" type="submit" onClick={() => setIsSigningUp(!isSigningUp)} style={buttonStyle} >SIGN IN</button>
+                                                    {error && <div className="alert alert-danger mt-3">{error}</div>}
+                                                    {success && <div className="alert alert-success mt-3">{success}</div>}
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
+             </div>
+      
+        {/* small container */}
+                    <div className="container mx-sm-auto mx-md-auto d-block d-lg-none" style={{loginWrapper}}>
+                            <div className="row justify-content-center mx-sm-3 mx-md-3 mt-3" >
+                                <div className={`mt-5 cont ${isSigningUp ? 's--signup' : ''}`} style={{ backgroundColor: "#FFEEF2" }}>
+                                
+                                
+                                <div className=" col-12 mx-3 mt-5">
+                                                {/* Sign-in Form */}
 
-                    <div className="form sign-up">
-                        <h2>Time to feel like home,</h2>
-                        {error && <div className="alert alert-danger">{error}</div>}
-                        {success && <div className="alert alert-success">{success}</div>}
-                        <form onSubmit={handleRegister}>
-                            <label>
-                                <span>Username</span>
-                                <input
-                                    type="text"
-                                    value={username}
-                                    onChange={(e) => setUsername(e.target.value)}
-                                    required
-                                />
-                            </label>
-                            <label>
-                                <span>Display Name</span>
-                                <input
-                                    type="text"
-                                    value={displayname}
-                                    onChange={(e) => setDisplayname(e.target.value)}
-                                    required
-                                />
-                            </label>
-                            <label>
-                                <span>Email</span>
-                                <input
-                                    type="email"
-                                    value={regEmail}
-                                    onChange={(e) => setRegEmail(e.target.value)}
-                                    required
-                                />
-                            </label>
-                            <label>
-                                <span>Password</span>
-                                <input
-                                    type="password"
-                                    value={regPassword}
-                                    onChange={(e) => setRegPassword(e.target.value)}
-                                    required
-                                />
-                            </label>
-                            <button type="submit" className="submit" disabled={loading}>
-                                {loading ? 'Registering...' : 'Sign Up'}
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+                                         <div className='row justify-content-center offset-md-1'>
+                                                <div className="form-floating sign-in d-flex justify-content-center align-items-center">
+                                                    {/* for the card's content */}
+                                                    <div className="col-12 col-md-10 col-sm-8"> 
+                                                  
+                                                        <h2 className="fs-2 p-1 mb-3 w-100 text-lowercase" style={{ fontFamily: "monospace"}}>👋 Welcome back!</h2>
+                                                        <form onSubmit={handleLogin} style={{marginLeft:"2rem"}}>
+                                                            <label>
+                                                                <input
+                                                                    type="email"
+                                                                    className=" form-control mb-3"
+                                                                    id="floatingInput" 
+                                                                    value={email}
+                                                                    placeholder="email"
+                                                                    onChange={(e) => setEmail(e.target.value)}
+                                                                    style={inputStyle}
+                                                                    required
+                                                                />
+                                                                <label for="floatingInput"></label>
+                                                            </label>
+                                                            <label>
+                                                                <input
+                                                                    type="password"
+                                                                    className="form-control mb-1"
+                                                                    id="floatingPassword" 
+                                                                    value={password}
+                                                                    placeholder="password"
+                                                                    onChange={(e) => setPassword(e.target.value)}
+                                                                    style={inputStyle}
+                                                                    required
+                                                                />
+                                                                
+                                                     
+                                                                        <label for="floatingPassword"></label>
+                                                                        <p className="forgot-pass text-lowercase mb-3" style={forgotPassStyle}>Forgot password?</p>
+                                                                    
+                                                                </label>
+                                                                
+                                                                   
+                                                                    <button type="submit" disabled={loading} style={buttonStyle}>
+                                                                        {loading ? 'Logging in...' : 'SIGN IN'}
+                                                                    </button>
+                                                                        {error && <div className="alert alert-danger">{error}</div>}
+                                                                {loginMessage && <div className="alert alert-success">{loginMessage}</div>}
+                                                               
+                                                                <button className="mt-2  d-block d-lg-none" type="submit" onClick={() => setIsSigningUp(!isSigningUp)} style={buttonStyle} >SIGN UP</button>
+                                                           
+                                                        </form>
+                                                     </div>
+                                                    </div>
+                                                    
+
+                                                    
+                                                </div>
+                                    
+                                    
+                                            </div>
+                                            <div className="sub-cont img-fluid " style={{ backgroundColor: "#FFEEF2" }}>
+                                
+                                    
+
+                                  <div className="container  mt-3 d-flex justify-content-center align-items-center " style={signUpStyle}>
+                                    <div className="mt-4 form sign-up">
+                                        <div className="row justify-content-center">
+                                            <div className="col-12 col-md-12 offset-md-3  ">
+                                                <p className="fs-2 text-lowercase text-center mb-4" style={forgotPassStyle}>
+                                                    new here? 🤗
+                                                </p>
+                                                <form onSubmit={handleRegister} className="text-center">
+                                                    <div className="mb-3">
+                                                        <input
+                                                            type="text"
+                                                            className="form-control"
+                                                            value={username}
+                                                            placeholder="username"
+                                                            onChange={(e) => setUsername(e.target.value)}
+                                                            style={inputStyle}
+                                                            required
+                                                        />
+                                                    </div>
+                                                    <div className="mb-3">
+                                                        <input
+                                                            type="text"
+                                                            className="form-control"
+                                                            value={displayname}
+                                                            placeholder="display name"
+                                                            onChange={(e) => setDisplayname(e.target.value)}
+                                                            style={inputStyle}
+                                                            required
+                                                        />
+                                                    </div>
+                                                    <div className="mb-3">
+                                                        <input
+                                                            type="email"
+                                                            className="form-control"
+                                                            value={regEmail}
+                                                            placeholder="email"
+                                                            onChange={(e) => setRegEmail(e.target.value)}
+                                                            style={inputStyle}
+                                                            required
+                                                        />
+                                                    </div>
+                                                    <div className="mb-3">
+                                                        <input
+                                                            type="password"
+                                                            className="form-control"
+                                                            value={regPassword}
+                                                            placeholder="password"
+                                                            onChange={(e) => setRegPassword(e.target.value)}
+                                                            style={inputStyle}
+                                                            required
+                                                        />
+                                                    </div>
+                                                    <div className='row'>
+                                                    <button type="submit" disabled={loading} style={buttonStyle} className="btn btn-primary mt-3">
+                                                        {loading ? 'Registering...' : 'SIGN UP'}
+                                                    </button>
+                                                    <button className="mt-2  d-block d-lg-none" type="submit" onClick={() => setIsSigningUp(!isSigningUp)} style={buttonStyle} >SIGN IN</button>
+                                                    {error && <div className="alert alert-danger mt-3">{error}</div>}
+                                                    {success && <div className="alert alert-success mt-3">{success}</div>}
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                          </div>
+
+                            </div>
+                            
+                            </div> 
+                           
+                  
+       
+           
+                     
+                      
+              
+
+                            
+                
+                    
+                      
+
+
+        </>
+
     );
 };
+
+
+
+
+
+
+// Styles
+const inputStyle = {
+  
+    background: "transparent",
+    border: "none",
+    borderBottom: "1px solid white",
+    minWidth:"250px",
+    marginBottom:"5%",
+    hover:"none"
+};
+
+const buttonStyle = {
+    backgroundColor: "#ffcad1",
+    border: "2px #000",
+    borderRadius: "20px",
+    boxShadow: "none",
+    padding: "2.5%",
+    maxWidth: "110px",
+    textAlign: "center",
+    fontSize: "1rem",
+    fontFamily: "monospace",
+    margin:"0 23%"
+  
+   
+}
+
+const forgotPassStyle = {
+ 
+    fontFamily: "monospace",
+    color: "black",
+    
+  
+};
+
+const imgTextStyle ={
+    fontFamily: "monospace",
+    color: "white",
+}
+
+const loginWrapper ={
+    display: "flex",
+    flexDirection: "column",
+    justifycontent:"center",
+    alignItems: "center",     // Full viewport height
+   
+}
+const signUpStyle = {
+    marginLeft: window.innerWidth < 992.00 ? '-120px' : '50px',
+    
+    
+    
+};
+
+
+
 
 export default LoginRegister;

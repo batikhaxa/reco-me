@@ -15,5 +15,6 @@
             "username": "root",
             "password": "h9OF1s8etZyd"
         }
-    ]
+    ],
+    "search.useIgnoreFiles": false
 }

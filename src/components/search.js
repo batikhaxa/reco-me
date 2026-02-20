@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 
 const Search = () => {
@@ -18,41 +18,41 @@ const Search = () => {
             setInputValue("");
         }
     };
-
-
+ 
+ 
     const removeTag = (tagToRemove) => {
         setTags(tags.filter(tag => tag !== tagToRemove));
     };
 
-    const fetchPosts = async () => {
-        if (tags.length === 0) return; // Don't search if there are no tags
+    const fetchPosts = useCallback(async () => {
+        if (tags.length === 0) return; 
 
         setLoading(true);
-        if (tags.length > 0) {
-            try {
-                const response = await axios.get('/api/posts/search', {
-                    params: {
-                        userId: loggedInUserId,
-                        tags: tags.join(',') // Join tags as a comma-separated string
-                    }
-                });
-                setPosts(response.data);
-            } catch (error) {
-                console.error("Error fetching posts", error);
-            }
+        try {
+            const response = await axios.get('/api/posts/search', {
+                params: {
+                    userId: loggedInUserId,
+                    tags: tags.join(',') // Join tags as a comma-separated string
+                }
+            });
+            setPosts(response.data);
+        } catch (error) {
+            console.error("Error fetching posts", error);
+        } finally {
+            setLoading(false); // Ensure loading is stopped even if an error occurs
         }
-        setLoading(false);
-    };
+    }, [tags, loggedInUserId]); // Add dependencies like 'tags' and 'loggedInUserId'
+
 
     useEffect(() => {
-        fetchPosts(); // Fetch posts whenever tags change
-    }, [tags]);
+        fetchPosts();
+    }, [fetchPosts]); // 'fetchPosts' already includes dependencies like 'tags' and 'loggedInUserId'
 
     const columnOnePosts = posts.filter((_, index) => index % 2 === 0);
     const columnTwoPosts = posts.filter((_, index) => index % 2 !== 0);
 
     return (
-        <div className="scrollable-container" data-bs-offset="0">
+        <div className="scrollable-container pt-4 pt-md-3 pt-lg-3" data-bs-offset="0">
             <div className="container mx-0 mx-sm-5 mx-lg-5 mt-5">
                 <div className="row justify-content-start m-0">
                     {/* First Column */}
@@ -94,7 +94,7 @@ const Search = () => {
                                             <div className="card-body d-flex flex-column">
                                                 <div className="d-flex gap-2">
                                                     <img
-                                                        src={post.profileImage || 'https://i.pinimg.com/564x/e8/d7/d0/e8d7d05f392d9c2cf0285ce928fb9f4a.jpg'}
+                                                        src={post.profile_picture || 'https://i.pinimg.com/564x/e8/d7/d0/e8d7d05f392d9c2cf0285ce928fb9f4a.jpg'}
                                                         alt=""
                                                         width="70"
                                                         height="70"
@@ -143,7 +143,7 @@ const Search = () => {
                                             <div className="card-body d-flex flex-column">
                                                 <div className="d-flex gap-2">
                                                     <img
-                                                        src={post.profileImage || 'https://i.pinimg.com/564x/e8/d7/d0/e8d7d05f392d9c2cf0285ce928fb9f4a.jpg'}
+                                                        src={post.profile_picture || 'https://i.pinimg.com/564x/e8/d7/d0/e8d7d05f392d9c2cf0285ce928fb9f4a.jpg'}
                                                         alt=""
                                                         width="70"
                                                         height="70"
